@@ -1,2 +1,1 @@
-# WhatsTheBra
-What's the Bra Project
+# What's the Bra
