@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5657E768-864E-1F3B-F5C0-068FCD234BC8" name="TB_STATE">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 14:50:29 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_state" id="368593B9-DFE6-4D00-5B9C-52FA53AF6047">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 14:59:12 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_country" id="0762F4CC-F81D-40B4-17ED-896CC76CEE5E">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:01:56 UTC</createdTime>
+<generatorID>89C1D243-7FD0-350B-8091-0544D3047506</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>2A9A0CA5-CD50-9E15-A60E-B49032D85354</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nm_state" id="035D8DDE-C72E-D334-8D01-BFA2B59B4DBE">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 14:59:50 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>60</dataTypeSize>
+<ownDataTypeParameters>60,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ds_abbreviation" id="25E3463C-FF55-F9F8-A7EC-BFD0F99B8E07">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:00:15 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="B6ABA572-4D24-2BCD-24DF-6696D7BF4A6B" name="TB_STATE PK">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 14:59:34 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>368593B9-DFE6-4D00-5B9C-52FA53AF6047</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

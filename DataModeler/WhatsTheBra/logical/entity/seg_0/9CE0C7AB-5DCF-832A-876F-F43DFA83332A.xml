@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9CE0C7AB-5DCF-832A-876F-F43DFA83332A" name="TB_FAVOURITE_BRA">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:52:22 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_favourite_bra" id="97DF749B-4C71-C2A9-15A5-5457C7CF6417">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:59:51 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_user" id="C8FAEED4-3A56-1E99-2209-8BB6E5E99D2D">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:53:54 UTC</createdTime>
+<generatorID>2281A5B7-E21A-97AC-6D04-BD235A5E7D9C</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>9464E22B-827D-DDC7-FF8D-371B3A83D035</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_bra" id="1F07E2AD-7095-E1B4-1761-1F19EEDB43D4">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:54:04 UTC</createdTime>
+<generatorID>0177A892-8228-A662-5525-09D9B3F27BF4</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>4EC3DAEE-277B-C7F5-B697-ED10E368B370</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="66AB8A17-0D18-C5E3-7165-7C5F76A09589" name="TB_FAVOURITE_BRA PK">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 16:00:03 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>97DF749B-4C71-C2A9-15A5-5457C7CF6417</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

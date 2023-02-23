@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="B478E526-BC12-96FB-E5C7-7A3BA39F7E53" name="TB_FAVOURITE_DRESS">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 14:42:26 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_favourite_dress" id="8DD7D606-2FD5-F758-C04E-669CBC54A0AA">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:58:15 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_user" id="FA5C8D08-2815-E0EE-FC8E-ED7EAD653077">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:49:38 UTC</createdTime>
+<generatorID>2288F839-D764-63B5-7136-FEDF7E7F877B</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>9464E22B-827D-DDC7-FF8D-371B3A83D035</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_dress" id="6E5AD52A-5DC5-CF04-75E4-A8A904DF3B3A">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:50:13 UTC</createdTime>
+<generatorID>C3C947E1-D56B-561B-B9B5-E1BF423C1065</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>70F8105B-C2B0-C0ED-D626-9189C718AD03</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="4246E9A4-A531-D7DE-1803-B0C852C83D2A" name="TB_FAVOURITE_DRESS PK">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-23 15:58:35 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>8DD7D606-2FD5-F758-C04E-669CBC54A0AA</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
