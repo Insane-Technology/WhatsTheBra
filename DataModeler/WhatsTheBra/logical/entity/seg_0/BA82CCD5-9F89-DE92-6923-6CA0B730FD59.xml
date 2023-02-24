@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="BA82CCD5-9F89-DE92-6923-6CA0B730FD59" name="TB_CATEGORY_BLOUSE">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-24 01:26:06 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_category_blouse" id="F8D27087-01AE-5ECE-3078-58F700B1D02D">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-24 01:26:21 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_category" id="DD6900BA-5655-C6AE-6921-98EE0953C097">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-24 01:26:46 UTC</createdTime>
+<generatorID>C0DFEC86-284D-2E06-A27B-8FDDFD2F4CD0</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>D935EB40-3806-AFEB-1D56-1FBEE3889306</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_blouse" id="89AA6169-5A03-EFD1-38FB-39DA86943E3F">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-24 01:26:59 UTC</createdTime>
+<generatorID>C343C95B-5CBF-ADFF-8099-3155C4ED0E31</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>8EE31A23-E9CB-91FA-BEAC-35B0A023B85F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="37A11C6E-0ED3-CE06-0ABE-0AA997C9FFC8" name="TB_CATEGORY_BLOUSE PK">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-24 01:26:33 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F8D27087-01AE-5ECE-3078-58F700B1D02D</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
