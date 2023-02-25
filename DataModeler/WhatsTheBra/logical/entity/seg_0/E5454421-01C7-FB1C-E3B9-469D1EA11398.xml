@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E5454421-01C7-FB1C-E3B9-469D1EA11398" name="TB_IMAGE_BLOUSE">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-25 20:54:42 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_image_blouse" id="9EA28585-06E5-44A2-F758-E29DAC1F0927">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-25 20:55:33 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_image" id="5365FBB1-61A9-C3BD-8E8F-100DADFD4C5B">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-25 20:58:50 UTC</createdTime>
+<generatorID>48DB2942-138C-7293-0537-3E98AAEA2E0C</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>563BC119-5B86-EBFE-E4CB-EA9DD8FD5686</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_blouse" id="A5E1B7EC-D8D0-0836-364F-10A96399627D">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-25 21:02:00 UTC</createdTime>
+<generatorID>80EC13C8-865B-0AF3-93CB-F6334A2A9822</generatorID>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<referedAttribute>8EE31A23-E9CB-91FA-BEAC-35B0A023B85F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="665881B1-01D8-AB1F-948E-804A171420B2" name="TB_IMAGE_BLOUSE PK">
+<createdBy>rennecastrucci</createdBy>
+<createdTime>2023-02-25 20:55:46 UTC</createdTime>
+<ownerDesignName>WhatsTheBra</ownerDesignName>
+<engineerTo>
+<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>9EA28585-06E5-44A2-F758-E29DAC1F0927</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
