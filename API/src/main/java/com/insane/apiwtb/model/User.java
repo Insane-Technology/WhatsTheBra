@@ -49,4 +49,16 @@ public class User {
     @JoinColumn(name = "id_image")
     private Image image;
 
+    @ManyToMany
+    @JoinTable(name = "tb_favourite_dress", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_dress"))
+    private List<Blouse> favouriteDresses  = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_favourite_blouse", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_blouse"))
+    private List<Blouse> favouriteBlouses  = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_favourite_bra", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_bra"))
+    private List<Blouse> favouriteBras  = new ArrayList<>();
+
 }
