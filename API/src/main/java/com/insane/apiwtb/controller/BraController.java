@@ -1,12 +1,8 @@
 package com.insane.apiwtb.controller;
 
-import com.insane.apiwtb.dto.BlouseInput;
 import com.insane.apiwtb.dto.BraInput;
-import com.insane.apiwtb.interfaces.BlouseRepository;
 import com.insane.apiwtb.interfaces.BraRepository;
-import com.insane.apiwtb.model.Blouse;
 import com.insane.apiwtb.model.Bra;
-import com.insane.apiwtb.services.BlouseService;
 import com.insane.apiwtb.services.BraService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
