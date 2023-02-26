@@ -33,16 +33,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .anyRequest().permitAll()
+                .and().csrf().disable();
     }
 
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**.html", "/actuator/**", "/v3/api-docs/**", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+        web.ignoring().antMatchers("/**.html", "/css/**", "/js/**", "/actuator/**", "/v3/api-docs/**", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
 }

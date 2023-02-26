@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Insane Technology</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="/css/particles.css" />
+    </head>
+
+    <body class="permission_denied">
+
+        <div id="tsparticles"></div>
+        
+        <div class="denied__wrapper">
+            <h2 class="mb-5 display-1 text-center text-light">Insane Technology</h2>
+            <h3 class="denied__link">Our API is online</h3>
+            <p class="my-5 text-center text-danger" th:if="${msg}" th:text="${msg}"></p>
+        </div>
+
+        <!-- JQuery -->
+        <script src="/js/jquery-3.6.3.slim.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <!-- Particles -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/tsparticles@1.18.11/dist/tsparticles.min.js"></script>
+        <script type="text/javascript" src="/js/particles.js"></script>
+
+    </body>
+
+</html>
