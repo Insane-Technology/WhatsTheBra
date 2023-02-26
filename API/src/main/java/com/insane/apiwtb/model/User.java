@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -42,5 +44,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_city")
     private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "id_image")
+    private Image image;
 
 }

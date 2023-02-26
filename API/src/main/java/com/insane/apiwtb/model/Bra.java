@@ -14,15 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "TB_DRESS")
-public class Dress {
+@Table(name = "TB_BRA")
+public class Bra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_dress")
+    @Column(name = "id_bra")
     private int id;
 
-    @Column(name = "nm_dress", nullable = false, length = 50)
+    @Column(name = "nm_bra", nullable = false, length = 50)
     private String name;
 
     @Column(name = "nr_price", precision = 9, scale = 2)
@@ -43,11 +43,11 @@ public class Dress {
     private BraType braType;
 
     @ManyToMany
-    @JoinTable(name = "tb_category_dress", joinColumns = @JoinColumn(name = "id_dress"), inverseJoinColumns = @JoinColumn(name = "id_category"))
+    @JoinTable(name = "tb_category_bra", joinColumns = @JoinColumn(name = "id_bra"), inverseJoinColumns = @JoinColumn(name = "id_category"))
     private List<Category> categories  = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "tb_image_dress", joinColumns = @JoinColumn(name = "id_dress"), inverseJoinColumns = @JoinColumn(name = "id_image"))
+    @JoinTable(name = "tb_image_bra", joinColumns = @JoinColumn(name = "id_bra"), inverseJoinColumns = @JoinColumn(name = "id_image"))
     private List<Image> images = new ArrayList<>();
 
 }
