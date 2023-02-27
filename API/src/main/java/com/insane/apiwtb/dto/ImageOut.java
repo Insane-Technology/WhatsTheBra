@@ -18,4 +18,7 @@ public class ImageOut {
     private String message;
     private HttpStatus httpStatus;
 
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
 }

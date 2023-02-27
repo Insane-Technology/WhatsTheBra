@@ -9,14 +9,36 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayoutTopBar"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:orientation="vertical"
+        android:id="@+id/linearLayoutLogo"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="10dp"
+        android:background="@color/pink_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="60dp  "
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_logo" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:text="What's the Bra"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:fontFamily="@font/life_savers_bold" />
+
 
     </LinearLayout>
 
@@ -24,6 +46,7 @@
         android:id="@+id/linearLayoutBottomBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,11 +56,32 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_home"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_home_gray" />
+            app:srcCompat="@drawable/ic_home_color" />
+
+        <ImageView
+            android:id="@+id/iv_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_heart" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_notification" />
+
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_profile" />
 
     </LinearLayout>
 
