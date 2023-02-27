@@ -1,11 +1,9 @@
 package com.insane.apiwtb.config;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Getter
 public class AppConfig {
 
     @Value("${HOME}")
@@ -13,6 +11,9 @@ public class AppConfig {
 
     @Value("${config.mediaFolderName}")
     private String imageFolderName;
+
+    @Value("${config.hostName}")
+    private String host;
 
     private final String imageURL;
 
@@ -23,10 +24,14 @@ public class AppConfig {
     }
 
     public String getImageURL(String filename) {
-        return this.imageURL+"/"+filename;
+        return host+imageURL+"/"+filename;
     }
 
     public String getImagePath() {
         return this.homePath+"/"+imageFolderName;
+    }
+
+    public String getImagePath(String filename) {
+        return this.homePath+"/"+imageFolderName+"/"+filename;
     }
 }

@@ -5,20 +5,15 @@ import com.insane.apiwtb.dto.ImageOut;
 import com.insane.apiwtb.interfaces.ImageRepository;
 import com.insane.apiwtb.model.Image;
 import com.insane.apiwtb.services.ImageService;
-import com.insane.apiwtb.utils.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +32,7 @@ public class ImageController {
 
     @GetMapping
     @ResponseBody
-    public List<Image> imageList() {
+    public List<Image> listAll() {
         return mapList(imageRepository.findAll(), Image.class);
     }
 
@@ -47,9 +42,9 @@ public class ImageController {
      * @return imagem binaria
      */
     @GetMapping("/{filename}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
+    public ResponseEntity<byte[]> streamImage(@PathVariable("filename") String filename) {
         try {
-            byte[] image = Files.readAllBytes(Paths.get(appConfig.getImagePath()+"/"+filename));
+            byte[] image = Files.readAllBytes(Paths.get(appConfig.getImagePath(filename)));
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(image);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -57,76 +52,38 @@ public class ImageController {
     }
 
     /**
-     * Método para fazer o upload de uma imagem no servidor
-     * @param file arquivo de imagem
-     * @param response resposta http do servidor 200, 403, 409 ou 500
-     * @return objeto ImageOut
+     * Método para fazer o streaming de uma imagem salva no servidor utilizando a id da imagem
+     * @param imageId id da imagem salva no banco
+     * @return imagem binaria
      */
-    @PostMapping
-    public ImageOut uploadFile(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
-
-        String imagePath = appConfig.getImagePath();
-        String fileName = file.getOriginalFilename();
-
-        Image image = Image.builder()
-                .name(fileName)
-                .created(new Date())
-                .updated(new Date())
-                .build();
-
-        ImageOut imageOut = ImageOut.builder()
-                .id(image.getId())
-                .name(image.getName())
-                .imageURL(appConfig.getImageURL(image.getName()))
-                .build();
-
-        if (Utils.checkCreateFolder(imagePath)) {
-            if (!imageRepository.existsImageByName(image.getName())) {
-                try {
-                    file.transferTo(new File(imagePath + "/" + fileName));
-                    imageOut.setId(imageRepository.save(image).getId());
-                    response.setStatus(HttpStatus.OK.value());
-                    imageOut.setMessage("Arquivo salvo com sucesso!");
-
-                } catch (IOException e) {
-                    response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-                    imageOut.setMessage("Ocorreu um erro ao salvar o arquivo!");
-                }
-            }
-            else {
-                response.setStatus(HttpStatus.CONFLICT.value());
-                imageOut.setMessage("Arquivo já existe!");
-            }
-        } else {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            imageOut.setMessage("Permissão negada para salvar o arquivo!");
+    @GetMapping("/id/{id}")
+    public ResponseEntity<byte[]> streamImage(@PathVariable("id") Integer imageId) {
+        try {
+            Image img = imageService.getById(imageId);
+            byte[] image = Files.readAllBytes(Paths.get(appConfig.getImagePath(img.getName())));
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(image);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-        return imageOut;
     }
 
     /**
-     * Método para deletar uma imagem do servidor e o registro no banco
-     * @param imageId id da imagem no banco
-     * @param response resposta http do servidor 200, 405
-     * @return objeto ImageOut
+     * Upload image MAX file size is 2MB controller will reject with 405 error
+     * @param file Multipart file
+     * @param response HttpStatus 200, 403, 405, 409 or 500
+     * @return ImageOut
      */
+    @PostMapping
+    public ImageOut upload(@RequestParam("file") MultipartFile file, HttpServletResponse response) {
+        ImageOut imageOut = imageService.save(file);
+        response.setStatus(imageOut.getHttpStatus().value());
+        return imageOut;
+    }
+
     @DeleteMapping
-    public ImageOut deleteFile(@RequestParam("id") Integer imageId, HttpServletResponse response) {
-
-        Image image = imageService.getById(imageId);
-        ImageOut imageOut = ImageOut.builder()
-                .id(image.getId())
-                .name(image.getName())
-                .imageURL(appConfig.getImageURL(image.getName()))
-                .build();
-
-        if (Utils.deleteFile(appConfig.getImagePath()+"/"+image.getName())) {
-            imageRepository.delete(image);
-            imageRepository.flush();
-            response.setStatus(HttpStatus.OK.value());
-            imageOut.setMessage("Imagem apagada com sucesso!");
-        }
-
+    public ImageOut delete(@RequestParam("id") Integer imageId, HttpServletResponse response) {
+        ImageOut imageOut = imageService.delete(imageId);
+        response.setStatus(imageOut.getHttpStatus().value());
         return imageOut;
     }
 
@@ -136,4 +93,5 @@ public class ImageController {
                 .map(element -> mapper.map(element, targetClass))
                 .collect(Collectors.toList());
     }
+
 }
