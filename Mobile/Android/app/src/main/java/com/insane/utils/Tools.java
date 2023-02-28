@@ -134,6 +134,7 @@ public class Tools {
                     // ETHERNET DATA ENABLE \\
                     return true;
                 }
+                // TODO: Verify if there is any other type of Connectivity Service other than WIFI, MOBILE and ETHERNET
             }
             // NO INTERNET \\
             return false;
@@ -276,15 +277,15 @@ public class Tools {
         /**
          * Gets the window size either width or height
          * @param activity context
-         * @param widthORheight parameter type String needs to be width or height
+         * @param widthOrHeight parameter type String needs to be width or height
          * @return a Integer number
          */
-        public static int size(Activity activity, String widthORheight) {
+        public static int size(Activity activity, String widthOrHeight) {
             DisplayMetrics dm = new DisplayMetrics();
             activity.getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
             int result = 0;
-            if (widthORheight.equals("width"))          { result  = (dm.widthPixels); }
-            else if (widthORheight.equals("height"))    { result  = (dm.heightPixels); }
+            if (widthOrHeight.equals("width"))          { result  = (dm.widthPixels); }
+            else if (widthOrHeight.equals("height"))    { result  = (dm.heightPixels); }
             return result;
         }
 
