@@ -1,8 +1,19 @@
 <resources>
+    <!-- Logo's Description -->
     <string name="app_name">What\'s the Bra</string>
-    <string name="categoryTitle">Categoria</string>
+
+    <!-- Search Bar Description -->
     <string name="hint"><font size="17">Pesquisar</font></string>
+
+    <!-- Category Container Description -->
+    <string name="categoryTitle">Categorias</string>
     <string name="categoryButtonAll">Todos</string>
+    <string name="categoryButtonDresses">Vestidos</string>
+    <string name="categoryButtonBras">Sutias</string>
+    <string name="categoryButtonBlouses">Blusas</string>
+    <string name="categoryButtonNight">Noite</string>
+    <string name="categoryButtonDay">Dia</string>
+    <string name="categoryButtonParty">Festa</string>
 
     <!-- Images Content Description -->
     <string name="contentDescImageLogo">Logo</string>
