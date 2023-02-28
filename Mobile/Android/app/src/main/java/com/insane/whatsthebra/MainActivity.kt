@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         button.typeface = Typeface.DEFAULT_BOLD
         button.setPadding(Tools.Window.dpToPx(20),0,Tools.Window.dpToPx(20),0)
         button.text = text
+        button.isAllCaps = false
+        button.textSize = 15.00f
         button.setTextColor(this.resources.getColor(R.color.white, this.theme))
         // Add view
         view.addView(button)
