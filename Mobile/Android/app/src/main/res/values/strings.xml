@@ -3,4 +3,12 @@
     <string name="categoryTitle">Categoria</string>
     <string name="hint"><font size="17">Pesquisar</font></string>
     <string name="categoryButtonAll">Todos</string>
+
+    <!-- Images Content Description -->
+    <string name="contentDescImageLogo">Logo</string>
+    <string name="contentDescButtonFilter">Filtro de pesquisa</string>
+    <string name="contentDescButtonHome">Tela inicial</string>
+    <string name="contentDescButtonHeart">Favoritos</string>
+    <string name="contentDescButtonNotification">Notificações</string>
+    <string name="contentDescButtonProfile">Perfil e conta</string>
 </resources>

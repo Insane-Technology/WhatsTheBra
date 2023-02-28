@@ -27,7 +27,8 @@
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_logo" />
+            app:srcCompat="@drawable/ic_logo"
+            android:contentDescription="@string/contentDescImageLogo"/>
 
         <TextView
             android:id="@+id/tv_logo"
@@ -71,7 +72,8 @@
             android:textSize="20sp"
             android:gravity="start"
             android:hint="@string/hint"
-            android:inputType="textShortMessage"/>
+            android:inputType="textShortMessage"
+            android:importantForAutofill="no"/>
 
         <ImageButton
             android:id="@+id/iv_filter"
@@ -79,7 +81,9 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:background="@drawable/ic_box_white"
-            app:srcCompat="@drawable/ic_filtro" />
+            android:contentDescription="@string/contentDescButtonFilter"
+            app:srcCompat="@drawable/ic_filtro"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
     </LinearLayout>
 
@@ -106,6 +110,7 @@
             app:fontFamily="@font/roboto_bold" />
 
         <HorizontalScrollView
+            android:id="@+id/scrollViewCategoryButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -118,13 +123,13 @@
 
                 <Button
                     android:id="@+id/button2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_box_color"
                     android:text="@string/categoryButtonAll"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:background="@drawable/ic_box_color"
                     app:fontFamily="@font/roboto_bold" />
 
             </LinearLayout>
@@ -152,28 +157,32 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_home_color" />
+            app:srcCompat="@drawable/ic_home_color"
+            android:contentDescription="@string/contentDescButtonHome"/>
 
         <ImageView
             android:id="@+id/iv_heart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_heart" />
+            app:srcCompat="@drawable/ic_heart"
+            android:contentDescription="@string/contentDescButtonHeart"/>
 
         <ImageView
             android:id="@+id/iv_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_notification" />
+            app:srcCompat="@drawable/ic_notification"
+            android:contentDescription="@string/contentDescButtonNotification"/>
 
         <ImageView
             android:id="@+id/iv_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_profile" />
+            app:srcCompat="@drawable/ic_profile"
+            android:contentDescription="@string/contentDescButtonProfile" />
 
     </LinearLayout>
 
