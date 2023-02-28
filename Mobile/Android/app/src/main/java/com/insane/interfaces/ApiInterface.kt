@@ -13,6 +13,9 @@ interface ApiInterface  {
     @GET("category")
     fun fetchCategories() : Call<JsonArray>
 
+    @GET("bra-type")
+    fun fetchBraType() : Call<JsonArray>
+
     @GET("location/BR/{state}/city")
     fun fetchCityByState(@Path("state") state: String) : Call<JsonArray>
 

@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.gson.JsonArray
 import com.insane.interfaces.ApiInterface
 import com.insane.utils.Tools
@@ -21,8 +21,14 @@ class MainActivity : AppCompatActivity() {
 
         val linearLayoutCategoryButtons = findViewById<LinearLayout>(R.id.linearLayoutCategoryButtons)
         val scrollViewCategoryButtons = findViewById<HorizontalScrollView>(R.id.scrollViewCategoryButtons)
+        val constraintLayoutFilter = findViewById<ConstraintLayout>(R.id.constraintLayoutFilterModal)
+        val imageButtonFilter = findViewById<ImageButton>(R.id.ib_filter)
+        val frameLayoutBackground = findViewById<FrameLayout>(R.id.frameLayoutFilterBackground)
+        val linearLayoutCheckboxContainerLeft = findViewById<LinearLayout>(R.id.linearLayoutCheckboxContainerLeft)
+        val linearLayoutCheckboxContainerRight = findViewById<LinearLayout>(R.id.linearLayoutCheckboxContainerRight)
         val apiService = ApiInterface.create()
         val categories: Call<JsonArray> = apiService.fetchCategories()
+        val braTypeList: Call<JsonArray> = apiService.fetchBraType()
 
         // REMOVE HORIZONTAL SCROLLBAR FROM VIEW CATEGORY BUTTONS
         scrollViewCategoryButtons.isHorizontalScrollBarEnabled = false
@@ -38,12 +44,50 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
-                t.message?.let { Log.e("API", it) }
+                t.message?.let {
+                    // TODO Trabalhar em caso de falha da api
+                    Log.e("API", it)
+                }
             }
+        })
+
+        braTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
+            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+                val response = response.body()
+                if (response != null) {
+                    linearLayoutCheckboxContainerLeft.removeAllViews()
+                    linearLayoutCheckboxContainerRight.removeAllViews()
+                    for ((index, braType) in response.withIndex()) {
+                        Log.d("INFO", braType.toString())
+                        if (index % 2 == 0) {
+                            createCheckboxFilter(linearLayoutCheckboxContainerLeft,braType.asJsonObject.get("name").asString)
+                        } else {
+                            createCheckboxFilter(linearLayoutCheckboxContainerRight, braType.asJsonObject.get("name").asString)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                t.message?.let {
+                    // TODO Trabalhar em caso de falha da api
+                    Log.e("API", it)
+                }
+            }
+        })
+
+        imageButtonFilter.setOnClickListener(View.OnClickListener {
+            constraintLayoutFilter.visibility = View.VISIBLE
+        })
+
+        frameLayoutBackground.setOnClickListener(View.OnClickListener {
+            constraintLayoutFilter.visibility = View.GONE
         })
 
     }
 
+    /**
+     * Method to create category button
+     */
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun createButtonCategory(view: LinearLayout, text: String) {
         val button = Button(this)
@@ -60,6 +104,14 @@ class MainActivity : AppCompatActivity() {
         button.setTextColor(this.resources.getColor(R.color.white, this.theme))
         // Add view
         view.addView(button)
+    }
+
+    private fun createCheckboxFilter(view: LinearLayout, text: String) {
+        val checkBox = CheckBox(this)
+        val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        checkBox.layoutParams = params
+        checkBox.text = text
+        view.addView(checkBox)
     }
 
 }

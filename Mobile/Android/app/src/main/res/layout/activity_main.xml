@@ -65,7 +65,7 @@
             android:layout_weight="1"
             android:paddingTop="12dp"
             android:maxLines="1"
-            android:background="@drawable/ic_box_white"
+            android:background="@drawable/ic_box_input_text"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="7dp"
             android:textColor="@color/gray_700"
@@ -76,11 +76,11 @@
             android:importantForAutofill="no"/>
 
         <ImageButton
-            android:id="@+id/iv_filter"
+            android:id="@+id/ib_filter"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/ic_box_white"
+            android:background="@drawable/ic_box_button_filter"
             android:contentDescription="@string/contentDescButtonFilter"
             app:srcCompat="@drawable/ic_filtro"
             tools:ignore="DuplicateSpeakableTextCheck" />
@@ -88,10 +88,6 @@
     </LinearLayout>
 
     <!-- CATEGORIES -->
-
-    <!-- ITEMS -->
-
-    <!-- MENU BAR -->
     <LinearLayout
         android:id="@+id/linearLayoutCategories"
         android:layout_width="match_parent"
@@ -117,32 +113,21 @@
         <HorizontalScrollView
             android:id="@+id/scrollViewCategoryButtons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:id="@+id/linearLayoutCategoryButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_category_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_box_button_on"
-                    android:text="@string/categoryButtonAll"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    app:fontFamily="@font/roboto_bold" />
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
 
         </HorizontalScrollView>
 
     </LinearLayout>
 
+    <!-- MENU BAR -->
     <LinearLayout
         android:id="@+id/linearLayoutBottomBar"
         android:layout_width="match_parent"
@@ -189,5 +174,177 @@
             app:srcCompat="@drawable/ic_profile" />
 
     </LinearLayout>
+
+    <!-- FILTERS -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutFilterModal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone" >
+
+        <!-- DARK BACKGROUND -->
+        <FrameLayout
+            android:id="@+id/frameLayoutFilterBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.7"
+            android:background="@color/black">
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_box_filter"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <!-- CHECKBOX CONTAINER -->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="15dp"
+                android:textSize="20dp"
+                android:textColor="@color/pink_700"
+                android:textStyle="bold"
+                android:text="Filtros"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutCheckboxContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:background="@drawable/ic_box_input_text">
+
+                <!-- LEFT CHECKBOX -->
+                <LinearLayout
+                    android:id="@+id/linearLayoutCheckboxContainerLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp">
+
+                    <CheckBox
+                        android:id="@+id/ck1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Balconet" />
+                    <CheckBox
+                        android:id="@+id/ck2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Triângulo" />
+                    <CheckBox
+                        android:id="@+id/ck3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Push up" />
+                    <CheckBox
+                        android:id="@+id/ck4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tomara \nque caia" />
+                    <CheckBox
+                        android:id="@+id/ck5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Esportivo" />
+                </LinearLayout>
+
+                <!-- RIGHT CHECKBOX -->
+                <LinearLayout
+                    android:id="@+id/linearLayoutCheckboxContainerRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="25dp">
+
+                    <CheckBox
+                        android:id="@+id/ck6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Meia taça" />
+                    <CheckBox
+                        android:id="@+id/ck7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nadador" />
+                    <CheckBox
+                        android:id="@+id/ck8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Alongado" />
+                    <CheckBox
+                        android:id="@+id/ck9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Strappy" />
+                    <CheckBox
+                        android:id="@+id/ck10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Invisível" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- BUTTONS FILTER -->
+            <LinearLayout
+                android:id="@+id/linearLayoutButtonsFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="0dp">
+
+                <Button
+                    android:id="@+id/btn_filter_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/white"
+                    android:textStyle="bold"
+                    android:textColor="@color/gray_700"
+                    android:textAllCaps="false"
+                    android:text="Cancelar" />
+
+                <Button
+                    android:id="@+id/btn_filter_apply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/pink_700"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:text="Aplicar" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
