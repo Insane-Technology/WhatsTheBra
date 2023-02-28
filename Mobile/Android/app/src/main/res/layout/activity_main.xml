@@ -58,22 +58,27 @@
 
         <EditText
             android:id="@+id/editMobileNo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/edittext"
-            android:drawableLeft="@drawable/ic_search"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="@string/hint"></EditText>
+            android:paddingTop="12dp"
+            android:maxLines="1"
+            android:background="@drawable/ic_box_white"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="7dp"
+            android:textColor="@color/gray_700"
+            android:textSize="20sp"
+            android:gravity="start"
+            android:hint="@string/hint"
+            android:inputType="textShortMessage"/>
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/iv_filter"
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/edittext"
+            android:background="@drawable/ic_box_white"
             app:srcCompat="@drawable/ic_filtro" />
 
     </LinearLayout>
@@ -90,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@id/linearLayoutSearchBar">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_categoryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/categoryTitle"
@@ -105,6 +110,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/linearLayoutCategoryButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
@@ -118,10 +124,11 @@
                     android:text="@string/categoryButtonAll"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:background="@drawable/ic_button"
+                    android:background="@drawable/ic_box_color"
                     app:fontFamily="@font/roboto_bold" />
 
             </LinearLayout>
+
         </HorizontalScrollView>
 
     </LinearLayout>
