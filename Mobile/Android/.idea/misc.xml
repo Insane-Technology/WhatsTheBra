@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/edittext.xml" value="0.3605" />
+        <entry key="app/src/main/res/drawable/ic_box_button_active.xml" value="0.3505" />
+        <entry key="app/src/main/res/drawable/ic_box_button_off.xml" value="0.5555" />
         <entry key="app/src/main/res/drawable/ic_box_white.xml" value="0.5565" />
         <entry key="app/src/main/res/drawable/ic_button.xml" value="0.3605" />
         <entry key="app/src/main/res/drawable/ic_filtro.xml" value="0.3615" />
@@ -21,6 +23,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.31592689295039167" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.33611111111111114" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.5505" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.31979166666666664" />
       </map>
     </option>
   </component>
