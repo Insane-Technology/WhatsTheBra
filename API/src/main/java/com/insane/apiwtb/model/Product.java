@@ -14,15 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "TB_BRA")
-public class Bra {
+@Table(name = "TB_PRODUCT")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_bra")
+    @Column(name = "id_product")
     private int id;
 
-    @Column(name = "nm_bra", nullable = false, length = 50)
+    @Column(name = "nm_product", nullable = false, length = 50)
     private String name;
 
     @Column(name = "nr_price", precision = 9, scale = 2)
@@ -39,15 +39,19 @@ public class Bra {
     private Shop shop;
 
     @ManyToOne
-    @JoinColumn(name = "id_bra_type")
-    private BraType braType;
+    @JoinColumn(name = "id_product_type")
+    private ProductType productType;
 
     @ManyToMany
-    @JoinTable(name = "tb_category_bra", joinColumns = @JoinColumn(name = "id_bra"), inverseJoinColumns = @JoinColumn(name = "id_category"))
+    @JoinTable(name = "tb_product_bra_type", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_bra_type"))
+    private List<BraType> braTypes  = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_category"))
     private List<Category> categories  = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "tb_image_bra", joinColumns = @JoinColumn(name = "id_bra"), inverseJoinColumns = @JoinColumn(name = "id_image"))
+    @JoinTable(name = "tb_product_image", joinColumns = @JoinColumn(name = "id_product"), inverseJoinColumns = @JoinColumn(name = "id_image"))
     private List<Image> images = new ArrayList<>();
 
 }
