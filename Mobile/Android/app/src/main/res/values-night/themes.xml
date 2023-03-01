@@ -17,6 +17,8 @@
         <!-- Font Family Entire App -->
         <item name="android:fontFamily">@font/roboto</item>
         <item name="fontFamily">@font/roboto</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">@color/gray_500</item>
     </style>
 
     <!-- SplashTheme -->

@@ -15,6 +15,9 @@
     <string name="categoryButtonDay">Dia</string>
     <string name="categoryButtonParty">Festa</string>
 
+    <!-- Filter Modal -->
+    <string name="filterModalTitle">Tipos de sutiã</string>
+
     <!-- Images Content Description -->
     <string name="contentDescImageLogo">Logo</string>
     <string name="contentDescButtonFilter">Filtro de pesquisa</string>

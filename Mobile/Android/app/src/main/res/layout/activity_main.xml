@@ -121,7 +121,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+            </LinearLayout>
 
         </HorizontalScrollView>
 
@@ -175,7 +177,7 @@
 
     </LinearLayout>
 
-    <!-- FILTERS -->
+    <!-- FILTER MODAL -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutFilterModal"
         android:layout_width="match_parent"
@@ -184,7 +186,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <!-- DARK BACKGROUND -->
         <FrameLayout
@@ -195,8 +197,9 @@
             android:background="@color/black">
         </FrameLayout>
 
+        <!-- MODAL CONTAINER -->
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linearLayoutFilterContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_box_filter"
@@ -208,8 +211,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
-            <!-- CHECKBOX CONTAINER -->
+            <!-- MODAL TITLE -->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -217,20 +219,22 @@
                 android:layout_marginStart="5dp"
                 android:paddingTop="0dp"
                 android:paddingBottom="15dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@color/pink_700"
                 android:textStyle="bold"
-                android:text="Filtros"/>
+                android:text="@string/filterModalTitle"/>
 
+            <!-- CHECKBOX CONTAINER -->
             <LinearLayout
                 android:id="@+id/linearLayoutCheckboxContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="0dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:background="@drawable/ic_box_input_text">
 
-                <!-- LEFT CHECKBOX -->
+                <!-- LEFT COLUMN -->
                 <LinearLayout
                     android:id="@+id/linearLayoutCheckboxContainerLeft"
                     android:layout_width="wrap_content"
@@ -239,34 +243,9 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="10dp">
 
-                    <CheckBox
-                        android:id="@+id/ck1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Balconet" />
-                    <CheckBox
-                        android:id="@+id/ck2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Triângulo" />
-                    <CheckBox
-                        android:id="@+id/ck3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Push up" />
-                    <CheckBox
-                        android:id="@+id/ck4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tomara \nque caia" />
-                    <CheckBox
-                        android:id="@+id/ck5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Esportivo" />
                 </LinearLayout>
 
-                <!-- RIGHT CHECKBOX -->
+                <!-- RIGHT COLUMN -->
                 <LinearLayout
                     android:id="@+id/linearLayoutCheckboxContainerRight"
                     android:layout_width="wrap_content"
@@ -275,31 +254,6 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="25dp">
 
-                    <CheckBox
-                        android:id="@+id/ck6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Meia taça" />
-                    <CheckBox
-                        android:id="@+id/ck7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Nadador" />
-                    <CheckBox
-                        android:id="@+id/ck8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Alongado" />
-                    <CheckBox
-                        android:id="@+id/ck9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Strappy" />
-                    <CheckBox
-                        android:id="@+id/ck10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Invisível" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -313,6 +267,7 @@
                 android:layout_marginTop="20dp"
                 android:padding="0dp">
 
+                <!-- BUTTON CLOSE MODAL -->
                 <Button
                     android:id="@+id/btn_filter_cancel"
                     android:layout_width="wrap_content"
@@ -325,6 +280,7 @@
                     android:textAllCaps="false"
                     android:text="Cancelar" />
 
+                <!-- BUTTON APPLY FILTER -->
                 <Button
                     android:id="@+id/btn_filter_apply"
                     android:layout_width="wrap_content"
@@ -341,8 +297,6 @@
 
 
         </LinearLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
