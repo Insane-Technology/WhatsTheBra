@@ -1,11 +1,13 @@
 package com.insane.model
 
-class Product {
-    private val id = 0
-    private val name: String? = null
-    private val price: Double? = null
-    private val description: String? = null
-    private val discount: Int? = null
-    private val braType: BraType? = null
-    private val categories: List<Category> = ArrayList()
-}
+class Product (
+    val id: Int = 0,
+    val name: String? = null,
+    val price: Double? = null,
+    val description: String? = null,
+    val discount: Int? = null,
+    val shop: Shop? = null,
+    val productType: ProductType? = null,
+    val braTypes: List<BraType> = ArrayList(),
+    val categories: List<Category> = ArrayList(),
+    val images: List<Image> = ArrayList()) {}
