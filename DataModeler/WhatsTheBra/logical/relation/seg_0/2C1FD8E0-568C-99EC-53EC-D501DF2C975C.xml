@@ -1,19 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="temv3" directorySegmentName="seg_0" id="2589FD10-6B02-0089-9555-94246EC3D0AD">
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="possuiv8" directorySegmentName="seg_0" id="2C1FD8E0-568C-99EC-53EC-D501DF2C975C">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:52:47 UTC</createdTime>
+<createdTime>2023-03-01 18:27:12 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
-<sourcePk>B5DB1D27-9935-B2C4-FF76-BC88687948C5</sourcePk>
+<sourcePk>A6DC3E08-82DF-2C1D-7EAB-2038D93AB65D</sourcePk>
 <identifying>false</identifying>
 <optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
-<sourceEntity>09C3F5C9-9109-E626-089E-D7AB29BC9223</sourceEntity>
+<sourceEntity>1F96C7CB-507A-DE11-B5AD-8C1355A04955</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>55588A9D-1B2C-82C7-ADEE-87C7D935380C</targetEntity>
+<targetEntity>9863BB6D-0103-6B22-DF9F-2F12A76F8349</targetEntity>
 <transferable>true</transferable>
-<deleteRule>CASCADE</deleteRule>
+<deleteRule>NO ACTION</deleteRule>
 </Relation>

@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9CE0C7AB-5DCF-832A-876F-F43DFA83332A" name="TB_FAVOURITE_BRA">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9863BB6D-0103-6B22-DF9F-2F12A76F8349" name="TB_PRODUCT_BRA_TYPE">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:52:22 UTC</createdTime>
+<createdTime>2023-03-01 18:25:41 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
@@ -15,9 +15,9 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_favourite_bra" id="97DF749B-4C71-C2A9-15A5-5457C7CF6417">
+<Attribute name="id_product_bra_type" id="DF15104B-7BA7-4761-5BAB-5EF1BAF68A40">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:59:51 UTC</createdTime>
+<createdTime>2023-03-01 18:26:00 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
@@ -28,30 +28,30 @@
 <dataTypePrecision>9</dataTypePrecision>
 <ownDataTypeParameters>,9,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_user" id="C8FAEED4-3A56-1E99-2209-8BB6E5E99D2D">
+<Attribute name="id_bra_type" id="FF2C1184-24C5-C84F-2957-03FC09A0541C">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:53:54 UTC</createdTime>
-<generatorID>2281A5B7-E21A-97AC-6D04-BD235A5E7D9C</generatorID>
+<createdTime>2023-03-01 18:26:45 UTC</createdTime>
+<generatorID>3689264E-63DC-DB6F-5E7D-7B78981440CD</generatorID>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
-<referedAttribute>9464E22B-827D-DDC7-FF8D-371B3A83D035</referedAttribute>
+<referedAttribute>A4C3558D-165A-B662-A2E1-74D9EEC840E8</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>9</dataTypePrecision>
+<dataTypePrecision>3</dataTypePrecision>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_bra" id="1F07E2AD-7095-E1B4-1761-1F19EEDB43D4">
+<Attribute name="id_product" id="B0E4A683-9D41-280C-5B87-396A3AA6E1DD">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:54:04 UTC</createdTime>
-<generatorID>0177A892-8228-A662-5525-09D9B3F27BF4</generatorID>
+<createdTime>2023-03-01 18:27:12 UTC</createdTime>
+<generatorID>2C1FD8E0-568C-99EC-53EC-D501DF2C975C</generatorID>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
-<referedAttribute>4EC3DAEE-277B-C7F5-B697-ED10E368B370</referedAttribute>
+<referedAttribute>70F8105B-C2B0-C0ED-D626-9189C718AD03</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
@@ -60,16 +60,16 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="66AB8A17-0D18-C5E3-7165-7C5F76A09589" name="TB_FAVOURITE_BRA PK">
+<identifier id="DF888C2E-C602-6CF0-8769-E2EFB7AA53CE" name="TB_PRODUCT_BRA_TYPE PK">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 16:00:03 UTC</createdTime>
+<createdTime>2023-03-01 18:26:12 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>97DF749B-4C71-C2A9-15A5-5457C7CF6417</attributeRef>
+<attributeRef>DF15104B-7BA7-4761-5BAB-5EF1BAF68A40</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

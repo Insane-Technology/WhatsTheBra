@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="8AD64CD5-12EA-A5A2-918D-5FC8C898EB73" name="TB_IMAGE_BRA">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="33C86EA6-30E3-D97F-AE99-83F56BB3992F" name="TB_PRODUCT_TYPE">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-25 20:54:50 UTC</createdTime>
+<createdTime>2023-03-01 18:09:49 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
@@ -15,9 +15,9 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_image_bra" id="59C139ED-BD66-B81B-DE6C-7D6EEE58AB0B">
+<Attribute name="id_product_type" id="32F2567E-AFF8-F5F3-26E4-CD8FE2DD548D">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-25 20:55:50 UTC</createdTime>
+<createdTime>2023-03-01 18:10:04 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
@@ -28,48 +28,31 @@
 <dataTypePrecision>9</dataTypePrecision>
 <ownDataTypeParameters>,9,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_image" id="31E8EC54-D870-1C10-8F02-801A34A4B6CF">
+<Attribute name="nm_product_type" id="876B1488-9594-A6FB-0CDF-9C7CDF505EFE">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-25 20:59:41 UTC</createdTime>
-<generatorID>E9C8C99E-C550-439D-DA66-967F0A591E5F</generatorID>
+<createdTime>2023-03-01 18:10:17 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
-<referedAttribute>563BC119-5B86-EBFE-E4CB-EA9DD8FD5686</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>9</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="id_bra" id="7AF5EF57-066A-5E18-7E94-5FA3BE860308">
-<createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-25 21:02:43 UTC</createdTime>
-<generatorID>9E91D6D3-E755-9F5C-646C-E9F743892EBB</generatorID>
-<ownerDesignName>WhatsTheBra</ownerDesignName>
-<engineerTo>
-<item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
-</engineerTo>
-<referedAttribute>4EC3DAEE-277B-C7F5-B697-ED10E368B370</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>9</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A7BA7B32-C1FF-5728-2E23-A33716A9315F" name="TB_IMAGE_BRA PK">
+<identifier id="7E3294DF-2C02-2E26-1AC6-FA7940451017" name="TB_PRODUCT_TYPE PK">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-25 20:56:02 UTC</createdTime>
+<createdTime>2023-03-01 18:10:13 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>59C139ED-BD66-B81B-DE6C-7D6EEE58AB0B</attributeRef>
+<attributeRef>32F2567E-AFF8-F5F3-26E4-CD8FE2DD548D</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

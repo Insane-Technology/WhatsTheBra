@@ -48,4 +48,11 @@ class Component(private var activity: Activity) {
         view.addView(checkBox)
     }
 
+    /**
+     * Method to create a Product container with image and labels
+     */
+    fun createProductContainer(view: LinearLayout, text: String) {
+
+    }
+
 }

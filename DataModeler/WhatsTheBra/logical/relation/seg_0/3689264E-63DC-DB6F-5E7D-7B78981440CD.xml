@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_6" directorySegmentName="seg_0" id="A5255717-CF33-AF7C-DF7D-A52FCC7BCF77">
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="possuiv6" directorySegmentName="seg_0" id="3689264E-63DC-DB6F-5E7D-7B78981440CD">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:36:58 UTC</createdTime>
+<createdTime>2023-03-01 18:26:45 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
@@ -13,7 +13,7 @@
 <sourceCardinality>1</sourceCardinality>
 <sourceEntity>5F4D5E12-5B70-62E5-7F6C-696289859149</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>1EA53207-75C3-403D-DBC6-BBAB9CCE079A</targetEntity>
+<targetEntity>9863BB6D-0103-6B22-DF9F-2F12A76F8349</targetEntity>
 <transferable>true</transferable>
-<deleteRule>NO ACTION</deleteRule>
+<deleteRule>CASCADE</deleteRule>
 </Relation>

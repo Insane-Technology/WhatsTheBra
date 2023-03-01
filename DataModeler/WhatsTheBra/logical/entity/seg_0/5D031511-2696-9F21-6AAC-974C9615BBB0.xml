@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5D031511-2696-9F21-6AAC-974C9615BBB0" name="TB_CATEGORY_DRESS">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5D031511-2696-9F21-6AAC-974C9615BBB0" name="TB_PRODUCT_CATEGORY">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-24 01:19:44 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_category_dress" id="147FDF2C-7B3A-8CDB-950A-1308A4B8AD7F">
+<Attribute name="id_product_category" id="147FDF2C-7B3A-8CDB-950A-1308A4B8AD7F">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-24 01:19:58 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -41,9 +41,9 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>4</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>,4,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_dress" id="23861354-3E44-F1C8-AF4B-3302BC9D59CF">
+<Attribute name="id_product" id="23861354-3E44-F1C8-AF4B-3302BC9D59CF">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-24 01:20:42 UTC</createdTime>
 <generatorID>420CE586-AA9F-6A4F-F05F-6E47EB783A0F</generatorID>
@@ -56,11 +56,11 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>9</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>,9,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A06833C5-7281-549F-FAFD-1FA35C8B313B" name="TB_CATEGORY_DRESS PK">
+<identifier id="A06833C5-7281-549F-FAFD-1FA35C8B313B" name="TB_PRODUCT_CATEGORY PK">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-24 01:20:10 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -68,6 +68,7 @@
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>147FDF2C-7B3A-8CDB-950A-1308A4B8AD7F</newElementsIDs>
 <usedAttributes>
 <attributeRef>147FDF2C-7B3A-8CDB-950A-1308A4B8AD7F</attributeRef>
 </usedAttributes>

@@ -1,5 +1,5 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1F96C7CB-507A-DE11-B5AD-8C1355A04955" name="TB_DRESS">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1F96C7CB-507A-DE11-B5AD-8C1355A04955" name="TB_PRODUCT">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-23 14:33:46 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_dress" id="70F8105B-C2B0-C0ED-D626-9189C718AD03">
+<Attribute name="id_product" id="70F8105B-C2B0-C0ED-D626-9189C718AD03">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-23 15:21:47 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -43,22 +43,22 @@
 <dataTypePrecision>9</dataTypePrecision>
 <ownDataTypeParameters>,9,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_bra_type" id="CA8F9199-9E65-74CD-4204-41BB4AB23B43">
+<Attribute name="id_product_type" id="80A12071-BC89-4A05-EE42-0BB7F7396AEE">
 <createdBy>rennecastrucci</createdBy>
-<createdTime>2023-02-23 15:31:20 UTC</createdTime>
-<generatorID>12BE90C5-5AB1-B6E3-9F5C-FC7EE833D757</generatorID>
+<createdTime>2023-03-01 18:10:47 UTC</createdTime>
+<generatorID>7590D138-1989-ED4E-89AC-C355BA1EEA6A</generatorID>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
 <engineerTo>
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
-<referedAttribute>A4C3558D-165A-B662-A2E1-74D9EEC840E8</referedAttribute>
+<referedAttribute>32F2567E-AFF8-F5F3-26E4-CD8FE2DD548D</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
-<dataTypePrecision>3</dataTypePrecision>
-<ownDataTypeParameters>,3,</ownDataTypeParameters>
+<dataTypePrecision>9</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="nm_dress" id="BF5B7359-CEAE-4AAF-5440-CDDD4AD7FD2C">
+<Attribute name="nm_product" id="BF5B7359-CEAE-4AAF-5440-CDDD4AD7FD2C">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-23 15:21:58 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -115,7 +115,7 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="A6DC3E08-82DF-2C1D-7EAB-2038D93AB65D" name="TB_DRESS PK">
+<identifier id="A6DC3E08-82DF-2C1D-7EAB-2038D93AB65D" name="TB_PRODUCT PK">
 <createdBy>rennecastrucci</createdBy>
 <createdTime>2023-02-23 15:21:57 UTC</createdTime>
 <ownerDesignName>WhatsTheBra</ownerDesignName>
@@ -123,6 +123,7 @@
 <item key="6CA35E56-7277-CD07-272C-1B7EC8940699" value="true"/>
 </engineerTo>
 <pk>true</pk>
+<newElementsIDs>70F8105B-C2B0-C0ED-D626-9189C718AD03</newElementsIDs>
 <usedAttributes>
 <attributeRef>70F8105B-C2B0-C0ED-D626-9189C718AD03</attributeRef>
 </usedAttributes>
