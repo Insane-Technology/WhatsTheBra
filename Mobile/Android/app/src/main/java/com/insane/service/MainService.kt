@@ -40,12 +40,13 @@ object MainService {
                             c.asJsonObject.get("name").asString)
                         categories.add(category)
                     }
+                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                 t.message?.let {
-                    // TODO Trabalhar em caso de falha da api
+                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
                     Log.e("API", it)
                 }
             }
@@ -67,12 +68,13 @@ object MainService {
                             t.asJsonObject.get("name").asString)
                         braTypes.add(braType)
                     }
+                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                 t.message?.let {
-                    // TODO Trabalhar em caso de falha da api
+                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
                     Log.e("API", it)
                 }
             }

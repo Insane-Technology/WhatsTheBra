@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.insane.model.Category
 import com.insane.service.MainService
-import java.io.Serializable
 
 class SplashScreen : AppCompatActivity(), MainService.DataCallBack {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+
+        // Load data from API
         MainService.loadData(this)
     }
 
+    /**
+     * CallBack method from loading data
+     */
     override fun onDataLoaded() {
         val intent = Intent(this, MainActivity::class.java)
         Handler(Looper.getMainLooper()).postDelayed({
