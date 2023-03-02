@@ -65,10 +65,18 @@ class MainActivity : AppCompatActivity() {
         leftColumn.removeAllViews()
         rightColumn.removeAllViews()
         for ((index, product) in MainService.getProducts().withIndex()) {
+            val view: View = mainActivityComponent.createProductContainer(product)
+            view.id = View.generateViewId()
+            view.tag = "product-${product.id}"
+            view.setOnClickListener(View.OnClickListener {
+                Tools.Show.message(this,"Você clicou no produto com a id ${product.id}")
+                // TODO Implement click listener to open the details activity for this product
+            })
+            // ADD VIEW TO EACH COLUMN
             if (index % 2 == 0) {
-                mainActivityComponent.createProductContainer(leftColumn, product)
+                leftColumn.addView(view)
             } else {
-                mainActivityComponent.createProductContainer(rightColumn, product)
+                rightColumn.addView(view)
             }
         }
     }

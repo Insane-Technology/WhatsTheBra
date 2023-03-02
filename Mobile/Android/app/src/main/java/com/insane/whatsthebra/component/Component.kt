@@ -9,7 +9,6 @@ import android.os.Build
 import android.view.Gravity
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.content.res.ResourcesCompat
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.utils.Tools
@@ -56,7 +55,7 @@ class Component(private val activity: Activity) {
      * Method to create a Product container with image and labels
      */
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
-    fun createProductContainer(view: LinearLayout, product: Product) {
+    fun createProductContainer(product: Product): LinearLayout {
         // MAIN LINEAR CONTAINER VERTICAL
         val mainLinearContainer = LinearLayout(activity)
         val paramsContainer = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -131,20 +130,11 @@ class Component(private val activity: Activity) {
         tvPrice.text = "R$ $price"
         // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
 
-
-        // ADD VIEWS
-        mainLinearContainer.addView(cardView)
-        cardView.addView(productImage)
-        cardView.addView(heartImage)
-        mainLinearContainer.addView(innerLinearContainer)
-        innerLinearContainer.addView(productDescriptionTextView)
-        innerLinearContainer.addView(linearPriceContainer)
-        linearPriceContainer.addView(tvPrice)
-
-
+        // PRICE AND DISCOUNT VIEWS
+        val tvOriginalPrice = TextView(activity)
+        val tvDiscount = TextView(activity)
         if (product.discount!! > 0) {
             // ORIGINAL PRICE TEXT VIEW
-            val tvOriginalPrice = TextView(activity)
             val paramsTvOriginalPrice =
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
             paramsTvOriginalPrice.weight = 1.2F
@@ -162,7 +152,6 @@ class Component(private val activity: Activity) {
             // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
 
             // ORIGINAL PRICE TEXT VIEW
-            val tvDiscount = TextView(activity)
             val paramsTvDiscount =
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
             paramsTvDiscount.weight = 1F
@@ -173,13 +162,23 @@ class Component(private val activity: Activity) {
             tvDiscount.typeface = Typeface.DEFAULT_BOLD
             tvDiscount.text = "${product.discount}% OFF"
             // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
+        }
 
+        // ADD VIEWS
+        mainLinearContainer.addView(cardView)
+        cardView.addView(productImage)
+        cardView.addView(heartImage)
+        mainLinearContainer.addView(innerLinearContainer)
+        innerLinearContainer.addView(productDescriptionTextView)
+        innerLinearContainer.addView(linearPriceContainer)
+        linearPriceContainer.addView(tvPrice)
+        if (product.discount!! > 0) {
             linearPriceContainer.addView(tvOriginalPrice)
             linearPriceContainer.addView(tvDiscount)
         }
 
-        // ADD ALL VIEWS TO MAIN CONTAINER
-        view.addView(mainLinearContainer)
+        // RETURN ALL VIEWS IN MAIN CONTAINER
+        return mainLinearContainer
     }
 
 }
