@@ -1,13 +1,15 @@
-package com.insane.whatsthebra
+package com.insane.whatsthebra.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.insane.service.MainService
+import com.insane.whatsthebra.service.MainService
+import com.insane.whatsthebra.R
+import com.insane.whatsthebra.interfaces.DataCallBack
 
-class SplashScreen : AppCompatActivity(), MainService.DataCallBack {
+class SplashScreen : AppCompatActivity(), DataCallBack {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class SplashScreen : AppCompatActivity(), MainService.DataCallBack {
         val intent = Intent(this, MainActivity::class.java)
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(intent)
-        }, 1000)
+        }, 500)
     }
 
 }

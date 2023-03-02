@@ -1,4 +1,4 @@
-package com.insane.utils;
+package com.insane.whatsthebra.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -158,6 +159,10 @@ public class Tools {
 
         public static int dpToPx(int dp) {
             return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+        }
+
+        public static float spToPx(int sp) {
+            return (float) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().getDisplayMetrics());
         }
 
         public static int pxToDp(int px) {

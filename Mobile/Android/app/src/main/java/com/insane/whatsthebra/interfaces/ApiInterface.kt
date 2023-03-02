@@ -1,4 +1,4 @@
-package com.insane.interfaces
+package com.insane.whatsthebra.interfaces
 
 import com.google.gson.JsonArray
 import okhttp3.OkHttpClient
@@ -14,7 +14,10 @@ interface ApiInterface  {
     fun fetchCategories() : Call<JsonArray>
 
     @GET("bra-type")
-    fun fetchBraType() : Call<JsonArray>
+    fun fetchBraTypes() : Call<JsonArray>
+
+    @GET("product")
+    fun fetchProducts() : Call<JsonArray>
 
     @GET("location/BR/{state}/city")
     fun fetchCityByState(@Path("state") state: String) : Call<JsonArray>

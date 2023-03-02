@@ -1,4 +1,4 @@
-package com.insane.model
+package com.insane.whatsthebra.model
 
 import java.io.Serializable
 import java.util.*

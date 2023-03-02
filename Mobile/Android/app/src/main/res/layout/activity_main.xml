@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <!-- LOGO -->
     <LinearLayout
         android:id="@+id/linearLayoutLogo"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:background="@color/pink_500"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -23,19 +23,20 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            android:padding="0dp"
+            android:layout_weight="0"
             app:srcCompat="@drawable/ic_logo"
             android:contentDescription="@string/contentDescImageLogo"/>
 
         <TextView
             android:id="@+id/tv_logo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:layout_marginStart="0dp"
+            android:layout_weight="0"
             android:text="@string/app_name"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -115,6 +116,7 @@
             android:id="@+id/scrollViewCategoryButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="none"
             tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
@@ -130,9 +132,9 @@
 
     </LinearLayout>
 
-    <!-- SCROLLVIEW FEED CONTAINER -->
+    <!-- SCROLLVIEW PRODUCT CONTAINER -->
     <ScrollView
-        android:id="@+id/scrollViewFeed"
+        android:id="@+id/scrollViewProduct"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -144,23 +146,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCategories">
 
-        <!-- INNER FEED CONTAINER -->
+        <!-- INNER PRODUCT CONTAINER -->
         <LinearLayout
-            android:id="@+id/linearLayoutFeedContainer"
+            android:id="@+id/linearLayoutProductContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- FEED COLUMNS CONTAINER -->
+            <!-- PRODUCT COLUMNS CONTAINER -->
             <LinearLayout
-                android:id="@+id/linearLayoutFeedColumns"
+                android:id="@+id/linearLayoutProductColumns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <!-- LEFT COLUMN -->
                 <LinearLayout
-                    android:id="@+id/linearLayoutFeedContainerLeft"
+                    android:id="@+id/linearLayoutProductContainerLeft"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,10 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:elevation="10dp"
-                            app:cardCornerRadius="20dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:cardCornerRadius="20dp">
 
                             <!-- PRODUCT IMAGE -->
                             <ImageView
@@ -231,37 +230,37 @@
                                 android:layout_marginTop="0dp"
                                 android:orientation="horizontal">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="R$ 59,90"
-                                android:textStyle="bold"
-                                android:textColor="@color/gray_700"
-                                android:textSize="14sp"
-                                android:gravity="start"
-                                app:fontFamily="@font/roboto_black"/>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.4"
+                                    android:text="R$ 59,90"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/gray_700"
+                                    android:textSize="13sp"
+                                    android:gravity="start"
+                                    app:fontFamily="@font/roboto_black"/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="R$ 85,90"
-                                android:textStyle="bold"
-                                android:textColor="@color/gray_500"
-                                android:textSize="11sp"
-                                android:gravity="end"/>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1.2"
+                                    android:text="R$ 85,90"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/gray_500"
+                                    android:textSize="11sp"
+                                    android:gravity="end"/>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="30% OFF"
-                                android:gravity="end"
-                                android:textColor="@color/pink_700"
-                                android:textSize="11sp"
-                                android:textStyle="bold"
-                                app:textAllCaps="false" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="30% OFF"
+                                    android:gravity="end"
+                                    android:textColor="@color/pink_700"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    app:textAllCaps="false" />
 
                             </LinearLayout>
 
@@ -282,10 +281,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:elevation="10dp"
-                            app:cardCornerRadius="20dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:cardCornerRadius="20dp">
 
                             <!-- PRODUCT IMAGE -->
                             <ImageView
@@ -374,7 +370,7 @@
 
                 <!-- RIGHT COLUMN -->
                 <LinearLayout
-                    android:id="@+id/linearLayoutFeedContainerRight"
+                    android:id="@+id/linearLayoutProductContainerRight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -395,10 +391,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:elevation="10dp"
-                            app:cardCornerRadius="20dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:cardCornerRadius="20dp">
 
                             <!-- PRODUCT IMAGE -->
                             <ImageView
@@ -496,10 +489,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:elevation="10dp"
-                            app:cardCornerRadius="20dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:cardCornerRadius="20dp">
 
                             <!-- PRODUCT IMAGE -->
                             <ImageView
@@ -594,10 +584,10 @@
     <LinearLayout
         android:id="@+id/linearLayoutBottomBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="10dp"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

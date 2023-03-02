@@ -1,4 +1,4 @@
-package com.insane.model
+package com.insane.whatsthebra.model
 
 class Product (
     val id: Int = 0,
