@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.core.widget.CompoundButtonCompat
+import com.insane.model.Product
 import com.insane.utils.Tools
 import com.insane.whatsthebra.R
 
@@ -51,7 +52,7 @@ class Component(private var activity: Activity) {
     /**
      * Method to create a Product container with image and labels
      */
-    fun createProductContainer(view: LinearLayout, text: String) {
+    fun createProductContainer(view: LinearLayout, product: Product) {
 
     }
 

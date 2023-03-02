@@ -36,6 +36,8 @@ public class ProductController {
         return productService.getById(id);
     }
 
+    // TODO CRIAR UM TIPO DTO PARA O REQUESTMAPPING POST RECEBER UMA LISTA INTEIRO PARA FAZER A QUERY DE FILTRO
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public Product addProduct(@RequestBody ProductInput productInput) {
