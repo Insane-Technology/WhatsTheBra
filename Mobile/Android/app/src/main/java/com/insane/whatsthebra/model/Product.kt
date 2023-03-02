@@ -8,6 +8,6 @@ class Product (
     val discount: Int? = null,
     val shop: Shop? = null,
     val productType: ProductType? = null,
-    val braTypes: List<BraType> = ArrayList(),
-    val categories: List<Category> = ArrayList(),
-    val images: List<Image> = ArrayList()) {}
+    val braTypes: ArrayList<BraType> = ArrayList(),
+    val categories: ArrayList<Category> = ArrayList(),
+    val images: ArrayList<Image> = ArrayList()) {}

@@ -3,12 +3,17 @@ package com.insane.whatsthebra.component
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker
 import android.os.Build
 import android.view.Gravity
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.utils.Tools
@@ -70,6 +75,16 @@ class Component(private val activity: Activity) {
         cardView.elevation = Tools.Window.dpToPx(10).toFloat()
         cardView.radius = Tools.Window.dpToPx(20).toFloat()
 
+        // LOADER
+
+        // CREATE A CIRCULAR DRAWABLE IMAGE ANIMATED FOR A PLACEHOLDER \\
+        val circularProgressDrawable = CircularProgressDrawable(activity)
+        circularProgressDrawable.strokeWidth = 15f
+        circularProgressDrawable.centerRadius = 60f
+        circularProgressDrawable!!.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
+        circularProgressDrawable.alpha = 25
+        circularProgressDrawable.start()
+
         // PRODUCT IMAGE
         val productImage = ImageView(activity)
         val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
@@ -77,7 +92,19 @@ class Component(private val activity: Activity) {
         productImage.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
         productImage.elevation = Tools.Window.dpToPx(1).toFloat()
         productImage.scaleType = ImageView.ScaleType.CENTER_CROP
-        productImage.setImageDrawable(activity.resources.getDrawable(R.drawable.sutia1, activity.theme))
+
+        if (product.images.size > 0) {
+            Glide.with(activity)
+                .load("http://160.238.220.112:9090/api/wtb-v1/image/id/${product.images[0].id}")
+                .error(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
+                .fallback(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
+                .placeholder(circularProgressDrawable)
+                .centerCrop()
+                .into(productImage)
+        } else {
+            //productImage.setImageDrawable(activity.resources.getDrawable(R.drawable.sutia1, activity.theme))
+            productImage.setImageResource(R.drawable.ic_launcher_background)
+        }
         // TODO Check the background because the corners are with shadow
 
         // HEART IMAGE
@@ -172,7 +199,7 @@ class Component(private val activity: Activity) {
         innerLinearContainer.addView(productDescriptionTextView)
         innerLinearContainer.addView(linearPriceContainer)
         linearPriceContainer.addView(tvPrice)
-        if (product.discount!! > 0) {
+        if (product.discount > 0) {
             linearPriceContainer.addView(tvOriginalPrice)
             linearPriceContainer.addView(tvDiscount)
         }

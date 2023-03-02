@@ -7,6 +7,7 @@ import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.reflect.Array
 
 /**
  * SingleTon object class
@@ -110,12 +111,28 @@ object MainService {
                 val jsonResponse = response.body()
                 if (jsonResponse != null) {
                     for (p in jsonResponse) {
+                        var imageList: ArrayList<Image> = ArrayList()
+                        for (image in p.asJsonObject.get("images").asJsonArray) {
+                            val img = Image(
+                                image.asJsonObject.get("id").asInt,
+                                image.asJsonObject.get("name").asString
+                            )
+                            imageList.add(img)
+                        }
+                        // TODO FALTA ADICIONAR O SHOP, PRODUCT TYPE, LIST BRATYPE E LIST CATEGORY
+                        // TODO FAZER IGUAL A LISTA DE IMAGES
+
                         var product = Product(
                             p.asJsonObject.get("id").asInt,
                             p.asJsonObject.get("name").asString,
                             p.asJsonObject.get("price").asDouble,
                             p.asJsonObject.get("description").asString,
-                            p.asJsonObject.get("discount").asInt
+                            p.asJsonObject.get("discount").asInt,
+                            null,
+                            null,
+                            ArrayList<BraType>(),
+                            ArrayList<Category>(),
+                            imageList
                         )
                         products.add(product)
                     }
