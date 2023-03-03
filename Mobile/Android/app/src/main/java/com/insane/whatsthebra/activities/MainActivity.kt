@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private var selectedFilters: ArrayList<BraType> = ArrayList()
     private var selectedCategory: Category = MainService.getCategories()[0]
     private var refreshLayout: SwipeRefreshLayout? = null
+    private var isFavouriteList = false
 
     override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
@@ -46,26 +47,19 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         val buttonFilterApply: Button = findViewById(R.id.btn_filter_apply)
         val buttonFilterCancel: Button = findViewById(R.id.btn_filter_cancel)
 
-        // BOTTOM MENU BAR BUTTONS
-        val btnHome: ImageView = findViewById(R.id.iv_home)
-        val btnFavourite: ImageView = findViewById(R.id.iv_heart)
-        val btnNotification: ImageView = findViewById(R.id.iv_notification)
-        val btnProfile: ImageView = findViewById(R.id.iv_profile)
+        // BOTTOM MENU BAR IMAGE VIEWS
+        val ivHome: ImageView = findViewById(R.id.iv_home)
+        val ivFavourite: ImageView = findViewById(R.id.iv_heart)
+        val ivNotification: ImageView = findViewById(R.id.iv_notification)
+        val ivProfile: ImageView = findViewById(R.id.iv_profile)
 
         // PULL REFRESH
-        refreshLayout = findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
-
-        // SET ID's
-        btnHome.id = AppConfig.Component.ID_BUTTON_HOME
-        btnFavourite.id = AppConfig.Component.ID_BUTTON_FAVOURITE
-        btnNotification.id = AppConfig.Component.ID_BUTTON_NOTIFICATION
-        btnProfile.id = AppConfig.Component.ID_BUTTON_PROFILE
-        imgBtnFilter.id = AppConfig.Component.ID_BUTTON_FILTER
-
+        refreshLayout = findViewById(R.id.swipeRefreshLayout)
 
         /*  ************************** ADD VIEWS *************************** */
         loadCategoryButtons(linearCategoryButtons)
         loadFilters(linearCheckboxContainerLeft,linearCheckboxContainerRight)
+        selectMenu(ivHome)
         setCategoryOn(selectedCategory)
         /*  ************************ END ADD VIEWS ************************* */
 
@@ -87,20 +81,46 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         // MODAL CONTAINER TO AVOID CLOSE MODAL ON MODAL's CLICK
         linearFilterContainer.setOnClickListener { /* Ignore event */ }
         // HOME
-        btnHome.setOnClickListener {}
+        ivHome.setOnClickListener {
+            selectMenu(ivHome)
+            isFavouriteList = false
+            loadProducts()
+        }
         // FAVOURITE
-        btnFavourite.setOnClickListener {
-            Tools.Show.message(this,"É necessário uma conta para poder adicionar o item na lista")
+        ivFavourite.setOnClickListener {
+            selectMenu(ivFavourite)
+            isFavouriteList = true
+            loadProducts()
         }
         // NOTIFICATION
-        btnNotification.setOnClickListener {
+        ivNotification.setOnClickListener {
             Tools.Show.message(this,"Painel de notificações ainda não disponível")
         }
         // PROFILE
-        btnProfile.setOnClickListener {
+        ivProfile.setOnClickListener {
             Tools.Show.message(this,"Perfil de conta ainda não disponível")
         }
         /* ********************** END CLICK LISTENERS ********************** */
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun selectMenu(imageView: ImageView) {
+        val ivHome: ImageView = this.findViewById(R.id.iv_home)
+        val ivHeart: ImageView = this.findViewById(R.id.iv_heart)
+        val ivNotification: ImageView = this.findViewById(R.id.iv_notification)
+        val ivProfile: ImageView = this.findViewById(R.id.iv_profile)
+
+        ivHome.setImageDrawable(this.getDrawable(R.drawable.ic_home))
+        ivHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
+        ivNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification))
+        ivProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile))
+
+        when (imageView.id) {
+            ivProfile.id -> ivProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile_color))
+            ivHeart.id -> ivHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
+            ivNotification.id -> ivNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification_color))
+            else -> ivHome.setImageDrawable(this.getDrawable(R.drawable.ic_home_color))
+        }
     }
 
     private fun openModalFilter(container: ConstraintLayout) {
@@ -181,15 +201,32 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         rightColumn.removeAllViews()
 
         for (product in MainService.getProducts()) {
-            if (checkCategoryProduct(product)) {
-                if (checkFilterProduct(product, selectedFilters)) {
-                    productMatches++
-                    val view: View = mainActivityComponent.createProductContainer(product)
-                    // ADD VIEW TO EACH COLUMN
-                    if (productMatches % 2 == 0) {
-                        rightColumn.addView(view)
-                    } else {
-                        leftColumn.addView(view)
+            if (!isFavouriteList) {
+                if (checkCategoryProduct(product)) {
+                    if (checkFilterProduct(product, selectedFilters)) {
+                        productMatches++
+                        val view: View = mainActivityComponent.createProductContainer(product)
+                        // ADD VIEW TO EACH COLUMN
+                        if (productMatches % 2 == 0) {
+                            rightColumn.addView(view)
+                        } else {
+                            leftColumn.addView(view)
+                        }
+                    }
+                }
+            } else {
+                if (MainService.getUser().favouriteProducts.any { it == product}) {
+                    if (checkCategoryProduct(product)) {
+                        if (checkFilterProduct(product, selectedFilters)) {
+                            productMatches++
+                            val view: View = mainActivityComponent.createProductContainer(product)
+                            // ADD VIEW TO EACH COLUMN
+                            if (productMatches % 2 == 0) {
+                                rightColumn.addView(view)
+                            } else {
+                                leftColumn.addView(view)
+                            }
+                        }
                     }
                 }
             }

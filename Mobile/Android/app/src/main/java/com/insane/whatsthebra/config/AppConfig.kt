@@ -72,11 +72,6 @@ object AppConfig {
     object Component {
         private const val BASE_ID_BUTTON_CATEGORY = 1000
         private const val BASE_ID_IMAGEVIEW_FAVOURITE = 2000
-        const val ID_BUTTON_HOME = 101
-        const val ID_BUTTON_FAVOURITE = 102
-        const val ID_BUTTON_NOTIFICATION = 103
-        const val ID_BUTTON_PROFILE = 104
-        const val ID_BUTTON_FILTER = 105
 
         fun getButtonCategoryId(category: Category): Int {
             return BASE_ID_BUTTON_CATEGORY+category.id
