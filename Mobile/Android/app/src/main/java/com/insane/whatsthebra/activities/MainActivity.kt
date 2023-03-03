@@ -6,8 +6,11 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.component.MainComponent
+import com.insane.whatsthebra.config.AppConfig
+import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
@@ -15,15 +18,14 @@ import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.utils.Tools
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DataCallBack {
 
     private val mainActivityComponent = MainComponent(this)
     private var selectedFilters: ArrayList<BraType> = ArrayList()
     private var selectedCategory: Category = MainService.getCategories()[0]
+    private var refreshLayout: SwipeRefreshLayout? = null
 
-    override fun onBackPressed() {
-        // Avoid going back to SplashScreen activity
-    }
+    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,16 @@ class MainActivity : AppCompatActivity() {
         val btnNotification: ImageView = findViewById(R.id.iv_notification)
         val btnProfile: ImageView = findViewById(R.id.iv_profile)
 
+        // PULL REFRESH
+        refreshLayout = findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
+
+        // SET ID's
+        btnHome.id = AppConfig.Component.ID_BUTTON_HOME
+        btnFavourite.id = AppConfig.Component.ID_BUTTON_FAVOURITE
+        btnNotification.id = AppConfig.Component.ID_BUTTON_NOTIFICATION
+        btnProfile.id = AppConfig.Component.ID_BUTTON_PROFILE
+        imgBtnFilter.id = AppConfig.Component.ID_BUTTON_FILTER
+
 
         /*  ************************** ADD VIEWS *************************** */
         loadCategoryButtons(linearCategoryButtons)
@@ -59,6 +71,8 @@ class MainActivity : AppCompatActivity() {
 
 
         /* ************************ CLICK LISTENERS ************************ */
+        // PULL TO REFRESH
+        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(this) }
         // BUTTON FILTER
         imgBtnFilter.setOnClickListener { openModalFilter(constraintFilter) }
         // DARK BACKGROUND MODAL
@@ -72,6 +86,20 @@ class MainActivity : AppCompatActivity() {
         }
         // MODAL CONTAINER TO AVOID CLOSE MODAL ON MODAL's CLICK
         linearFilterContainer.setOnClickListener { /* Ignore event */ }
+        // HOME
+        btnHome.setOnClickListener {}
+        // FAVOURITE
+        btnFavourite.setOnClickListener {
+            Tools.Show.message(this,"É necessário uma conta para poder adicionar o item na lista")
+        }
+        // NOTIFICATION
+        btnNotification.setOnClickListener {
+            Tools.Show.message(this,"Painel de notificações ainda não disponível")
+        }
+        // PROFILE
+        btnProfile.setOnClickListener {
+            Tools.Show.message(this,"Perfil de conta ainda não disponível")
+        }
         /* ********************** END CLICK LISTENERS ********************** */
     }
 
@@ -94,15 +122,15 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     fun setCategoryOn(category: Category) {
         // Unselect selected button
-        val oldSelectedButton: Button = this.findViewById(selectedCategory.id)
-        oldSelectedButton.background = this.resources.getDrawable(R.drawable.ic_box_button_off, this.theme)
+        val oldSelectedButton = this.findViewById(AppConfig.Component.getButtonCategoryId(selectedCategory)) as Button
+        oldSelectedButton.background = this.getDrawable(R.drawable.ic_box_button_off)
 
         // Set new category selected
         selectedCategory = category
 
         // Select Button
-        val selectedButton: Button = this.findViewById(category.id)
-        selectedButton.background = this.resources.getDrawable(R.drawable.ic_box_button_on, this.theme)
+        val selectedButton: Button = this.findViewById(AppConfig.Component.getButtonCategoryId(category))
+        selectedButton.background = this.getDrawable(R.drawable.ic_box_button_on)
 
         // Reload Products
         loadProducts()
@@ -177,6 +205,11 @@ class MainActivity : AppCompatActivity() {
                 mainActivityComponent.createCheckboxFilter(rightColumn, braType)
             }
         }
+    }
+
+    override fun onDataLoaded() {
+        loadProducts()
+        false.also { refreshLayout!!.isRefreshing = it }
     }
 
 }

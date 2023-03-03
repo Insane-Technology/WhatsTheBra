@@ -33,7 +33,7 @@ class MainComponent(private val context: MainActivity) {
         // Layout Params
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         params.setMargins(0,0, Tools.Window.dpToPx(10),0)
-        button.id = category.id
+        button.id = AppConfig.Component.getButtonCategoryId(category)
         button.layoutParams = params
         button.background = view.context.resources.getDrawable(R.drawable.ic_box_button_off, context.theme)
         button.typeface = Typeface.DEFAULT_BOLD

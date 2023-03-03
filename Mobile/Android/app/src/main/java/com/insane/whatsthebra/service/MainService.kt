@@ -17,9 +17,6 @@ object MainService {
 
     private val apiService = ApiInterface.create()
     private var callBack: DataCallBack? = null
-    private var categoryLoaded: Boolean = false
-    private var braTypeLoaded: Boolean = false
-    private var productLoaded: Boolean = false
     private var categories = ArrayList<Category>()
     private var braTypes = ArrayList<BraType>()
     private var products = ArrayList<Product>()
@@ -38,8 +35,8 @@ object MainService {
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
     private fun loadCategories(callBack: DataCallBack) {
+        categories.clear()
         setDataCallBack(callBack)
-        categoryLoaded = false
         val jsonCategories: Call<JsonArray> = apiService.fetchCategories()
         jsonCategories.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -52,7 +49,6 @@ object MainService {
                         categories.add(category)
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
-                    categoryLoaded = true
                     onServiceDone()
                 }
             }
@@ -71,7 +67,7 @@ object MainService {
      */
     private fun loadBraTypes(callBack: DataCallBack) {
         setDataCallBack(callBack)
-        braTypeLoaded = false
+        braTypes.clear()
         val jsonBraTypeList: Call<JsonArray> = apiService.fetchBraTypes()
         jsonBraTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -84,7 +80,6 @@ object MainService {
                         braTypes.add(braType)
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
-                    braTypeLoaded = true
                     onServiceDone()
                 }
             }
@@ -101,9 +96,9 @@ object MainService {
      * Method to load products list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    private fun loadProducts(callBack: DataCallBack) {
+    fun loadProducts(callBack: DataCallBack) {
         setDataCallBack(callBack)
-        productLoaded = false
+        products.clear()
         val jsonProducts: Call<JsonArray> = apiService.fetchProducts()
         jsonProducts.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -171,7 +166,6 @@ object MainService {
                         products.add(product)
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
-                    productLoaded = true
                     onServiceDone()
                 }
             }
@@ -188,7 +182,7 @@ object MainService {
      * Method called when all services are done
      */
     private fun onServiceDone() {
-        if (categoryLoaded && braTypeLoaded && productLoaded) {
+        if (categories.size > 0 && braTypes.size > 0 && products.size > 0) {
             callBack!!.onDataLoaded()
         }
     }
