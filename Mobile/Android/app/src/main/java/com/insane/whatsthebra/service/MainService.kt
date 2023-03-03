@@ -37,7 +37,7 @@ object MainService {
      * Method to load category list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    fun loadCategories(callBack: DataCallBack) {
+    private fun loadCategories(callBack: DataCallBack) {
         setDataCallBack(callBack)
         categoryLoaded = false
         val jsonCategories: Call<JsonArray> = apiService.fetchCategories()
@@ -69,7 +69,7 @@ object MainService {
      * Method to load bra type list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    fun loadBraTypes(callBack: DataCallBack) {
+    private fun loadBraTypes(callBack: DataCallBack) {
         setDataCallBack(callBack)
         braTypeLoaded = false
         val jsonBraTypeList: Call<JsonArray> = apiService.fetchBraTypes()
@@ -101,7 +101,7 @@ object MainService {
      * Method to load products list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    fun loadProducts(callBack: DataCallBack) {
+    private fun loadProducts(callBack: DataCallBack) {
         setDataCallBack(callBack)
         productLoaded = false
         val jsonProducts: Call<JsonArray> = apiService.fetchProducts()
@@ -110,7 +110,9 @@ object MainService {
                 val jsonResponse = response.body()
                 if (jsonResponse != null) {
                     for (p in jsonResponse) {
-                        var imageList: ArrayList<Image> = ArrayList()
+
+                        // SETTING PRODUCT IMAGE LIST
+                        val imageList: ArrayList<Image> = ArrayList()
                         for (image in p.asJsonObject.get("images").asJsonArray) {
                             val img = Image(
                                 image.asJsonObject.get("id").asInt,
@@ -118,19 +120,52 @@ object MainService {
                             )
                             imageList.add(img)
                         }
-                        // TODO FALTA ADICIONAR O SHOP, PRODUCT TYPE, LIST BRATYPE E LIST CATEGORY
-                        // TODO FAZER IGUAL A LISTA DE IMAGES
 
-                        var product = Product(
+                        // SETTING PRODUCT BraType LIST
+                        val braTypes: ArrayList<BraType> = ArrayList()
+                        for (braType in p.asJsonObject.get("braTypes").asJsonArray) {
+                            val bt = BraType(
+                                braType.asJsonObject.get("id").asInt,
+                                braType.asJsonObject.get("name").asString
+                            )
+                            braTypes.add(bt)
+                        }
+
+                        // SETTING PRODUCT CATEGORIES
+                        val categories: ArrayList<Category> = ArrayList()
+                        for (category in p.asJsonObject.get("categories").asJsonArray) {
+                            val cat = Category(
+                                category.asJsonObject.get("id").asInt,
+                                category.asJsonObject.get("name").asString
+                            )
+                            categories.add(cat)
+                        }
+
+                        // SETTING PRODUCT SHOP
+                        val shopJsonObj = p.asJsonObject.get("shop").asJsonObject
+                        val shop = Shop(
+                            shopJsonObj.asJsonObject.get("id").asInt,
+                            shopJsonObj.asJsonObject.get("name").asString,
+                            shopJsonObj.asJsonObject.get("link").asString
+                        )
+
+                        // SETTING PRODUCT TYPE
+                        val productTypeJsonObject = p.asJsonObject.get("productType").asJsonObject
+                        val productType = ProductType(
+                            productTypeJsonObject.asJsonObject.get("id").asInt,
+                            productTypeJsonObject.asJsonObject.get("name").asString
+                        )
+
+                        val product = Product(
                             p.asJsonObject.get("id").asInt,
                             p.asJsonObject.get("name").asString,
                             p.asJsonObject.get("price").asDouble,
                             p.asJsonObject.get("description").asString,
                             p.asJsonObject.get("discount").asInt,
-                            null,
-                            null,
-                            ArrayList<BraType>(),
-                            ArrayList<Category>(),
+                            shop,
+                            productType,
+                            braTypes,
+                            categories,
                             imageList
                         )
                         products.add(product)
@@ -179,17 +214,3 @@ object MainService {
     }
 
 }
-
-//                        p.asJsonObject.get("shop").asString,
-//                        p.asJsonObject.get("productType").asString,
-//                        p.asJsonObject.get("braTypes").asString,
-//                        p.asJsonObject.get("categories").asString,
-//                        p.asJsonObject.get("images").asString
-//                        val price: Double? = null,
-//                        val description: String? = null,
-//                        val discount: Int? = null,
-//                        val shop: Shop? = null,
-//                        val productType: ProductType? = null,
-//                        val braTypes: List<BraType> = ArrayList(),
-//                        val categories: List<Category> = ArrayList(),
-//                        val images: List<Image> = ArrayList()

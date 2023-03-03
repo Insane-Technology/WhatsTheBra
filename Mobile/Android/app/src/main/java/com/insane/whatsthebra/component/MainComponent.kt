@@ -1,64 +1,75 @@
 package com.insane.whatsthebra.component
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.res.ColorStateList
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker
 import android.os.Build
 import android.view.Gravity
-import android.view.View
 import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import androidx.viewpager2.widget.ViewPager2
 import com.insane.whatsthebra.R
-import com.insane.whatsthebra.adapter.ImageAdapter
+import com.insane.whatsthebra.activities.MainActivity
+import com.insane.whatsthebra.adapter.MainImageAdapter
 import com.insane.whatsthebra.config.AppConfig
-import com.insane.whatsthebra.config.GlideApp
+import com.insane.whatsthebra.model.BraType
+import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.utils.Tools
 import java.text.DecimalFormat
 
 
-class Component(private val activity: Activity) {
+class MainComponent(private val context: MainActivity) {
 
     /**
      * Method to create category button
      */
     @SuppressLint("UseCompatLoadingForDrawables")
-    fun createButtonCategory(view: LinearLayout, text: String) {
-        val button = Button(activity)
+    fun createButtonCategory(view: LinearLayout, category: Category) {
+        val button = Button(context)
         // Layout Params
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         params.setMargins(0,0, Tools.Window.dpToPx(10),0)
+        button.id = category.id
         button.layoutParams = params
-        button.background = view.context.resources.getDrawable(R.drawable.ic_box_button_off, activity.theme)
+        button.background = view.context.resources.getDrawable(R.drawable.ic_box_button_off, context.theme)
         button.typeface = Typeface.DEFAULT_BOLD
         button.setPadding(Tools.Window.dpToPx(20),0, Tools.Window.dpToPx(20),0)
-        button.text = text
+        button.text = category.name
         button.isAllCaps = false
         button.textSize = 15.00f
-        button.setTextColor(activity.resources.getColor(R.color.white, activity.theme))
+        button.setTextColor(context.resources.getColor(R.color.white, context.theme))
+
         // Add view
         view.addView(button)
+
+        // Click Listener
+        button.setOnClickListener {
+            context.setCategoryOn(category)
+        }
     }
 
     /**
      * Method to create a CheckBox
      */
-    fun createCheckboxFilter(view: LinearLayout, text: String) {
-        val checkBox = CheckBox(activity)
+    fun createCheckboxFilter(view: LinearLayout, braType: BraType) {
+        val checkBox = CheckBox(context)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        checkBox.buttonTintList = ColorStateList.valueOf(activity.resources.getColor(R.color.gray_200, activity.theme))
+        checkBox.buttonTintList = ColorStateList.valueOf(context.resources.getColor(R.color.gray_200, context.theme))
         checkBox.layoutParams = params
-        checkBox.text = text
-        checkBox.setTextColor(activity.resources.getColor(R.color.gray_700, activity.theme))
+        checkBox.text = braType.name
+        checkBox.setTextColor(context.resources.getColor(R.color.gray_700, context.theme))
         view.addView(checkBox)
+
+        checkBox.setOnClickListener {
+            if (checkBox.isChecked)
+                context.addFilter(braType)
+            else
+                context.removeFilter(braType)
+        }
     }
 
     /**
@@ -67,88 +78,44 @@ class Component(private val activity: Activity) {
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     fun createProductContainer(product: Product): LinearLayout {
         // MAIN LINEAR CONTAINER VERTICAL
-        val mainLinearContainer = LinearLayout(activity)
+        val mainLinearContainer = LinearLayout(context)
         val paramsContainer = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsContainer.setMargins(0,Tools.Window.dpToPx(10),0,Tools.Window.dpToPx(10))
         mainLinearContainer.layoutParams = paramsContainer
         mainLinearContainer.orientation = LinearLayout.VERTICAL
 
         // CARD VIEW
-        val cardView = CardView(activity)
+        val cardView = CardView(context)
         val paramsCardView = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         cardView.layoutParams = paramsCardView
-        cardView.elevation = Tools.Window.dpToPx(10).toFloat()
+        cardView.elevation = 0F
         cardView.radius = Tools.Window.dpToPx(20).toFloat()
 
-        // CREATE A CIRCULAR DRAWABLE IMAGE ANIMATED FOR A PLACEHOLDER AS A LOADER \\
-        val circularProgressDrawable = CircularProgressDrawable(activity)
-        circularProgressDrawable.strokeWidth = 15f
-        circularProgressDrawable.centerRadius = 60f
-        circularProgressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
-        circularProgressDrawable.alpha = 25
-        circularProgressDrawable.start()
-
-        // PRODUCT IMAGE WITH GLIDE
-//        val productImage = ImageView(activity)
-//        val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
-//        productImage.layoutParams = paramsProductImage
-//        productImage.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
-//        productImage.elevation = Tools.Window.dpToPx(1).toFloat()
-//        productImage.scaleType = ImageView.ScaleType.CENTER_CROP
-//        if (product.images.size > 0) {
-//            GlideApp.with(activity)
-//                .load(AppConfig.API.getImageUrl(product.images[0].id))
-//                .error(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
-//                .fallback(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
-//                .placeholder(circularProgressDrawable)
-//                .centerCrop()
-//                .into(productImage)
-//        } else {
-//            //productImage.setImageDrawable(activity.resources.getDrawable(R.drawable.ic_broken_image, activity.theme))
-//            productImage.setImageResource(R.drawable.ic_broken_image)
-//        }
-
-        // TODO Check the IMAGES background because the corners are with shadow
-
-        // PRODUCT IMAGES WITH VIEWPAGER
-        val productImages = ViewPager(activity)
-        val paramsViewPager = LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
-        paramsViewPager.setMargins(0, 0,0,0)
-        productImages.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
-        productImages.elevation = Tools.Window.dpToPx(1).toFloat()
-        productImages.layoutParams = paramsViewPager
-        productImages.foregroundGravity = Gravity.CENTER
-
-        val adapter = ImageAdapter(activity, product.images)
-        productImages.adapter = adapter
-        productImages.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                // scrollDisplay.requestDisallowInterceptTouchEvent(true);
-            }
-
-            override fun onPageSelected(position: Int) {
-                Tools.Show.message(activity,"Position: $position")
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                //  scrollDisplay.requestDisallowInterceptTouchEvent(false);
-            }
-        })
+        // PRODUCT IMAGES WITH VIEWPAGER OR PRODUCT IMAGE PLACEHOLDER
+        val productImages = ViewPager(context)
+        val productImage = AppConfig.Image.getImageViewThumbnailTemplate(context)
+        if (product.images.size > 0) {
+            productImages.layoutParams = LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, AppConfig.Image.getThumbnailHeight())
+            productImages.adapter = MainImageAdapter(context, product)
+            productImages.addOnPageChangeListener(object : OnPageChangeListener {
+                override fun onPageScrolled(position: Int,positionOffset: Float,positionOffsetPixels: Int) { /* scrollDisplay.requestDisallowInterceptTouchEvent(true); */ }
+                override fun onPageSelected(position: Int) {}
+                override fun onPageScrollStateChanged(state: Int) { /* scrollDisplay.requestDisallowInterceptTouchEvent(false); */ }
+            })
+        } else {
+            productImage.setImageResource(R.drawable.ic_broken_image)
+        }
 
         // HEART IMAGE
-        val heartImage = ImageView(activity)
+        val heartImage = ImageView(context)
         val paramsHeartImage = LinearLayout.LayoutParams(Tools.Window.dpToPx(30), LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsHeartImage.setMargins(Tools.Window.dpToPx(8),Tools.Window.dpToPx(2),0,0)
         heartImage.layoutParams = paramsHeartImage
         heartImage.elevation = Tools.Window.dpToPx(10).toFloat()
-        heartImage.setImageDrawable(activity.resources.getDrawable(R.drawable.ic_heart, activity.theme))
+        heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart, context.theme))
 
         // INNER LINEAR LABEL AND PRICE CONTAINER
-        val innerLinearContainer = LinearLayout(activity)
+        val innerLinearContainer = LinearLayout(context)
         val paramsInnerContainer = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsInnerContainer.setMargins(0,Tools.Window.dpToPx(5),0,0)
         paramsInnerContainer.weight = 1F
@@ -156,17 +123,17 @@ class Component(private val activity: Activity) {
         innerLinearContainer.orientation = LinearLayout.VERTICAL
 
         // PRODUCT DESCRIPTION TEXT
-        val productDescriptionTextView = TextView(activity)
+        val productDescriptionTextView = TextView(context)
         val paramsProductDescription = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         productDescriptionTextView.layoutParams = paramsProductDescription
-        productDescriptionTextView.setTextColor(activity.resources.getColor(R.color.gray_700, activity.theme))
+        productDescriptionTextView.setTextColor(context.resources.getColor(R.color.gray_700, context.theme))
         // TODO Justification mode is applied only for greater or equal SDK|API Level 29
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { productDescriptionTextView.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD }
         productDescriptionTextView.gravity = Gravity.START
         productDescriptionTextView.text = product.description
 
         // LINEAR PRICE AND DISCOUNT CONTAINER
-        val linearPriceContainer = LinearLayout(activity)
+        val linearPriceContainer = LinearLayout(context)
         val paramsInnerPriceContainer = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsInnerPriceContainer.setMargins(0,0,0,0)
         paramsInnerPriceContainer.weight = Tools.Window.dpToPx(1).toFloat()
@@ -174,24 +141,25 @@ class Component(private val activity: Activity) {
         linearPriceContainer.orientation = LinearLayout.HORIZONTAL
 
         // PRICE TEXT VIEW
-        val tvPrice = TextView(activity)
+        val tvPrice = TextView(context)
         val paramsTvPrice = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsTvPrice.weight = 1.4F
         tvPrice.layoutParams = paramsTvPrice
-        tvPrice.setTextColor(activity.resources.getColor(R.color.gray_700, activity.theme))
+        tvPrice.setTextColor(context.resources.getColor(R.color.gray_700, context.theme))
         tvPrice.textSize = 13F
         tvPrice.gravity = Gravity.START
-        val fontFamily: Typeface = activity.resources.getFont(R.font.roboto_black)
+        val fontFamily: Typeface = context.resources.getFont(R.font.roboto_black)
         tvPrice.typeface = fontFamily
         val dec = DecimalFormat("#,###.00")
         val priceAfterDiscount = product.price?.minus((product.price * product.discount!! /100))
         val price: String = dec.format(priceAfterDiscount)
         tvPrice.text = "R$ $price"
         // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
+        // TODO Ajustar o ponto e virgula no valor - pontos para mil e virgula para centavos
 
         // PRICE AND DISCOUNT VIEWS
-        val tvOriginalPrice = TextView(activity)
-        val tvDiscount = TextView(activity)
+        val tvOriginalPrice = TextView(context)
+        val tvDiscount = TextView(context)
         if (product.discount!! > 0) {
             // ORIGINAL PRICE TEXT VIEW
             val paramsTvOriginalPrice =
@@ -199,23 +167,25 @@ class Component(private val activity: Activity) {
             paramsTvOriginalPrice.weight = 1.2F
             tvOriginalPrice.layoutParams = paramsTvOriginalPrice
             tvOriginalPrice.setTextColor(
-                activity.resources.getColor(
+                context.resources.getColor(
                     R.color.gray_500,
-                    activity.theme
+                    context.theme
                 )
             )
             tvOriginalPrice.textSize = 11F
             tvOriginalPrice.gravity = Gravity.CENTER
             tvOriginalPrice.typeface = Typeface.DEFAULT_BOLD
             tvOriginalPrice.text = "R$ ${dec.format(product.price)}"
+            tvOriginalPrice.paintFlags = tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
+            // TODO Ajustar o ponto e virgula no valor - pontos para mil e virgula para centavos
 
             // ORIGINAL PRICE TEXT VIEW
             val paramsTvDiscount =
                 LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
             paramsTvDiscount.weight = 1F
             tvDiscount.layoutParams = paramsTvDiscount
-            tvDiscount.setTextColor(activity.resources.getColor(R.color.pink_700, activity.theme))
+            tvDiscount.setTextColor(context.resources.getColor(R.color.pink_700, context.theme))
             tvDiscount.textSize = 11F
             tvDiscount.gravity = Gravity.END
             tvDiscount.typeface = Typeface.DEFAULT_BOLD
@@ -223,10 +193,9 @@ class Component(private val activity: Activity) {
             // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
         }
 
-
         // ADD VIEWS
         mainLinearContainer.addView(cardView)
-        cardView.addView(productImages)
+        if (product.images.size > 0) cardView.addView(productImages) else cardView.addView(productImage)
         cardView.addView(heartImage)
         mainLinearContainer.addView(innerLinearContainer)
         innerLinearContainer.addView(productDescriptionTextView)
@@ -236,6 +205,11 @@ class Component(private val activity: Activity) {
             linearPriceContainer.addView(tvOriginalPrice)
             linearPriceContainer.addView(tvDiscount)
         }
+
+        // CLICK LISTENERS
+        productImage.setOnClickListener { context.openProductDetails(product) }
+        innerLinearContainer.setOnClickListener { context.openProductDetails(product) }
+        heartImage.setOnClickListener { context.setFavouriteProduct(product) }
 
         // RETURN ALL VIEWS IN MAIN CONTAINER
         return mainLinearContainer
