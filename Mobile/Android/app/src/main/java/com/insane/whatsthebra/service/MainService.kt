@@ -7,6 +7,8 @@ import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
 import retrofit2.Call
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * SingleTon object class
@@ -20,14 +22,36 @@ object MainService {
     private var categories = ArrayList<Category>()
     private var braTypes = ArrayList<BraType>()
     private var products = ArrayList<Product>()
+    private var user = User(id = 0)
 
     /**
      * Method to load data from API
      */
     fun loadData(callBack: DataCallBack) {
+        loadUser(callBack)
         loadCategories(callBack)
         loadBraTypes(callBack)
         loadProducts(callBack)
+    }
+
+    private fun loadUser(callBack: DataCallBack) {
+        setDataCallBack(callBack)
+        // TODO Must Implement loading user from API getting credentials from shared preferences file
+        // CREATING A FAKE USER TO TEST
+        user = User(
+            id = 1,
+            name = "User Number One",
+            email = "user@email.com",
+            birthday = Date(),
+            created = Date(),
+            updated = Date(),
+            city = City(),
+            image = Image(),
+            favouriteProducts = ArrayList()
+        )
+
+        // CALLING SERVICE DONE
+        onServiceDone()
     }
 
     /**
@@ -182,9 +206,12 @@ object MainService {
      * Method called when all services are done
      */
     private fun onServiceDone() {
-        if (categories.size > 0 && braTypes.size > 0 && products.size > 0) {
-            callBack!!.onDataLoaded()
-        }
+        if (categories.size > 0 &&
+            braTypes.size > 0 &&
+            products.size > 0 &&
+            user.id > 0
+        )
+        callBack!!.onDataLoaded()
     }
 
     /**
@@ -205,6 +232,10 @@ object MainService {
 
     fun getProducts(): ArrayList<Product> {
         return this.products
+    }
+
+    fun getUser(): User {
+        return user
     }
 
 }

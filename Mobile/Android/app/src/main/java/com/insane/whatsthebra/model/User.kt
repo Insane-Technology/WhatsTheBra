@@ -14,4 +14,4 @@ class User(
     val updated: Date? = null,
     val city: City? = null,
     val image: Image? = null,
-    val favouriteProducts: List<Product> = ArrayList()) : Serializable {}
+    val favouriteProducts: ArrayList<Product> = ArrayList()) : Serializable {}

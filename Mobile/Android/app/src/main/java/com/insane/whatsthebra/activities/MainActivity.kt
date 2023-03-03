@@ -141,9 +141,17 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         // TODO Implement click listener to open product details page
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     fun setFavouriteProduct(product: Product) {
-        Tools.Show.message(this, "Set product with id ${product.id} as favourite!")
-        // TODO Implement click listener to set product as favourite
+        val favouriteButton = this.findViewById(AppConfig.Component.getImageViewFavouriteId(product)) as ImageView
+        if (MainService.getUser().favouriteProducts.any { it == product }) {
+            MainService.getUser().favouriteProducts.remove(product)
+            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
+        } else {
+            MainService.getUser().favouriteProducts.add(product)
+            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
+        }
+        // TODO Implement to set product as favourite on server or on shared preferences on device
     }
 
     private fun checkCategoryProduct(product: Product): Boolean {

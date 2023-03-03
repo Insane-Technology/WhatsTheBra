@@ -18,6 +18,7 @@ import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
+import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.utils.Tools
 import java.text.DecimalFormat
 
@@ -108,11 +109,15 @@ class MainComponent(private val context: MainActivity) {
 
         // HEART IMAGE
         val heartImage = ImageView(context)
+        heartImage.id = AppConfig.Component.getImageViewFavouriteId(product)
         val paramsHeartImage = LinearLayout.LayoutParams(Tools.Window.dpToPx(30), LinearLayout.LayoutParams.WRAP_CONTENT)
         paramsHeartImage.setMargins(Tools.Window.dpToPx(8),Tools.Window.dpToPx(2),0,0)
         heartImage.layoutParams = paramsHeartImage
         heartImage.elevation = Tools.Window.dpToPx(10).toFloat()
-        heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart, context.theme))
+        if (MainService.getUser().favouriteProducts.any { it == product })
+            heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart_color, context.theme))
+        else
+            heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart, context.theme))
 
         // INNER LINEAR LABEL AND PRICE CONTAINER
         val innerLinearContainer = LinearLayout(context)

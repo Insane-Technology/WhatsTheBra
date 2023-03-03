@@ -8,6 +8,7 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.model.Category
+import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.utils.Tools
 
 object AppConfig {
@@ -70,6 +71,7 @@ object AppConfig {
 
     object Component {
         private const val BASE_ID_BUTTON_CATEGORY = 1000
+        private const val BASE_ID_IMAGEVIEW_FAVOURITE = 2000
         const val ID_BUTTON_HOME = 101
         const val ID_BUTTON_FAVOURITE = 102
         const val ID_BUTTON_NOTIFICATION = 103
@@ -78,6 +80,10 @@ object AppConfig {
 
         fun getButtonCategoryId(category: Category): Int {
             return BASE_ID_BUTTON_CATEGORY+category.id
+        }
+
+        fun getImageViewFavouriteId(product: Product): Int {
+            return BASE_ID_IMAGEVIEW_FAVOURITE+product.id
         }
 
     }
