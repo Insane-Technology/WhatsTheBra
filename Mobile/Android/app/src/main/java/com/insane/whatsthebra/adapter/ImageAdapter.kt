@@ -10,21 +10,20 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
 import com.insane.whatsthebra.R
+import com.insane.whatsthebra.config.AppConfig
+import com.insane.whatsthebra.config.GlideApp
 import com.insane.whatsthebra.model.Image
 import com.insane.whatsthebra.utils.Tools
 
-class ImageAdapter(private var context: Context?, private var images: ArrayList<Image>?) : PagerAdapter() {
-
-    var circularProgressDrawable: CircularProgressDrawable? = null
+class ImageAdapter(private var context: Context, private var images: ArrayList<Image>) : PagerAdapter() {
 
     override fun getCount(): Int {
-        return images!!.size
+        return images.size
     }
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
+    override fun isViewFromObject(view: View, obj: Any): Boolean {
+        return view === obj
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -34,24 +33,23 @@ class ImageAdapter(private var context: Context?, private var images: ArrayList<
         val imageView = ImageView(context)
         val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
         imageView.layoutParams = paramsProductImage
-        imageView.setBackgroundColor(context!!.resources.getColor(R.color.white, context!!.theme))
+        imageView.setBackgroundColor(context.resources.getColor(R.color.white, context.theme))
         imageView.elevation = Tools.Window.dpToPx(1).toFloat()
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
         // CREATE A CIRCULAR DRAWABLE IMAGE ANIMATED FOR A PLACEHOLDER \\
-        circularProgressDrawable = CircularProgressDrawable(context!!)
-        circularProgressDrawable!!.strokeWidth = 15f
-        circularProgressDrawable!!.centerRadius = 60f
-        circularProgressDrawable!!.alpha = 25
-        circularProgressDrawable!!.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
-        circularProgressDrawable!!.start()
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 15f
+        circularProgressDrawable.centerRadius = 60f
+        circularProgressDrawable.alpha = 25
+        circularProgressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
+        circularProgressDrawable.start()
 
         // RETRIEVING IMAGES PATH ON SERVER
-        val url =  "http://160.238.220.112:9090/api/wtb-v1/image/id/${images!![position].id}"
-        Glide.with(context!!)
-            .load(url)
-            .error(context!!.resources.getDrawable(R.drawable.ic_logo, context!!.theme))
-            .fallback(context!!.resources.getDrawable(R.drawable.ic_logo, context!!.theme))
+        GlideApp.with(context)
+            .load(AppConfig.API.getImageUrl(images[position].id))
+            .error(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
+            .fallback(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
             .placeholder(circularProgressDrawable)
             .centerCrop()
             .into(imageView)
@@ -60,8 +58,8 @@ class ImageAdapter(private var context: Context?, private var images: ArrayList<
         return imageView
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as ImageView)
+    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+        container.removeView(obj as ImageView)
     }
 
 }

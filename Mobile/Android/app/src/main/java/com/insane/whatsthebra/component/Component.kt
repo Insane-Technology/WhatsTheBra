@@ -3,18 +3,23 @@ package com.insane.whatsthebra.component
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.text.LineBreaker
 import android.os.Build
 import android.view.Gravity
+import android.view.View
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager2.widget.ViewPager2
 import com.insane.whatsthebra.R
+import com.insane.whatsthebra.adapter.ImageAdapter
+import com.insane.whatsthebra.config.AppConfig
+import com.insane.whatsthebra.config.GlideApp
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.utils.Tools
 import java.text.DecimalFormat
@@ -75,37 +80,64 @@ class Component(private val activity: Activity) {
         cardView.elevation = Tools.Window.dpToPx(10).toFloat()
         cardView.radius = Tools.Window.dpToPx(20).toFloat()
 
-        // LOADER
-
-        // CREATE A CIRCULAR DRAWABLE IMAGE ANIMATED FOR A PLACEHOLDER \\
+        // CREATE A CIRCULAR DRAWABLE IMAGE ANIMATED FOR A PLACEHOLDER AS A LOADER \\
         val circularProgressDrawable = CircularProgressDrawable(activity)
         circularProgressDrawable.strokeWidth = 15f
         circularProgressDrawable.centerRadius = 60f
-        circularProgressDrawable!!.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
+        circularProgressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.LIGHTEN)
         circularProgressDrawable.alpha = 25
         circularProgressDrawable.start()
 
-        // PRODUCT IMAGE
-        val productImage = ImageView(activity)
-        val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
-        productImage.layoutParams = paramsProductImage
-        productImage.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
-        productImage.elevation = Tools.Window.dpToPx(1).toFloat()
-        productImage.scaleType = ImageView.ScaleType.CENTER_CROP
+        // PRODUCT IMAGE WITH GLIDE
+//        val productImage = ImageView(activity)
+//        val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
+//        productImage.layoutParams = paramsProductImage
+//        productImage.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
+//        productImage.elevation = Tools.Window.dpToPx(1).toFloat()
+//        productImage.scaleType = ImageView.ScaleType.CENTER_CROP
+//        if (product.images.size > 0) {
+//            GlideApp.with(activity)
+//                .load(AppConfig.API.getImageUrl(product.images[0].id))
+//                .error(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
+//                .fallback(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
+//                .placeholder(circularProgressDrawable)
+//                .centerCrop()
+//                .into(productImage)
+//        } else {
+//            //productImage.setImageDrawable(activity.resources.getDrawable(R.drawable.ic_broken_image, activity.theme))
+//            productImage.setImageResource(R.drawable.ic_broken_image)
+//        }
 
-        if (product.images.size > 0) {
-            Glide.with(activity)
-                .load("http://160.238.220.112:9090/api/wtb-v1/image/id/${product.images[0].id}")
-                .error(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
-                .fallback(activity.resources.getDrawable(R.drawable.ic_logo, activity.theme))
-                .placeholder(circularProgressDrawable)
-                .centerCrop()
-                .into(productImage)
-        } else {
-            //productImage.setImageDrawable(activity.resources.getDrawable(R.drawable.sutia1, activity.theme))
-            productImage.setImageResource(R.drawable.ic_launcher_background)
-        }
-        // TODO Check the background because the corners are with shadow
+        // TODO Check the IMAGES background because the corners are with shadow
+
+        // PRODUCT IMAGES WITH VIEWPAGER
+        val productImages = ViewPager(activity)
+        val paramsViewPager = LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, Tools.Window.dpToPx(240))
+        paramsViewPager.setMargins(0, 0,0,0)
+        productImages.setBackgroundColor(activity.resources.getColor(R.color.white, activity.theme))
+        productImages.elevation = Tools.Window.dpToPx(1).toFloat()
+        productImages.layoutParams = paramsViewPager
+        productImages.foregroundGravity = Gravity.CENTER
+
+        val adapter = ImageAdapter(activity, product.images)
+        productImages.adapter = adapter
+        productImages.addOnPageChangeListener(object : OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                // scrollDisplay.requestDisallowInterceptTouchEvent(true);
+            }
+
+            override fun onPageSelected(position: Int) {
+                Tools.Show.message(activity,"Position: $position")
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                //  scrollDisplay.requestDisallowInterceptTouchEvent(false);
+            }
+        })
 
         // HEART IMAGE
         val heartImage = ImageView(activity)
@@ -191,9 +223,10 @@ class Component(private val activity: Activity) {
             // TODO Change the way to get the Reais symbol perhaps make a method in class to getPrice
         }
 
+
         // ADD VIEWS
         mainLinearContainer.addView(cardView)
-        cardView.addView(productImage)
+        cardView.addView(productImages)
         cardView.addView(heartImage)
         mainLinearContainer.addView(innerLinearContainer)
         innerLinearContainer.addView(productDescriptionTextView)

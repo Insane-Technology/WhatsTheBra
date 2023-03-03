@@ -1,6 +1,7 @@
 package com.insane.whatsthebra.interfaces
 
 import com.google.gson.JsonArray
+import com.insane.whatsthebra.config.AppConfig
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ interface ApiInterface  {
             return Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://160.238.220.112:9090/api/wtb-v1/")
+                .baseUrl(AppConfig.API.getHost())
                 .build().create(ApiInterface::class.java)
         }
     }

@@ -7,7 +7,6 @@ import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.reflect.Array
 
 /**
  * SingleTon object class
