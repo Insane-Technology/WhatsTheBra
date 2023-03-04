@@ -18,7 +18,7 @@ object AppConfig {
      */
     object API {
 
-        private const val apiHost: String = "http://160.238.220.112:9090/api/wtb-v1/"
+        private const val apiHost: String = "https://insane-wtb.rcastrucci.com/api/wtb-v1/"
         private const val imageEndPointId: String = "image/id/"
         private const val imageEndPoint: String = "image/"
 
