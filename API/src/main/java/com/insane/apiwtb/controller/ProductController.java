@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +43,13 @@ public class ProductController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public Product addProduct(@RequestBody ProductInput productInput) {
         return mapper.map(productService.save(productInput), Product.class);
+    }
+
+    @RequestMapping(path = "/images", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Product addProduct(@RequestBody ProductInput productInput, @RequestParam("files") List<MultipartFile> files) {
+        return mapper.map(productService.save(productInput, files), Product.class);
+        // TODO NOT WORKING, MUST CHANGE METHOD TO SUPPORT MULTIPART
     }
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {

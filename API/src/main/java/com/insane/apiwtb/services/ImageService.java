@@ -44,6 +44,7 @@ public class ImageService {
     public ImageOut save(MultipartFile file) {
 
         String originalFileName = file.getOriginalFilename();
+        assert originalFileName != null;
         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String fileName = new Date().getTime()+fileExtension;
 

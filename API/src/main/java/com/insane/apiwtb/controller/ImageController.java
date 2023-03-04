@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +79,16 @@ public class ImageController {
         ImageOut imageOut = imageService.save(file);
         response.setStatus(imageOut.getHttpStatus().value());
         return imageOut;
+    }
+
+    @PostMapping("/list")
+    public List<ImageOut> uploadImages(@RequestParam("files") List<MultipartFile> files, HttpServletResponse response) {
+        ArrayList<ImageOut> imagesOut = new ArrayList();
+        for (MultipartFile file: files) {
+            imagesOut.add(imageService.save(file));
+        }
+        response.setStatus(imagesOut.get(0).getHttpStatus().value());
+        return imagesOut;
     }
 
     @DeleteMapping
