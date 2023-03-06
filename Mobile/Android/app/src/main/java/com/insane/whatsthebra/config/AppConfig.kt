@@ -18,20 +18,25 @@ object AppConfig {
      */
     object API {
 
-        private const val apiHost: String = "https://insane-wtb.rcastrucci.com/api/wtb-v1/"
+        private const val hostBase: String = "https://insane-wtb.rcastrucci.com/"
+        private const val api: String = "api/wtb-v1/"
         private const val imageEndPointId: String = "image/id/"
         private const val imageEndPoint: String = "image/"
 
+        fun getHostBase(): String {
+            return hostBase;
+        }
+
         fun getHost(): String {
-            return apiHost;
+            return "${hostBase}${api}";
         }
 
         fun getImageUrl(imageId: Int): String {
-            return "${apiHost}${imageEndPointId}${imageId}"
+            return "${hostBase}${api}${imageEndPointId}${imageId}"
         }
 
         fun getImageUrl(imageName: String): String {
-            return "${apiHost}${imageEndPoint}${imageName}"
+            return "${hostBase}${api}${imageEndPoint}${imageName}"
         }
 
     }
