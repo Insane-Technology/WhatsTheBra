@@ -6,7 +6,6 @@ import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.os.*
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
 import android.widget.Toast
 import com.insane.whatsthebra.config.AppConfig
@@ -26,7 +25,7 @@ object Tools {
         fun internetStatus(context: Context): Boolean {
 
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            return cm!!.activeNetworkInfo != null && cm!!.activeNetworkInfo!!.isConnected
+            return cm.activeNetworkInfo != null && cm.activeNetworkInfo!!.isConnected
             // TODO: Verify if there is any other type of Connectivity Service other than WIFI, MOBILE and ETHERNET
             // TODO: VERIFY DEPRECATION
         }

@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         }
         // MODAL CONTAINER TO AVOID CLOSE MODAL ON MODAL's CLICK
         linearFilterContainer.setOnClickListener { /* Ignore event */ }
+
         // HOME
         ivHome.setOnClickListener {
             selectMenu(ivHome)
