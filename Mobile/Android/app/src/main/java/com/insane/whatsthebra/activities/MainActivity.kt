@@ -12,6 +12,7 @@ import com.insane.whatsthebra.R
 import com.insane.whatsthebra.component.MainComponent
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
+import com.insane.whatsthebra.database.dto.CategoryDTO
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     private val mainActivityComponent = MainComponent(this)
     private var selectedFilters: ArrayList<BraType> = ArrayList()
-    private var selectedCategory: Category = MainService.getCategories()[0]
+    private var selectedCategory: Category = Category(name = "")
     private var refreshLayout: SwipeRefreshLayout? = null
     private var isFavouriteList = false
     private val db = AppDataBase.getDataBase(this)
@@ -58,11 +59,14 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         val ivNotification: ImageView = findViewById(R.id.iv_notification)
         val ivProfile: ImageView = findViewById(R.id.iv_profile)
 
+        // SET FIRST CATEGORY ON
+        selectedCategory = db.categoryDao().getAll()[0].toCategory()
+
         // PULL REFRESH
         refreshLayout = findViewById(R.id.swipeRefreshLayout)
 
         /*  ************************** ADD VIEWS *************************** */
-        loadCategoryButtons(linearCategoryButtons)
+        loadCategoryButtons(linearCategoryButtons, db.categoryDao().getAll())
         loadFilters(linearCheckboxContainerLeft,linearCheckboxContainerRight)
         selectMenu(ivHome)
         setCategoryOn(selectedCategory)
@@ -221,32 +225,32 @@ class MainActivity : AppCompatActivity(), DataCallBack {
             }
         }
 
-        for (product in MainService.getProducts()) {
+        for (product in db.productDao().getAll()) {
             if (!isFavouriteList) {
-                filter(product)
+                filter(product.toProduct(db))
             } else {
-                if (favouriteProducts.any { it == product}) {
-                    filter(product)
+                if (favouriteProducts.any { it == product.toProduct(db)}) {
+                    filter(product.toProduct(db))
                 }
             }
         }
     }
 
-    private fun loadCategoryButtons(buttonsContainer: LinearLayout) {
+    private fun loadCategoryButtons(buttonsContainer: LinearLayout, categories: List<CategoryDTO>) {
         buttonsContainer.removeAllViews()
-        for (category in MainService.getCategories()) {
-            mainActivityComponent.createButtonCategory(buttonsContainer, category)
+        for (category in categories) {
+            mainActivityComponent.createButtonCategory(buttonsContainer, category.toCategory())
         }
     }
 
     private fun loadFilters(leftColumn: LinearLayout, rightColumn: LinearLayout) {
         leftColumn.removeAllViews()
         rightColumn.removeAllViews()
-        for ((index, braType) in MainService.getBraTypes().withIndex()) {
+        for ((index, braType) in db.braTypeDao().getAll().withIndex()) {
             if (index % 2 == 0) {
-                mainActivityComponent.createCheckboxFilter(leftColumn, braType)
+                mainActivityComponent.createCheckboxFilter(leftColumn, braType.toBraType())
             } else {
-                mainActivityComponent.createCheckboxFilter(rightColumn, braType)
+                mainActivityComponent.createCheckboxFilter(rightColumn, braType.toBraType())
             }
         }
     }

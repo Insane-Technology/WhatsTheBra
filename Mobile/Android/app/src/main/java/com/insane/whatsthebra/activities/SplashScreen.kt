@@ -30,7 +30,7 @@ class SplashScreen : AppCompatActivity(), DataCallBack {
             MainService.loadData(db, this)
         } else if (db.productDao().getAll().isNotEmpty()) {
             Tools.Show.message(this, this.getString(R.string.offlineData))
-            MainService.loadDataOffline(db, this)
+            onDataLoaded()
         } else {
             noInternet()
         }

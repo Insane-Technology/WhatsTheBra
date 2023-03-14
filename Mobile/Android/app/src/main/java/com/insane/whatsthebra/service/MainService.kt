@@ -25,11 +25,6 @@ object MainService {
 
     private val apiService = ApiInterface.create()
     private var callBack: DataCallBack? = null
-    private var categories = ArrayList<Category>()
-    private var braTypes = ArrayList<BraType>()
-    private var shops = ArrayList<Shop>()
-    private var productTypes = ArrayList<ProductType>()
-    private var products = ArrayList<Product>()
     private var serviceCounter = 0
 
     /**
@@ -43,32 +38,6 @@ object MainService {
         loadShopList(db, callBack)
         loadProductTypeList(db, callBack)
         loadProducts(db, callBack)
-    }
-
-    fun loadDataOffline(db: AppDataBase, callBack: DataCallBack) {
-        serviceCounter++
-        loadUser(callBack)
-        categories.clear()
-        for (category in db.categoryDao().getAll()) {
-            categories.add(category.toCategory())
-        }
-        braTypes.clear()
-        for (braType in db.braTypeDao().getAll()) {
-            braTypes.add(braType.toBraType())
-        }
-        shops.clear()
-        for (shop in db.shopDao().getAll()) {
-            shops.add(shop.toShop())
-        }
-        productTypes.clear()
-        for (productType in db.productTypeDao().getAll()) {
-            productTypes.add(productType.toProductType())
-        }
-        products.clear()
-        for (product in db.productDao().getAll()) {
-            products.add(product.toProduct(db))
-        }
-        onServiceDone()
     }
 
     private fun loadUser(callBack: DataCallBack) {
@@ -108,16 +77,13 @@ object MainService {
                         var category = Category(
                             c.asJsonObject.get("id").asInt,
                             c.asJsonObject.get("name").asString)
-                        categories.add(category)
                         db.categoryDao().insert(category.toCategoryDTO())
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                 t.message?.let {
-                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
                     Log.e("API", it)
                 }
             }
@@ -131,7 +97,6 @@ object MainService {
     private fun loadBraTypes(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         setDataCallBack(callBack)
-        braTypes.clear()
         val jsonBraTypeList: Call<JsonArray> = apiService.fetchBraTypes()
         jsonBraTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -141,10 +106,8 @@ object MainService {
                         var braType = BraType(
                             t.asJsonObject.get("id").asInt,
                             t.asJsonObject.get("name").asString)
-                        braTypes.add(braType)
                         db.braTypeDao().insert(braType.toBraTypeDTO())
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
@@ -175,7 +138,6 @@ object MainService {
                             t.asJsonObject.get("name").asString)
                         db.imageDao().insert(image.toImageDTO())
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
@@ -195,7 +157,6 @@ object MainService {
     private fun loadShopList(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         setDataCallBack(callBack)
-        shops.clear()
         val jsonShopList: Call<JsonArray> = apiService.fetchShops()
         jsonShopList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -206,11 +167,8 @@ object MainService {
                             t.asJsonObject.get("id").asInt,
                             t.asJsonObject.get("name").asString,
                             t.asJsonObject.get("link").asString)
-                        shops.add(shop)
                         db.shopDao().insert(shop.toShopDTO())
-                        // TODO: Once everything is saved into local SQLITE database no need to keeo in memory the lists we may delete all var like, shops, categories, products...
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
@@ -230,7 +188,6 @@ object MainService {
     private fun loadProductTypeList(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         setDataCallBack(callBack)
-        productTypes.clear()
         val jsonProductTypeList: Call<JsonArray> = apiService.fetchProductTypes()
         jsonProductTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -240,11 +197,8 @@ object MainService {
                         var productType = ProductType (
                             t.asJsonObject.get("id").asInt,
                             t.asJsonObject.get("name").asString)
-                        productTypes.add(productType)
                         db.productTypeDao().insert(productType.toProductTypeDTO())
-                        // TODO: Once everything is saved into local SQLITE database no need to keeo in memory the lists we may delete all var like, shops, categories, products...
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
@@ -264,7 +218,6 @@ object MainService {
     fun loadProducts(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         setDataCallBack(callBack)
-        products.clear()
         val jsonProducts: Call<JsonArray> = apiService.fetchProducts()
         jsonProducts.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
@@ -332,12 +285,8 @@ object MainService {
                             categories,
                             imageList
                         )
-
-                        products.add(product)
                         db.productDao().insert(product.toProductDTO())
-
                     }
-                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
                 }
             }
@@ -366,18 +315,6 @@ object MainService {
      */
     private fun setDataCallBack(dataCallBack: DataCallBack) {
         this.callBack = dataCallBack
-    }
-
-    fun getCategories(): ArrayList<Category> {
-        return this.categories
-    }
-
-    fun getBraTypes(): ArrayList<BraType> {
-        return this.braTypes
-    }
-
-    fun getProducts(): ArrayList<Product> {
-        return this.products
     }
 
 }
