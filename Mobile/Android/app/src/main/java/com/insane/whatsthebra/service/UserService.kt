@@ -22,7 +22,7 @@ class UserService (var context: Context) {
     fun setFavouriteProduct(product: Product): Boolean {
         return if (user.favouriteProducts.any { it == product }) {
             user.favouriteProducts.remove(product)
-            db.favouriteProductDao().removeProductById(product.id)
+            db.favouriteProductDao().removeProductByIdAndUser(product.id, user.id)
             false
         } else {
             user.favouriteProducts.add(product)

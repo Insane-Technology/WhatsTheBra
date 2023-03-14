@@ -26,6 +26,9 @@ interface ApiInterface  {
     @GET("product")
     fun fetchProducts(): Call<JsonArray>
 
+    @GET("image")
+    fun fetchImages(): Call<JsonArray>
+
     @GET("location/BR/{state}/city")
     fun fetchCityByState(@Path("state") state: String) : Call<JsonArray>
 

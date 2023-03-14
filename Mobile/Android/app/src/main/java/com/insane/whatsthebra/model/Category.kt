@@ -1,8 +1,9 @@
 package com.insane.whatsthebra.model
 
+import com.insane.whatsthebra.database.dto.CategoryDTO
 import java.io.Serializable
 
-class Category(val id: Int = 0, var name: String? = null) : Serializable {
+class Category(val id: Int = 0, var name: String) : Serializable {
 
     override fun hashCode(): Int {
         var result = id
@@ -16,6 +17,13 @@ class Category(val id: Int = 0, var name: String? = null) : Serializable {
         if (other !is Category) return false
         if (name != other.name || id != other.id) return false
         return true
+    }
+
+    fun toCategoryDTO(): CategoryDTO {
+        return CategoryDTO(
+            id = id,
+            name = name
+        )
     }
 
 }

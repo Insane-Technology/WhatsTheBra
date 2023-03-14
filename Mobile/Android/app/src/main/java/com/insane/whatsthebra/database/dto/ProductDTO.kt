@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.model.*
+import com.insane.whatsthebra.service.ProductService
 
 const val PRODUCT_TABLE_NAME = "tb_product"
 
@@ -34,11 +35,10 @@ data class ProductDTO (
             discount = discount,
             shop = db.shopDao().getById(shopId).toShop(),
             productType = db.productTypeDao().getById(productTypeId).toProductType(),
-            braTypes = ArrayList(),
-            categories = ArrayList(),
-            images = ArrayList()
+            braTypes = ProductService(context).getProductBraTypeList(id),
+            categories = ProductService(context).getProductCategoryList(id),
+            images = ProductService(context).getProductImageList(id)
         )
-        // TODO: Must implement the productType DAO and get also all lists from images and etc..
     }
 
 }

@@ -4,14 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.insane.whatsthebra.database.dao.FavouriteProductDAO
-import com.insane.whatsthebra.database.dao.ProductDAO
-import com.insane.whatsthebra.database.dao.ProductTypeDAO
-import com.insane.whatsthebra.database.dao.ShopDAO
-import com.insane.whatsthebra.database.dto.FavouriteProductDTO
-import com.insane.whatsthebra.database.dto.ProductDTO
-import com.insane.whatsthebra.database.dto.ProductTypeDTO
-import com.insane.whatsthebra.database.dto.ShopDTO
+import com.insane.whatsthebra.database.dao.*
+import com.insane.whatsthebra.database.dto.*
 
 const val DATABASE_NAME = "db_insane"
 
@@ -19,7 +13,13 @@ const val DATABASE_NAME = "db_insane"
     ProductDTO::class,
     ShopDTO::class,
     FavouriteProductDTO::class,
-    ProductTypeDTO::class],
+    ProductBraTypeDTO::class,
+    ProductTypeDTO::class,
+    BraTypeDTO::class,
+    CategoryDTO::class,
+    ImageDTO::class,
+    ProductCategoryDTO::class,
+    ProductImageDTO::class],
     version = 1)
 abstract class AppDataBase: RoomDatabase() {
 
@@ -27,6 +27,12 @@ abstract class AppDataBase: RoomDatabase() {
     abstract fun shopDao(): ShopDAO
     abstract fun productTypeDao(): ProductTypeDAO
     abstract fun favouriteProductDao(): FavouriteProductDAO
+    abstract fun productBraTypeDao(): ProductBraTypeDAO
+    abstract fun productCategoryDao(): ProductCategoryDAO
+    abstract fun productImageDao(): ProductImageDAO
+    abstract fun braTypeDao(): BraTypeDAO
+    abstract fun categoryDao(): CategoryDAO
+    abstract fun imageDao(): ImageDAO
 
     companion object {
         private var INSTANCE: AppDataBase? = null

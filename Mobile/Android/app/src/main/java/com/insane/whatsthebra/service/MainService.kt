@@ -3,6 +3,9 @@ package com.insane.whatsthebra.service
 import android.util.Log
 import com.google.gson.JsonArray
 import com.insane.whatsthebra.database.AppDataBase
+import com.insane.whatsthebra.database.dto.ProductBraTypeDTO
+import com.insane.whatsthebra.database.dto.ProductCategoryDTO
+import com.insane.whatsthebra.database.dto.ProductImageDTO
 import com.insane.whatsthebra.interfaces.ApiInterface
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
@@ -33,8 +36,9 @@ object MainService {
      */
     fun loadData(db: AppDataBase, callBack: DataCallBack) {
         loadUser(callBack)
-        loadCategories(callBack)
-        loadBraTypes(callBack)
+        loadCategories(db, callBack)
+        loadBraTypes(db, callBack)
+        loadImages(db, callBack)
         loadShopList(db, callBack)
         loadProductTypeList(db, callBack)
         loadProducts(db, callBack)
@@ -53,7 +57,7 @@ object MainService {
             created = Date(),
             updated = Date(),
             city = City(),
-            image = Image(),
+            image = Image(name = ""),
             favouriteProducts = ArrayList()
         )
 
@@ -65,7 +69,7 @@ object MainService {
      * Method to load category list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    private fun loadCategories(callBack: DataCallBack) {
+    private fun loadCategories(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         categories.clear()
         setDataCallBack(callBack)
@@ -79,6 +83,7 @@ object MainService {
                             c.asJsonObject.get("id").asInt,
                             c.asJsonObject.get("name").asString)
                         categories.add(category)
+                        db.categoryDao().insert(category.toCategoryDTO())
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
@@ -97,7 +102,7 @@ object MainService {
      * Method to load bra type list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    private fun loadBraTypes(callBack: DataCallBack) {
+    private fun loadBraTypes(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
         setDataCallBack(callBack)
         braTypes.clear()
@@ -111,6 +116,38 @@ object MainService {
                             t.asJsonObject.get("id").asInt,
                             t.asJsonObject.get("name").asString)
                         braTypes.add(braType)
+                        db.braTypeDao().insert(braType.toBraTypeDTO())
+                    }
+                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
+                    onServiceDone()
+                }
+            }
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                t.message?.let {
+                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
+                    Log.e("API", it)
+                }
+            }
+        })
+    }
+
+    /**
+     * Method to load a image list from API
+     * @param callBack an interface DataCallback must be implemented to receive the callback from this method
+     */
+    private fun loadImages(db: AppDataBase, callBack: DataCallBack) {
+        serviceCounter++
+        setDataCallBack(callBack)
+        val jsonImageList: Call<JsonArray> = apiService.fetchImages()
+        jsonImageList.enqueue(object : retrofit2.Callback<JsonArray> {
+            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+                val jsonResponse = response.body()
+                if (jsonResponse != null) {
+                    for (t in jsonResponse) {
+                        var image = Image (
+                            t.asJsonObject.get("id").asInt,
+                            t.asJsonObject.get("name").asString)
+                        db.imageDao().insert(image.toImageDTO())
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
@@ -217,6 +254,7 @@ object MainService {
                                 image.asJsonObject.get("name").asString
                             )
                             imageList.add(img)
+                            db.productImageDao().insert(ProductImageDTO(id_product = p.asJsonObject.get("id").asInt, id_image = img.id))
                         }
 
                         // SETTING PRODUCT BraType LIST
@@ -227,6 +265,7 @@ object MainService {
                                 braType.asJsonObject.get("name").asString
                             )
                             braTypes.add(bt)
+                            db.productBraTypeDao().insert(ProductBraTypeDTO(id_product = p.asJsonObject.get("id").asInt, id_bra_type = bt.id))
                         }
 
                         // SETTING PRODUCT CATEGORIES
@@ -237,6 +276,7 @@ object MainService {
                                 category.asJsonObject.get("name").asString
                             )
                             categories.add(cat)
+                            db.productCategoryDao().insert(ProductCategoryDTO(id_product = p.asJsonObject.get("id").asInt, id_category = cat.id))
                         }
 
                         // SETTING PRODUCT SHOP

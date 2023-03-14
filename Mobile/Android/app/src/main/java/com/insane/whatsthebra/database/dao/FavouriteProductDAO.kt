@@ -13,7 +13,7 @@ interface FavouriteProductDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(favouriteProduct: FavouriteProductDTO)
 
-    @Query("DELETE FROM $FAVOURITE_PRODUCT_TABLE_NAME WHERE id_product = :productId")
-    fun removeProductById(productId: Int)
+    @Query("DELETE FROM $FAVOURITE_PRODUCT_TABLE_NAME WHERE id_product = :productId AND id_user = :userId")
+    fun removeProductByIdAndUser(productId: Int, userId: Int)
 
 }
