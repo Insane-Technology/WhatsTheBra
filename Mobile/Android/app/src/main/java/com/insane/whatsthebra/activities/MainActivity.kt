@@ -4,17 +4,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.activity.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.component.MainComponent
 import com.insane.whatsthebra.config.AppConfig
+import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
+import com.insane.whatsthebra.service.UserService
 import com.insane.whatsthebra.utils.Tools
 
 
@@ -25,7 +28,9 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private var selectedCategory: Category = MainService.getCategories()[0]
     private var refreshLayout: SwipeRefreshLayout? = null
     private var isFavouriteList = false
+    private val db = AppDataBase.getDataBase(this)
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +71,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
         /* ************************ CLICK LISTENERS ************************ */
         // PULL TO REFRESH
-        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(this) }
+        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(AppDataBase.getDataBase(this), this) }
         // BUTTON FILTER
         imgBtnFilter.setOnClickListener { openModalFilter(constraintFilter) }
         // DARK BACKGROUND MODAL
@@ -165,14 +170,10 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     @SuppressLint("UseCompatLoadingForDrawables")
     fun setFavouriteProduct(product: Product) {
         val favouriteButton = this.findViewById(AppConfig.Component.getImageViewFavouriteId(product)) as ImageView
-        if (MainService.getUser().favouriteProducts.any { it == product }) {
-            MainService.getUser().favouriteProducts.remove(product)
-            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
-        } else {
-            MainService.getUser().favouriteProducts.add(product)
+        if (UserService(this).setFavouriteProduct(product))
             favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
-        }
-        // TODO Implement to set product as favourite on server or on shared preferences on device
+        else
+            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
     }
 
     private fun checkCategoryProduct(product: Product): Boolean {
@@ -196,39 +197,33 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         val leftColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerLeft)
         val rightColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerRight)
         var productMatches = 0
+        val favouriteProducts = UserService(this).getFavouriteProducts()
 
         // CLEAR VIEWS
         leftColumn.removeAllViews()
         rightColumn.removeAllViews()
 
-        for (product in MainService.getProducts()) {
-            if (!isFavouriteList) {
-                if (checkCategoryProduct(product)) {
-                    if (checkFilterProduct(product, selectedFilters)) {
-                        productMatches++
-                        val view: View = mainActivityComponent.createProductContainer(product)
-                        // ADD VIEW TO EACH COLUMN
-                        if (productMatches % 2 == 0) {
-                            rightColumn.addView(view)
-                        } else {
-                            leftColumn.addView(view)
-                        }
+        fun filter(product: Product) {
+            if (checkCategoryProduct(product)) {
+                if (checkFilterProduct(product, selectedFilters)) {
+                    productMatches++
+                    val view: View = mainActivityComponent.createProductContainer(product)
+                    // ADD VIEW TO EACH COLUMN
+                    if (productMatches % 2 == 0) {
+                        rightColumn.addView(view)
+                    } else {
+                        leftColumn.addView(view)
                     }
                 }
+            }
+        }
+
+        for (product in MainService.getProducts()) {
+            if (!isFavouriteList) {
+                filter(product)
             } else {
-                if (MainService.getUser().favouriteProducts.any { it == product}) {
-                    if (checkCategoryProduct(product)) {
-                        if (checkFilterProduct(product, selectedFilters)) {
-                            productMatches++
-                            val view: View = mainActivityComponent.createProductContainer(product)
-                            // ADD VIEW TO EACH COLUMN
-                            if (productMatches % 2 == 0) {
-                                rightColumn.addView(view)
-                            } else {
-                                leftColumn.addView(view)
-                            }
-                        }
-                    }
+                if (favouriteProducts.any { it == product}) {
+                    filter(product)
                 }
             }
         }

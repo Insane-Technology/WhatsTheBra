@@ -1,13 +1,15 @@
 package com.insane.whatsthebra.model
 
+import com.insane.whatsthebra.database.dto.ProductDTO
+
 class Product (
-    val id: Int = 0,
-    val name: String? = null,
-    val price: Double? = null,
-    val description: String? = null,
-    val discount: Int? = null,
-    val shop: Shop? = null,
-    val productType: ProductType? = null,
+    var id: Int = 0,
+    val name: String,
+    val price: Double,
+    val description: String,
+    var discount: Int = 0,
+    val shop: Shop,
+    val productType: ProductType,
     val braTypes: ArrayList<BraType> = ArrayList(),
     val categories: ArrayList<Category> = ArrayList(),
     val images: ArrayList<Image> = ArrayList()) {
@@ -25,4 +27,17 @@ class Product (
         if (name != other.name || id != other.id) return false
         return true
     }
+
+    fun toProductDTO(): ProductDTO {
+        return ProductDTO (
+            id = id,
+            name = name,
+            price = price,
+            description = description,
+            discount = discount,
+            shopId = shop.id,
+            productTypeId = productType.id
+        )
+    }
+
 }

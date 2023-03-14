@@ -2,9 +2,11 @@ package com.insane.whatsthebra.service
 
 import android.util.Log
 import com.google.gson.JsonArray
+import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.interfaces.ApiInterface
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
+import com.insane.whatsthebra.utils.Tools
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -21,24 +23,29 @@ object MainService {
     private var callBack: DataCallBack? = null
     private var categories = ArrayList<Category>()
     private var braTypes = ArrayList<BraType>()
+    private var shops = ArrayList<Shop>()
+    private var productTypes = ArrayList<ProductType>()
     private var products = ArrayList<Product>()
-    private var user = User(id = 0)
+    private var serviceCounter = 0
 
     /**
      * Method to load data from API
      */
-    fun loadData(callBack: DataCallBack) {
+    fun loadData(db: AppDataBase, callBack: DataCallBack) {
         loadUser(callBack)
         loadCategories(callBack)
         loadBraTypes(callBack)
-        loadProducts(callBack)
+        loadShopList(db, callBack)
+        loadProductTypeList(db, callBack)
+        loadProducts(db, callBack)
     }
 
     private fun loadUser(callBack: DataCallBack) {
+        // serviceCounter++
         setDataCallBack(callBack)
         // TODO Must Implement loading user from API getting credentials from shared preferences file
         // CREATING A FAKE USER TO TEST
-        user = User(
+        UserService.user = User(
             id = 1,
             name = "User Number One",
             email = "user@email.com",
@@ -51,7 +58,7 @@ object MainService {
         )
 
         // CALLING SERVICE DONE
-        onServiceDone()
+        // onServiceDone()
     }
 
     /**
@@ -59,6 +66,7 @@ object MainService {
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
     private fun loadCategories(callBack: DataCallBack) {
+        serviceCounter++
         categories.clear()
         setDataCallBack(callBack)
         val jsonCategories: Call<JsonArray> = apiService.fetchCategories()
@@ -90,6 +98,7 @@ object MainService {
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
     private fun loadBraTypes(callBack: DataCallBack) {
+        serviceCounter++
         setDataCallBack(callBack)
         braTypes.clear()
         val jsonBraTypeList: Call<JsonArray> = apiService.fetchBraTypes()
@@ -117,10 +126,80 @@ object MainService {
     }
 
     /**
+     * Method to load shop list from API
+     * @param callBack an interface DataCallback must be implemented to receive the callback from this method
+     */
+    private fun loadShopList(db: AppDataBase, callBack: DataCallBack) {
+        serviceCounter++
+        setDataCallBack(callBack)
+        shops.clear()
+        val jsonShopList: Call<JsonArray> = apiService.fetchShops()
+        jsonShopList.enqueue(object : retrofit2.Callback<JsonArray> {
+            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+                val jsonResponse = response.body()
+                if (jsonResponse != null) {
+                    for (t in jsonResponse) {
+                        var shop = Shop (
+                            t.asJsonObject.get("id").asInt,
+                            t.asJsonObject.get("name").asString,
+                            t.asJsonObject.get("link").asString)
+                        shops.add(shop)
+                        db.shopDao().insert(shop.toShopDTO())
+                        // TODO: Once everything is saved into local SQLITE database no need to keeo in memory the lists we may delete all var like, shops, categories, products...
+                    }
+                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
+                    onServiceDone()
+                }
+            }
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                t.message?.let {
+                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
+                    Log.e("API", it)
+                }
+            }
+        })
+    }
+
+    /**
+     * Method to load product type list from API
+     * @param callBack an interface DataCallback must be implemented to receive the callback from this method
+     */
+    private fun loadProductTypeList(db: AppDataBase, callBack: DataCallBack) {
+        serviceCounter++
+        setDataCallBack(callBack)
+        productTypes.clear()
+        val jsonProductTypeList: Call<JsonArray> = apiService.fetchProductTypes()
+        jsonProductTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
+            override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
+                val jsonResponse = response.body()
+                if (jsonResponse != null) {
+                    for (t in jsonResponse) {
+                        var productType = ProductType (
+                            t.asJsonObject.get("id").asInt,
+                            t.asJsonObject.get("name").asString)
+                        productTypes.add(productType)
+                        db.productTypeDao().insert(productType.toProductTypeDTO())
+                        // TODO: Once everything is saved into local SQLITE database no need to keeo in memory the lists we may delete all var like, shops, categories, products...
+                    }
+                    // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
+                    onServiceDone()
+                }
+            }
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                t.message?.let {
+                    // TODO: CHECK IF THERE IS ANY JSON RESPONSE SAVED IN SHARED PREFERENCES TO CONTINUE WITH APP
+                    Log.e("API", it)
+                }
+            }
+        })
+    }
+
+    /**
      * Method to load products list from API
      * @param callBack an interface DataCallback must be implemented to receive the callback from this method
      */
-    fun loadProducts(callBack: DataCallBack) {
+    fun loadProducts(db: AppDataBase, callBack: DataCallBack) {
+        serviceCounter++
         setDataCallBack(callBack)
         products.clear()
         val jsonProducts: Call<JsonArray> = apiService.fetchProducts()
@@ -187,7 +266,10 @@ object MainService {
                             categories,
                             imageList
                         )
+
                         products.add(product)
+                        db.productDao().insert(product.toProductDTO())
+
                     }
                     // TODO: AT THIS POINT WE MAY SAVE THE ENTIRE JSON RESPONSE INTO OUR SHARED PREFERENCES
                     onServiceDone()
@@ -206,12 +288,10 @@ object MainService {
      * Method called when all services are done
      */
     private fun onServiceDone() {
-        if (categories.size > 0 &&
-            braTypes.size > 0 &&
-            products.size > 0 &&
-            user.id > 0
-        )
-        callBack!!.onDataLoaded()
+        serviceCounter--
+        if (serviceCounter <= 0) {
+            callBack!!.onDataLoaded()
+        }
     }
 
     /**
@@ -232,10 +312,6 @@ object MainService {
 
     fun getProducts(): ArrayList<Product> {
         return this.products
-    }
-
-    fun getUser(): User {
-        return user
     }
 
 }

@@ -3,7 +3,6 @@ package com.insane.whatsthebra.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -12,14 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.R
-import com.insane.whatsthebra.database.DataBaseManager
+import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.interfaces.DataCallBack
-import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.utils.Tools
 
 class SplashScreen : AppCompatActivity(), DataCallBack {
 
-    private val db = DataBaseManager(this, "braType")
+//    private val db = DataBaseManager(this, "braType")
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +27,7 @@ class SplashScreen : AppCompatActivity(), DataCallBack {
         // Check Internet Status
         if (Tools.Connection.internetStatus(this)) {
             // Load data from API
-            MainService.loadData(this)
+            MainService.loadData(AppDataBase.getDataBase(this), this)
         } else {
             Tools.Show.noConnection(this)
             noInternet()
@@ -51,7 +49,7 @@ class SplashScreen : AppCompatActivity(), DataCallBack {
         // Check Internet Status
         if (Tools.Connection.internetStatus(this)) {
             // Load data from API
-            MainService.loadData(this)
+            MainService.loadData(AppDataBase.getDataBase(this), this)
         } else {
             progressBar.visibility = View.GONE
             modal.visibility = View.VISIBLE

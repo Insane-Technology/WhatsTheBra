@@ -12,13 +12,19 @@ import retrofit2.http.Path
 interface ApiInterface  {
 
     @GET("category")
-    fun fetchCategories() : Call<JsonArray>
+    fun fetchCategories(): Call<JsonArray>
 
     @GET("bra-type")
-    fun fetchBraTypes() : Call<JsonArray>
+    fun fetchBraTypes(): Call<JsonArray>
+
+    @GET("shop")
+    fun fetchShops(): Call<JsonArray>
+
+    @GET("product-type")
+    fun fetchProductTypes(): Call<JsonArray>
 
     @GET("product")
-    fun fetchProducts() : Call<JsonArray>
+    fun fetchProducts(): Call<JsonArray>
 
     @GET("location/BR/{state}/city")
     fun fetchCityByState(@Path("state") state: String) : Call<JsonArray>

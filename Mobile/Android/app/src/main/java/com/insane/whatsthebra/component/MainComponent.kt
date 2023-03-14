@@ -19,6 +19,7 @@ import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
+import com.insane.whatsthebra.service.UserService
 import com.insane.whatsthebra.utils.Tools
 import java.text.DecimalFormat
 
@@ -114,7 +115,7 @@ class MainComponent(private val context: MainActivity) {
         paramsHeartImage.setMargins(Tools.Window.dpToPx(8),Tools.Window.dpToPx(2),0,0)
         heartImage.layoutParams = paramsHeartImage
         heartImage.elevation = Tools.Window.dpToPx(10).toFloat()
-        if (MainService.getUser().favouriteProducts.any { it == product })
+        if (UserService.user.favouriteProducts.any { it == product })
             heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart_color, context.theme))
         else
             heartImage.setImageDrawable(context.resources.getDrawable(R.drawable.ic_heart, context.theme))

@@ -8,8 +8,6 @@ import android.os.*
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.widget.Toast
-import com.insane.whatsthebra.config.AppConfig
-import java.net.InetAddress
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.text.Normalizer
@@ -30,30 +28,21 @@ object Tools {
             // TODO: VERIFY DEPRECATION
         }
 
-        fun isInternetAvailable(): Boolean {
-            return try {
-                val ipAddress: InetAddress = InetAddress.getByName(AppConfig.API.getHostBase())
-                // TODO: METHOD NEED TP CHECK THE IP RESPONSE
-                !ipAddress.equals("")
-            } catch (e: java.lang.Exception) {
-                false
-            }
-        }
     }
 
 
     object Text {
         fun removeAccents(string: String): String {
-            var string = string
-            string = Normalizer.normalize(string, Normalizer.Form.NFD)
-            string = string.replace("[^\\p{ASCII}]".toRegex(), "")
-            return Normalizer.normalize(string, Normalizer.Form.NFD)
+            var st = string
+            st = Normalizer.normalize(string, Normalizer.Form.NFD)
+            st = st.replace("[^\\p{ASCII}]".toRegex(), "")
+            return Normalizer.normalize(st, Normalizer.Form.NFD)
                 .replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
         }
 
         fun isEmail(email: String?): Boolean {
             val emailRegex =
-                "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$"
+                "^[a-zA-Z\\d_+&*-]+(?:\\.[a-zA-Z\\d_+&*-]+)*@(?:[a-zA-Z\\d-]+\\.)+[a-zA-Z]{2,7}$"
             val pat = Pattern.compile(emailRegex)
             return if (email == null) false else pat.matcher(email).matches()
         }
