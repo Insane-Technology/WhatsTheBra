@@ -17,19 +17,21 @@ import com.insane.whatsthebra.utils.Tools
 
 class SplashScreen : AppCompatActivity(), DataCallBack {
 
-//    private val db = DataBaseManager(this, "braType")
 
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+        val db = AppDataBase.getDataBase(this)
+
         // Check Internet Status
         if (Tools.Connection.internetStatus(this)) {
-            // Load data from API
-            MainService.loadData(AppDataBase.getDataBase(this), this)
+            MainService.loadData(db, this)
+        } else if (db.productDao().getAll().isNotEmpty()) {
+            Tools.Show.message(this, this.getString(R.string.offlineData))
+            MainService.loadDataOffline(db, this)
         } else {
-            Tools.Show.noConnection(this)
             noInternet()
         }
 

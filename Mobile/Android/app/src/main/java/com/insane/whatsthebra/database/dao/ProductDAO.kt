@@ -7,7 +7,7 @@ import com.insane.whatsthebra.database.dto.ProductDTO
 @Dao
 interface ProductDAO {
 
-    @Query("SELECT * FROM $PRODUCT_TABLE_NAME ORDER BY name ASC")
+    @Query("SELECT * FROM $PRODUCT_TABLE_NAME ORDER BY id ASC")
     fun getAll(): List<ProductDTO>
 
     @Query("SELECT * FROM $PRODUCT_TABLE_NAME WHERE id = :productId")

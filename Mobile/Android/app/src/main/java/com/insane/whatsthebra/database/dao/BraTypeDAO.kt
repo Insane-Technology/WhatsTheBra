@@ -7,7 +7,7 @@ import com.insane.whatsthebra.database.dto.BraTypeDTO
 @Dao
 interface BraTypeDAO {
 
-    @Query("SELECT * FROM $BRA_TYPE_TABLE_NAME ORDER BY name ASC")
+    @Query("SELECT * FROM $BRA_TYPE_TABLE_NAME ORDER BY id ASC")
     fun getAll(): List<BraTypeDTO>
 
     @Query("SELECT * FROM $BRA_TYPE_TABLE_NAME WHERE id = :braTypeId")

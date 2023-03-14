@@ -7,7 +7,7 @@ import com.insane.whatsthebra.database.dto.CategoryDTO
 @Dao
 interface CategoryDAO {
 
-    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY name ASC")
+    @Query("SELECT * FROM $CATEGORY_TABLE_NAME ORDER BY id ASC")
     fun getAll(): List<CategoryDTO>
 
     @Query("SELECT * FROM $CATEGORY_TABLE_NAME WHERE id = :categoryId")

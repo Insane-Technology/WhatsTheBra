@@ -2,6 +2,7 @@ package com.insane.whatsthebra.service
 
 import android.util.Log
 import com.google.gson.JsonArray
+import com.insane.whatsthebra.R
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.ProductBraTypeDTO
 import com.insane.whatsthebra.database.dto.ProductCategoryDTO
@@ -44,6 +45,32 @@ object MainService {
         loadProducts(db, callBack)
     }
 
+    fun loadDataOffline(db: AppDataBase, callBack: DataCallBack) {
+        serviceCounter++
+        loadUser(callBack)
+        categories.clear()
+        for (category in db.categoryDao().getAll()) {
+            categories.add(category.toCategory())
+        }
+        braTypes.clear()
+        for (braType in db.braTypeDao().getAll()) {
+            braTypes.add(braType.toBraType())
+        }
+        shops.clear()
+        for (shop in db.shopDao().getAll()) {
+            shops.add(shop.toShop())
+        }
+        productTypes.clear()
+        for (productType in db.productTypeDao().getAll()) {
+            productTypes.add(productType.toProductType())
+        }
+        products.clear()
+        for (product in db.productDao().getAll()) {
+            products.add(product.toProduct(db))
+        }
+        onServiceDone()
+    }
+
     private fun loadUser(callBack: DataCallBack) {
         // serviceCounter++
         setDataCallBack(callBack)
@@ -71,7 +98,6 @@ object MainService {
      */
     private fun loadCategories(db: AppDataBase, callBack: DataCallBack) {
         serviceCounter++
-        categories.clear()
         setDataCallBack(callBack)
         val jsonCategories: Call<JsonArray> = apiService.fetchCategories()
         jsonCategories.enqueue(object : retrofit2.Callback<JsonArray> {

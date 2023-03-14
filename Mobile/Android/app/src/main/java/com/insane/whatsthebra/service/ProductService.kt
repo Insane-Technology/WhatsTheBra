@@ -1,14 +1,11 @@
 package com.insane.whatsthebra.service
 
-import android.content.Context
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Image
 
-class ProductService (var context: Context) {
-
-    private val db = AppDataBase.getDataBase(context)
+class ProductService (var db: AppDataBase) {
 
     fun getProductBraTypeList(productId: Int): ArrayList<BraType> {
         val braTypes = ArrayList<BraType>()

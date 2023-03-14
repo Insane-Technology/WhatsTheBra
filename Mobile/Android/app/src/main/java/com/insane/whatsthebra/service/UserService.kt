@@ -43,7 +43,7 @@ class UserService (var context: Context) {
     fun getFavouriteProducts(): List<Product> {
         user.favouriteProducts.clear()
         for (favouriteProduct in db.favouriteProductDao().getAll()) {
-            user.favouriteProducts.add(db.productDao().getById(favouriteProduct.id_product).toProduct(context))
+            user.favouriteProducts.add(db.productDao().getById(favouriteProduct.id_product).toProduct(db))
         }
         return user.favouriteProducts
     }

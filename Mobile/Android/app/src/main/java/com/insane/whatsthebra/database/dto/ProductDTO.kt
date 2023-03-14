@@ -25,8 +25,7 @@ data class ProductDTO (
      * Method to convert ProductDTO into Product with all relations
      * This method requires a context to be able to use the AppDataBase
      */
-    fun toProduct(context: Context): Product {
-        val db = AppDataBase.getDataBase(context)
+    fun toProduct(db: AppDataBase): Product {
         return Product(
             id = id,
             name = name,
@@ -35,9 +34,9 @@ data class ProductDTO (
             discount = discount,
             shop = db.shopDao().getById(shopId).toShop(),
             productType = db.productTypeDao().getById(productTypeId).toProductType(),
-            braTypes = ProductService(context).getProductBraTypeList(id),
-            categories = ProductService(context).getProductCategoryList(id),
-            images = ProductService(context).getProductImageList(id)
+            braTypes = ProductService(db).getProductBraTypeList(id),
+            categories = ProductService(db).getProductCategoryList(id),
+            images = ProductService(db).getProductImageList(id)
         )
     }
 

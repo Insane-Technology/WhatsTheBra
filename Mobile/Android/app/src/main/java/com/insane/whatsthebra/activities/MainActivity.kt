@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     fun openProductDetails(product: Product) {
 //        Tools.Show.message(this, "Openning Product with id ${product.id}")
-        for (img in db.productDao().getById(product.id).toProduct(this).images) {
+        for (img in db.productDao().getById(product.id).toProduct(db).images) {
             Tools.Show.message(this, "Product Image -> ${img.name}")
         }
         // TODO Implement click listener to open product details page
