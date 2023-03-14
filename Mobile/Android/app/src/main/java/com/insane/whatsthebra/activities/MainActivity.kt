@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
         /* ************************ CLICK LISTENERS ************************ */
         // PULL TO REFRESH
-        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(AppDataBase.getDataBase(this), this) }
+        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(db, this) }
         // BUTTON FILTER
         imgBtnFilter.setOnClickListener { openModalFilter(constraintFilter) }
         // DARK BACKGROUND MODAL
@@ -167,10 +167,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
     fun openProductDetails(product: Product) {
-//        Tools.Show.message(this, "Openning Product with id ${product.id}")
-        for (img in db.productDao().getById(product.id).toProduct(db).images) {
-            Tools.Show.message(this, "Product Image -> ${img.name}")
-        }
+        Tools.Show.message(this, "Openning Product with id ${product.id}")
         // TODO Implement click listener to open product details page
     }
 

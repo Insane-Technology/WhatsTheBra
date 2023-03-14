@@ -2,7 +2,6 @@ package com.insane.whatsthebra.service
 
 import android.util.Log
 import com.google.gson.JsonArray
-import com.insane.whatsthebra.R
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.ProductBraTypeDTO
 import com.insane.whatsthebra.database.dto.ProductCategoryDTO
@@ -10,7 +9,6 @@ import com.insane.whatsthebra.database.dto.ProductImageDTO
 import com.insane.whatsthebra.interfaces.ApiInterface
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.*
-import com.insane.whatsthebra.utils.Tools
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -38,6 +36,11 @@ object MainService {
         loadShopList(db, callBack)
         loadProductTypeList(db, callBack)
         loadProducts(db, callBack)
+    }
+
+    fun loadDataOffline(db: AppDataBase, callBack: DataCallBack) {
+        loadUser(callBack)
+        onServiceDone()
     }
 
     private fun loadUser(callBack: DataCallBack) {
@@ -285,6 +288,7 @@ object MainService {
                             categories,
                             imageList
                         )
+
                         db.productDao().insert(product.toProductDTO())
                     }
                     onServiceDone()
@@ -297,6 +301,7 @@ object MainService {
                 }
             }
         })
+        // TODO: WE MUST CHECK IF THERE IS INTERNET BEFORE LOAD DATE AND SET A TIMEOUT TO CALL onServiceDOne
     }
 
     /**
