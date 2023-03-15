@@ -29,5 +29,9 @@
     <!-- Messages -->
     <string name="noInternet">Sem conexão com a internet. Por favor conecte à uma rede e tente novamente.</string>
     <string name="offlineData">Sem sinal de internet, carregando dados offline…</string>
+    <string name="notificationMessage">Painel de notificações ainda não disponível</string>
+    <string name="profileMessage">Perfil de conta ainda não disponível</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

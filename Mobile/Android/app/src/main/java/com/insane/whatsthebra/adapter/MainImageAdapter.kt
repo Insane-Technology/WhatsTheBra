@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import com.insane.whatsthebra.R
-import com.insane.whatsthebra.activities.MainActivity
+import com.insane.whatsthebra.activity.MainActivity
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.config.GlideApp
 import com.insane.whatsthebra.model.Product

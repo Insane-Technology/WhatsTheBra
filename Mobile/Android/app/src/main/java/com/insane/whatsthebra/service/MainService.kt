@@ -301,7 +301,7 @@ object MainService {
                 }
             }
         })
-        // TODO: WE MUST CHECK IF THERE IS INTERNET BEFORE LOAD DATE AND SET A TIMEOUT TO CALL onServiceDOne
+        // TODO: WE MUST CHECK IF THERE IS INTERNET BEFORE LOAD DATA AND SET A TIMEOUT TO CALL onServiceDOne
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.insane.whatsthebra.activities
+package com.insane.whatsthebra.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,7 +15,7 @@ import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.utils.Tools
 
-class SplashScreen : AppCompatActivity(), DataCallBack {
+class SplashScreenActivity : AppCompatActivity(), DataCallBack {
 
 
     @SuppressLint("Range")

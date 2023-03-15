@@ -1,4 +1,4 @@
-package com.insane.whatsthebra.activities
+package com.insane.whatsthebra.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.CategoryDTO
 import com.insane.whatsthebra.databinding.ActivityMainBinding
+import com.insane.whatsthebra.fragment.DetailFragment
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private val mainActivityComponent = MainComponent(this)
     private var selectedCategory = db.categoryDao().getAll()[0].toCategory()
     private var selectedFilters = ArrayList<BraType>()
-    private var isFavouriteList = false
+    private var favouriteList = false
 
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
+//    @Deprecated("Deprecated in Java")
+//    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,38 +60,45 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
         // PULL TO REFRESH
         refreshLayout.setOnRefreshListener { MainService.loadProducts(db, this) }
+
         // BUTTON FILTER
         binding.imageButtonFilter.setOnClickListener { openModalFilter(binding.constraintLayoutFilterModal) }
+
         // DARK BACKGROUND MODAL
         binding.frameLayoutFilterBackground.setOnClickListener { closeModalFilter(binding.constraintLayoutFilterModal) }
+
         // BUTTON CANCEL FILTER MODAL
         binding.buttonFilterCancel.setOnClickListener { closeModalFilter(binding.constraintLayoutFilterModal) }
+
         // BUTTON APPLY FILTER MODAL
         binding.buttonFilterApply.setOnClickListener {
             closeModalFilter(binding.constraintLayoutFilterModal)
             loadProducts()
         }
+
         // MODAL CONTAINER TO AVOID CLOSE MODAL ON MODAL's CLICK
         binding.linearLayoutFilterContainer.setOnClickListener { /* Ignore event */ }
-        // HOME
+
+        // BUTTON HOME
         binding.imageViewHome.setOnClickListener {
             selectMenu(binding.imageViewHome)
-            isFavouriteList = false
-            loadProducts()
+            setFavouriteList(false).also { loadProducts() }
         }
-        // FAVOURITE
+
+        // BUTTON FAVOURITE
         binding.imageViewHeart.setOnClickListener {
             selectMenu(binding.imageViewHeart)
-            isFavouriteList = true
-            loadProducts()
+            setFavouriteList(true).also { loadProducts() }
         }
-        // NOTIFICATION
+
+        // BUTTON NOTIFICATION
         binding.imageViewNotification.setOnClickListener {
-            Tools.Show.message(this,"Painel de notificações ainda não disponível")
+            Tools.Show.message(this, this.getString(R.string.notificationMessage))
         }
-        // PROFILE
+
+        // BUTTON PROFILE
         binding.imageViewProfile.setOnClickListener {
-            Tools.Show.message(this,"Perfil de conta ainda não disponível")
+            Tools.Show.message(this, this.getString(R.string.profileMessage))
         }
     }
 
@@ -145,6 +153,13 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     fun openProductDetails(product: Product) {
         Tools.Show.message(this, "Openning Product with id ${product.id}")
+
+        val detailFragment = DetailFragment.newInstance(product.id);
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.frameLayoutDetail, detailFragment, "FRAGMENT_DETAIL")
+            .commit();
+
         // TODO Implement click listener to open product details page
     }
 
@@ -200,7 +215,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         }
 
         for (product in db.productDao().getAll()) {
-            if (!isFavouriteList) {
+            if (!favouriteList) {
                 filter(product.toProduct(db))
             } else {
                 if (favouriteProducts.any { it == product.toProduct(db)}) {
@@ -229,9 +244,13 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         }
     }
 
+    private fun setFavouriteList(status: Boolean) {
+        favouriteList = status
+    }
+
     override fun onDataLoaded() {
         loadProducts()
-        false.also { refreshLayout.isRefreshing = it }
+        refreshLayout.isRefreshing = false
     }
 
 }

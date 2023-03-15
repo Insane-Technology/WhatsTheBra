@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activities.MainActivity">
+    tools:context=".activity.MainActivity">
 
     <!-- LOGO -->
     <LinearLayout
@@ -564,6 +564,17 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- FRAME LAYOUT DETAIL -->
+    <FrameLayout
+        android:id="@+id/frameLayoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutLogo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

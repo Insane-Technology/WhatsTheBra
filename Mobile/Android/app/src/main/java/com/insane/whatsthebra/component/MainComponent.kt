@@ -12,13 +12,12 @@ import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.insane.whatsthebra.R
-import com.insane.whatsthebra.activities.MainActivity
+import com.insane.whatsthebra.activity.MainActivity
 import com.insane.whatsthebra.adapter.MainImageAdapter
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
-import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.service.UserService
 import com.insane.whatsthebra.utils.Tools
 import java.text.DecimalFormat
