@@ -13,6 +13,7 @@ import com.insane.whatsthebra.component.MainComponent
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.CategoryDTO
+import com.insane.whatsthebra.databinding.ActivityMainBinding
 import com.insane.whatsthebra.interfaces.DataCallBack
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
@@ -24,112 +25,88 @@ import com.insane.whatsthebra.utils.Tools
 
 class MainActivity : AppCompatActivity(), DataCallBack {
 
-    private val mainActivityComponent = MainComponent(this)
-    private var selectedFilters: ArrayList<BraType> = ArrayList()
-    private var selectedCategory: Category = Category(name = "")
-    private var refreshLayout: SwipeRefreshLayout? = null
-    private var isFavouriteList = false
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var refreshLayout: SwipeRefreshLayout
     private val db = AppDataBase.getDataBase(this)
+    private val mainActivityComponent = MainComponent(this)
+    private var selectedCategory = db.categoryDao().getAll()[0].toCategory()
+    private var selectedFilters = ArrayList<BraType>()
+    private var isFavouriteList = false
+
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        refreshLayout = binding.swipeRefreshLayout
+        // SET UP VIEWS
+        setUpViews()
+        // SET UP CLICK LISTENERS
+        setUpClickListeners()
+    }
 
-        // CATEGORY CONTAINER
-        val linearCategoryButtons: LinearLayout = findViewById(R.id.linearLayoutCategoryButtons)
-
-        // FILTER CONTAINERS
-        val linearFilterContainer: LinearLayout = findViewById(R.id.linearLayoutFilterContainer)
-        val frameBackground: FrameLayout = findViewById(R.id.frameLayoutFilterBackground)
-        val linearCheckboxContainerLeft: LinearLayout = findViewById(R.id.linearLayoutCheckboxContainerLeft)
-        val linearCheckboxContainerRight: LinearLayout = findViewById(R.id.linearLayoutCheckboxContainerRight)
-        val constraintFilter: ConstraintLayout = findViewById(R.id.constraintLayoutFilterModal)
-
-        // FILTER BUTTONS
-        val imgBtnFilter: ImageButton = findViewById(R.id.ib_filter)
-        val buttonFilterApply: Button = findViewById(R.id.btn_filter_apply)
-        val buttonFilterCancel: Button = findViewById(R.id.btn_filter_cancel)
-
-        // BOTTOM MENU BAR IMAGE VIEWS
-        val ivHome: ImageView = findViewById(R.id.iv_home)
-        val ivFavourite: ImageView = findViewById(R.id.iv_heart)
-        val ivNotification: ImageView = findViewById(R.id.iv_notification)
-        val ivProfile: ImageView = findViewById(R.id.iv_profile)
-
-        // SET FIRST CATEGORY ON
-        selectedCategory = db.categoryDao().getAll()[0].toCategory()
-
-        // PULL REFRESH
-        refreshLayout = findViewById(R.id.swipeRefreshLayout)
-
-        /*  ************************** ADD VIEWS *************************** */
-        loadCategoryButtons(linearCategoryButtons, db.categoryDao().getAll())
-        loadFilters(linearCheckboxContainerLeft,linearCheckboxContainerRight)
-        selectMenu(ivHome)
+    private fun setUpViews() {
+        loadCategoryButtons(binding.linearLayoutCategoryButtons, db.categoryDao().getAll())
+        loadFilters(binding.linearLayoutCheckboxContainerLeft,binding.linearLayoutCheckboxContainerRight)
+        selectMenu(binding.imageViewHome)
         setCategoryOn(selectedCategory)
-        /*  ************************ END ADD VIEWS ************************* */
+    }
 
+    private fun setUpClickListeners() {
 
-        /* ************************ CLICK LISTENERS ************************ */
         // PULL TO REFRESH
-        refreshLayout!!.setOnRefreshListener { MainService.loadProducts(db, this) }
+        refreshLayout.setOnRefreshListener { MainService.loadProducts(db, this) }
         // BUTTON FILTER
-        imgBtnFilter.setOnClickListener { openModalFilter(constraintFilter) }
+        binding.imageButtonFilter.setOnClickListener { openModalFilter(binding.constraintLayoutFilterModal) }
         // DARK BACKGROUND MODAL
-        frameBackground.setOnClickListener { closeModalFilter(constraintFilter) }
+        binding.frameLayoutFilterBackground.setOnClickListener { closeModalFilter(binding.constraintLayoutFilterModal) }
         // BUTTON CANCEL FILTER MODAL
-        buttonFilterCancel.setOnClickListener { closeModalFilter(constraintFilter) }
+        binding.buttonFilterCancel.setOnClickListener { closeModalFilter(binding.constraintLayoutFilterModal) }
         // BUTTON APPLY FILTER MODAL
-        buttonFilterApply.setOnClickListener {
-            closeModalFilter(constraintFilter)
+        binding.buttonFilterApply.setOnClickListener {
+            closeModalFilter(binding.constraintLayoutFilterModal)
             loadProducts()
         }
         // MODAL CONTAINER TO AVOID CLOSE MODAL ON MODAL's CLICK
-        linearFilterContainer.setOnClickListener { /* Ignore event */ }
-
+        binding.linearLayoutFilterContainer.setOnClickListener { /* Ignore event */ }
         // HOME
-        ivHome.setOnClickListener {
-            selectMenu(ivHome)
+        binding.imageViewHome.setOnClickListener {
+            selectMenu(binding.imageViewHome)
             isFavouriteList = false
             loadProducts()
         }
         // FAVOURITE
-        ivFavourite.setOnClickListener {
-            selectMenu(ivFavourite)
+        binding.imageViewHeart.setOnClickListener {
+            selectMenu(binding.imageViewHeart)
             isFavouriteList = true
             loadProducts()
         }
         // NOTIFICATION
-        ivNotification.setOnClickListener {
+        binding.imageViewNotification.setOnClickListener {
             Tools.Show.message(this,"Painel de notificações ainda não disponível")
         }
         // PROFILE
-        ivProfile.setOnClickListener {
+        binding.imageViewProfile.setOnClickListener {
             Tools.Show.message(this,"Perfil de conta ainda não disponível")
         }
-        /* ********************** END CLICK LISTENERS ********************** */
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun selectMenu(imageView: ImageView) {
-        val ivHome: ImageView = this.findViewById(R.id.iv_home)
-        val ivHeart: ImageView = this.findViewById(R.id.iv_heart)
-        val ivNotification: ImageView = this.findViewById(R.id.iv_notification)
-        val ivProfile: ImageView = this.findViewById(R.id.iv_profile)
 
-        ivHome.setImageDrawable(this.getDrawable(R.drawable.ic_home))
-        ivHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
-        ivNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification))
-        ivProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile))
+        binding.imageViewHome.setImageDrawable(this.getDrawable(R.drawable.ic_home))
+        binding.imageViewHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
+        binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification))
+        binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_profile))
 
         when (imageView.id) {
-            ivProfile.id -> ivProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile_color))
-            ivHeart.id -> ivHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
-            ivNotification.id -> ivNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification_color))
-            else -> ivHome.setImageDrawable(this.getDrawable(R.drawable.ic_home_color))
+            binding.imageViewNotification.id -> binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_profile_color))
+            binding.imageViewHeart.id -> binding.imageViewHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
+            binding.imageViewNotification.id -> binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification_color))
+            else -> binding.imageViewHome.setImageDrawable(this.getDrawable(R.drawable.ic_home_color))
         }
     }
 
@@ -254,7 +231,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     override fun onDataLoaded() {
         loadProducts()
-        false.also { refreshLayout!!.isRefreshing = it }
+        false.also { refreshLayout.isRefreshing = it }
     }
 
 }
