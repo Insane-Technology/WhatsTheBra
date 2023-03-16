@@ -1,5 +1,6 @@
 package com.insane.whatsthebra.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.insane.whatsthebra.R
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.databinding.FragmentDetailBinding
+import com.insane.whatsthebra.service.UserService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -38,11 +41,21 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setUpViews() {
         val db = this.context?.let { AppDataBase.getDataBase(it) }
         lifecycleScope.launch {
             val product = db?.productDao()?.getById(productId)?.toProduct(db)
-            binding.textViewFragment.text = product?.name
+            val favouriteProducts = db?.let { UserService(it).getFavouriteProducts() }
+
+            binding.textViewShopName.text = product?.shop?.name
+            binding.textViewShopDescription.text = product?.description
+            binding.textViewBraMatch.text = product!!.braTypes[0].name
+            binding.textViewPrice.text = product.price.toString()
+
+            if (favouriteProducts!!.any { it == product}) {
+                binding.imageViewHeart.setImageDrawable(requireActivity().getDrawable(R.drawable.ic_heart_color))
+            }
         }
     }
 
@@ -52,7 +65,7 @@ class DetailFragment : Fragment() {
         binding.frameLayoutBackground.setOnClickListener { /* Ignore event */ }
 
         // BUTTON CLOSE FRAGMENT
-        binding.buttonDetailClose.setOnClickListener {
+        binding.imageViewBack.setOnClickListener {
             closeFragment()
         }
     }

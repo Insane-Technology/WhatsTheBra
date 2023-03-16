@@ -6,9 +6,7 @@ import com.insane.whatsthebra.database.dto.FavouriteProductDTO
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.model.User
 
-class UserService (var context: Context) {
-
-    private val db = AppDataBase.getDataBase(context)
+class UserService (var db: AppDataBase) {
 
     companion object {
         var user: User = User(id = 0)

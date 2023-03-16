@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
 
 //    @Deprecated("Deprecated in Java")
-//    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
+    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,10 +108,10 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         binding.imageViewHome.setImageDrawable(this.getDrawable(R.drawable.ic_home))
         binding.imageViewHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
         binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification))
-        binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_profile))
+        binding.imageViewProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile))
 
         when (imageView.id) {
-            binding.imageViewNotification.id -> binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_profile_color))
+            binding.imageViewProfile.id -> binding.imageViewProfile.setImageDrawable(this.getDrawable(R.drawable.ic_profile_color))
             binding.imageViewHeart.id -> binding.imageViewHeart.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
             binding.imageViewNotification.id -> binding.imageViewNotification.setImageDrawable(this.getDrawable(R.drawable.ic_notification_color))
             else -> binding.imageViewHome.setImageDrawable(this.getDrawable(R.drawable.ic_home_color))
@@ -152,7 +152,6 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
     fun openProductDetails(product: Product) {
-        Tools.Show.message(this, "Openning Product with id ${product.id}")
 
         val detailFragment = DetailFragment.newInstance(product.id);
         supportFragmentManager
@@ -160,13 +159,12 @@ class MainActivity : AppCompatActivity(), DataCallBack {
             .add(R.id.frameLayoutDetail, detailFragment, "FRAGMENT_DETAIL")
             .commit();
 
-        // TODO Implement click listener to open product details page
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     fun setFavouriteProduct(product: Product) {
         val favouriteButton = this.findViewById(AppConfig.Component.getImageViewFavouriteId(product)) as ImageView
-        if (UserService(this).setFavouriteProduct(product))
+        if (UserService(db).setFavouriteProduct(product))
             favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
         else
             favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
@@ -193,7 +191,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         val leftColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerLeft)
         val rightColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerRight)
         var productMatches = 0
-        val favouriteProducts = UserService(this).getFavouriteProducts()
+        val favouriteProducts = UserService(db).getFavouriteProducts()
 
         // CLEAR VIEWS
         leftColumn.removeAllViews()
