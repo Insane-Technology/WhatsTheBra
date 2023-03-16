@@ -14,6 +14,7 @@ import com.insane.whatsthebra.databinding.FragmentDetailBinding
 import com.insane.whatsthebra.service.UserService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 private const val PRODUCT = "PRODUCT_ID"
 
@@ -41,17 +42,18 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun setUpViews() {
         val db = this.context?.let { AppDataBase.getDataBase(it) }
         lifecycleScope.launch {
             val product = db?.productDao()?.getById(productId)?.toProduct(db)
             val favouriteProducts = db?.let { UserService(it).getFavouriteProducts() }
+            val dec = DecimalFormat("#,###.00")
 
             binding.textViewShopName.text = product?.shop?.name
             binding.textViewShopDescription.text = product?.description
             binding.textViewBraMatch.text = product!!.braTypes[0].name
-            binding.textViewPrice.text = product.price.toString()
+            binding.textViewPrice.text = "R$ ${dec.format(product.price)}"
 
             if (favouriteProducts!!.any { it == product}) {
                 binding.imageViewHeart.setImageDrawable(requireActivity().getDrawable(R.drawable.ic_heart_color))
