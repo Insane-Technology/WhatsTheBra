@@ -72,6 +72,16 @@ object AppConfig {
             return imageView
         }
 
+        fun getImageViewDetailTemplate(context: Context): ImageView {
+            val imageView = ImageView(context)
+            val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+            imageView.layoutParams = paramsProductImage
+            imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+            imageView.setBackgroundColor(context.getColor(R.color.pink_200))
+            imageView.elevation = 0F
+            return imageView
+        }
+
     }
 
     object Component {
