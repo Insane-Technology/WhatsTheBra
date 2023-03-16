@@ -1,24 +1,26 @@
 package com.insane.whatsthebra.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.adapter.DetailImageAdapter
-import com.insane.whatsthebra.adapter.MainImageAdapter
-import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.databinding.FragmentDetailBinding
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.UserService
-import kotlinx.coroutines.async
+import com.insane.whatsthebra.utils.Tools
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
@@ -71,17 +73,50 @@ class DetailFragment : Fragment() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun displayViewPager(product: Product) {
         val context = this.context
         val productImages = ViewPager(context!!)
+
+        // CREATE DOTS LINEARLAYOUT \\
+        val dotsLayout = LinearLayout(activity)
+        val paramsLinearDot = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+        paramsLinearDot.setMargins(0,Tools.Window.convertDpToPixel(0F),0,Tools.Window.convertDpToPixel(0F))
+        dotsLayout.layoutParams = paramsLinearDot
+        dotsLayout.gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
+        dotsLayout.orientation = LinearLayout.HORIZONTAL
+
+        // CREATE DOTS LINEARLAYOUT \\
+        val dotsContentLayout = RelativeLayout(activity)
+        val paramsDotsContentLayout = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.MATCH_PARENT)
+        paramsDotsContentLayout.setMargins(0,Tools.Window.convertDpToPixel(0F),0,Tools.Window.convertDpToPixel(0F))
+        dotsContentLayout.setPadding(0, 0, 0, Tools.Window.convertDpToPixel(35F))
+        dotsContentLayout.layoutParams = paramsDotsContentLayout
+        dotsContentLayout.gravity = Gravity.CENTER_HORIZONTAL or Gravity.BOTTOM
+
         productImages.layoutParams = LinearLayout.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT)
         productImages.adapter = DetailImageAdapter(context, product)
         productImages.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(position: Int,positionOffset: Float,positionOffsetPixels: Int) { /* scrollDisplay.requestDisallowInterceptTouchEvent(true); */ }
-            override fun onPageSelected(position: Int) {}
-            override fun onPageScrollStateChanged(state: Int) { /* scrollDisplay.requestDisallowInterceptTouchEvent(false); */ }
+            override fun onPageScrolled(position: Int,positionOffset: Float,positionOffsetPixels: Int) { }
+            override fun onPageSelected(position: Int) { fillLayoutDots(dotsLayout, product.images.size, position) }
+            override fun onPageScrollStateChanged(state: Int) { }
         })
+
         binding.cardViewDetail.addView(productImages)
+        binding.cardViewDetail.addView(dotsContentLayout)
+        fillLayoutDots(dotsLayout, product.images.size, 0)
+        dotsContentLayout.addView(dotsLayout, 0)
+    }
+
+    private fun fillLayoutDots(linearLayout: LinearLayout, amount: Int, position: Int) {
+        linearLayout.removeAllViews()
+        for (i in 0 until amount) {
+            val dot = ImageView(activity)
+            Tools.Window.convertDpToPixel(5F).let { dot.setPadding(it,it,it,it) }
+            dot.scaleType = ImageView.ScaleType.CENTER_CROP
+            if (position == i) dot.setImageResource(R.drawable.ic_dot_full) else dot.setImageResource(R.drawable.ic_dot_empty)
+            linearLayout.addView(dot)
+        }
     }
 
     private fun setUpClickListeners() {
