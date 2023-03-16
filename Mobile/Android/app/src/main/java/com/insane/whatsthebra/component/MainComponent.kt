@@ -220,4 +220,16 @@ class MainComponent(private val context: MainActivity) {
         return mainLinearContainer
     }
 
+    fun createTextView(text: String, gravity: Int): TextView {
+        // PRODUCT DESCRIPTION TEXT
+        val textView = TextView(context)
+        val paramsTextView = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        textView.layoutParams = paramsTextView
+        textView.setTextColor(context.resources.getColor(R.color.gray_700, context.theme))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { textView.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD }
+        textView.gravity = gravity
+        textView.text = text
+        return textView
+    }
+
 }

@@ -2,6 +2,7 @@ package com.insane.whatsthebra.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.activity.*
@@ -93,12 +94,16 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
         // BUTTON NOTIFICATION
         binding.imageViewNotification.setOnClickListener {
-            Tools.Show.message(this, this.getString(R.string.notificationMessage))
+            selectMenu(binding.imageViewNotification).also {
+                loadNotifications()
+            }
         }
 
         // BUTTON PROFILE
         binding.imageViewProfile.setOnClickListener {
-            Tools.Show.message(this, this.getString(R.string.profileMessage))
+            selectMenu(binding.imageViewProfile).also {
+                loadProfile()
+            }
         }
     }
 
@@ -187,15 +192,37 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         return false
     }
 
+    private fun loadNotifications() {
+        cleanViews().also {
+            binding.linearLayoutCategories.visibility = View.INVISIBLE
+            binding.linearLayoutSearchBar.visibility = View.INVISIBLE
+            binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView(this.getString(R.string.notificationMessage), Gravity.CENTER))
+        }
+    }
+
+    private fun loadProfile() {
+        cleanViews().also {
+            binding.linearLayoutCategories.visibility = View.INVISIBLE
+            binding.linearLayoutSearchBar.visibility = View.INVISIBLE
+            binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView(this.getString(R.string.profileMessage), Gravity.CENTER))
+        }
+    }
+
+    private fun cleanViews() {
+        binding.linearLayoutCategories.visibility = View.VISIBLE
+        binding.linearLayoutSearchBar.visibility = View.VISIBLE
+        binding.linearLayoutProductContainerLeft.removeAllViews()
+        binding.linearLayoutProductContainerRight.removeAllViews()
+        binding.linearLayoutMessageContainer.removeAllViews()
+    }
+
+
     private fun loadProducts() {
-        val leftColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerLeft)
-        val rightColumn: LinearLayout = findViewById(R.id.linearLayoutProductContainerRight)
         var productMatches = 0
         val favouriteProducts = UserService(db).getFavouriteProducts()
 
         // CLEAR VIEWS
-        leftColumn.removeAllViews()
-        rightColumn.removeAllViews()
+        cleanViews()
 
         fun filter(product: Product) {
             if (checkCategoryProduct(product)) {
@@ -204,9 +231,9 @@ class MainActivity : AppCompatActivity(), DataCallBack {
                     val view: View = mainActivityComponent.createProductContainer(product)
                     // ADD VIEW TO EACH COLUMN
                     if (productMatches % 2 == 0) {
-                        rightColumn.addView(view)
+                        binding.linearLayoutProductContainerRight.addView(view)
                     } else {
-                        leftColumn.addView(view)
+                        binding.linearLayoutProductContainerLeft.addView(view)
                     }
                 }
             }
@@ -231,8 +258,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
     private fun loadFilters(leftColumn: LinearLayout, rightColumn: LinearLayout) {
-        leftColumn.removeAllViews()
-        rightColumn.removeAllViews()
+        cleanViews()
         for ((index, braType) in db.braTypeDao().getAll().withIndex()) {
             if (index % 2 == 0) {
                 mainActivityComponent.createCheckboxFilter(leftColumn, braType.toBraType())
@@ -247,8 +273,11 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
     override fun onDataLoaded() {
-        loadProducts()
-        refreshLayout.isRefreshing = false
+        selectMenu(binding.imageViewHome).also {
+            setFavouriteList(false)
+            loadProducts()
+            refreshLayout.isRefreshing = false
+        }
     }
 
 }

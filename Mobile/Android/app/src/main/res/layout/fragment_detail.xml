@@ -84,7 +84,7 @@
             android:layout_marginEnd="80dp"
             android:textColor="@color/black"
             android:textSize="25sp"
-            android:text="H&amp;M"/>
+            android:text="Nome da loja"/>
 
         <!-- DESCRIÇÃO -->
         <TextView
@@ -94,198 +94,68 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="80dp"
+            android:textColor="@color/gray_500"
             android:textSize="15sp"
-            android:text="Vestido curto tomara que caia com manga ciganinha"/>
+            android:text="Descrição do produto, detalhes, nome e observações"/>
 
-<!--    <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginStart="20dp"-->
-<!--            android:layout_marginEnd="20dp"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            &lt;!&ndash; TITLE COLOR &ndash;&gt;-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="16sp"-->
-<!--                android:layout_marginEnd="70dp"-->
-<!--                android:text="Cor"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--            <ImageView-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:layout_marginEnd="5dp"-->
-<!--                android:src="@drawable/ic_box_button_on"/>-->
-
-<!--        </LinearLayout>-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        &lt;!&ndash; TITLE SIZES &ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:layout_marginEnd="19dp"-->
-<!--            android:textSize="16sp"-->
-<!--            android:text="Tamanhos"/>-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:src="@drawable/ic_box_button_on"/>-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:src="@drawable/ic_box_button_on"/>-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:src="@drawable/ic_box_button_on"/>-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:src="@drawable/ic_box_button_on"/>-->
-
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:src="@drawable/ic_box_button_on"/>-->
-
-<!--    </LinearLayout>-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal">
-
-        <!-- TITLE LINGERIE -->
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:text="Sutiã ideal:"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textViewBraMatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/pink_700"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="Tomara que caia"/>
+            <!-- TITLE LINGERIE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginEnd="5dp"
+                android:text="Sutiã ideal:"/>
+
+            <TextView
+                android:id="@+id/textViewBraMatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pink_700"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Tipo de sutiã"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal">
-
-        <!-- PRICE -->
-        <TextView
-            android:id="@+id/textViewPrice"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:textSize="22sp"
-            android:text="R$ 245"/>
+            android:gravity="center_vertical"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/pink_700"
-            android:textAllCaps="true"
-            android:text="Ir para loja"/>
+            <!-- PRICE -->
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="22sp"
+                android:text="R$ 0.00"/>
 
-    </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/pink_700"
+                android:textAllCaps="true"
+                android:text="Ir para loja"/>
+
+        </LinearLayout>
 
         <!-- TIP -->
         <TextView
@@ -303,3 +173,136 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <!--    <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:layout_marginTop="20dp"-->
+    <!--            android:layout_marginStart="20dp"-->
+    <!--            android:layout_marginEnd="20dp"-->
+    <!--            android:orientation="horizontal">-->
+
+    <!--            &lt;!&ndash; TITLE COLOR &ndash;&gt;-->
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:layout_marginEnd="70dp"-->
+    <!--                android:text="Cor"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--            <ImageView-->
+    <!--                android:layout_width="20dp"-->
+    <!--                android:layout_height="20dp"-->
+    <!--                android:layout_marginStart="5dp"-->
+    <!--                android:layout_marginEnd="5dp"-->
+    <!--                android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--        </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center_vertical"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        &lt;!&ndash; TITLE SIZES &ndash;&gt;-->
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:textColor="@color/black"-->
+    <!--            android:layout_marginEnd="19dp"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:text="Tamanhos"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginEnd="5dp"-->
+    <!--            android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginEnd="5dp"-->
+    <!--            android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginEnd="5dp"-->
+    <!--            android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginEnd="5dp"-->
+    <!--            android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginStart="5dp"-->
+    <!--            android:layout_marginEnd="5dp"-->
+    <!--            android:src="@drawable/ic_box_button_on"/>-->
+
+    <!--    </LinearLayout>-->
