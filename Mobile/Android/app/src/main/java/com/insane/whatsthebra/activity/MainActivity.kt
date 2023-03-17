@@ -22,7 +22,6 @@ import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.service.UserService
-import com.insane.whatsthebra.utils.Tools
 
 
 class MainActivity : AppCompatActivity(), DataCallBack {
@@ -37,7 +36,14 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
 
 //    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() { /* Avoid going back to SplashScreen activity */ }
+    override fun onBackPressed() {
+        val detailFragment: DetailFragment? = supportFragmentManager.findFragmentByTag("FRAGMENT_DETAIL") as DetailFragment?
+        if (detailFragment != null && detailFragment.isVisible) {
+            val manager = this.supportFragmentManager
+            manager.beginTransaction().remove(detailFragment).commit()
+            loadProducts()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -217,7 +223,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
 
-    private fun loadProducts() {
+    fun loadProducts() {
         var productMatches = 0
         val favouriteProducts = UserService(db).getFavouriteProducts()
 

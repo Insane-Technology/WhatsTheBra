@@ -63,113 +63,149 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!-- CONTAINER DETAILS -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="-25dp"
-        android:background="@drawable/ic_box_top_radius_white"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBackground"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewDetail">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:layout_marginTop="-30dp"-->
+<!--        android:scrollbars="none"-->
+<!--        android:background="@drawable/ic_box_top_radius_white"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBackground"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cardViewDetail">-->
 
-        <!-- NOME DA LOJA -->
-        <TextView
-            android:id="@+id/textViewShopName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="80dp"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:text="Nome da loja"/>
-
-        <!-- DESCRIÇÃO -->
-        <TextView
-            android:id="@+id/textViewShopDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="80dp"
-            android:textColor="@color/gray_500"
-            android:textSize="15sp"
-            android:text="Descrição do produto, detalhes, nome e observações"/>
-
+        <!-- CONTAINER DETAILS -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:elevation="2dp"
+            android:layout_marginTop="-30dp"
+            android:background="@drawable/ic_box_top_radius_white"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayoutBackground"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewDetail">
 
-            <!-- TITLE LINGERIE -->
+            <!-- NOME DA LOJA -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginEnd="5dp"
-                android:text="Sutiã ideal:"/>
-
-            <TextView
-                android:id="@+id/textViewBraMatch"
+                android:id="@+id/textViewShopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/pink_700"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="80dp"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:text="Nome da loja"/>
+
+            <!-- DESCRIÇÃO -->
+            <TextView
+                android:id="@+id/textViewShopDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="80dp"
+                android:textColor="@color/gray_500"
+                android:textSize="15sp"
+                android:text="Descrição do produto, detalhes, nome e observações"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal">
+
+                <!-- TITLE LINGERIE -->
+                <TextView
+                    android:id="@+id/textViewIdealTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/idealBraTitle"/>
+
+                <TextView
+                    android:id="@+id/textViewBraMatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pink_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/braTypeTitle"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal">
+
+                <!-- PRICE -->
+
+                <TextView
+                    android:id="@+id/textViewPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="R$ 0.00"
+                    android:textColor="@color/black"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/pink_700"
+                    android:textAllCaps="true"
+                    android:text="@string/buttonGoToShop"/>
+
+            </LinearLayout>
+
+            <!-- TIP -->
+            <TextView
+                android:id="@+id/textViewTitleRecommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="80dp"
+                android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="Tipo de sutiã"/>
+                android:text="@string/braRecommendation"/>
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewRecommendations"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="15dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutRecommendations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="horizontal">
-
-            <!-- PRICE -->
-            <TextView
-                android:id="@+id/textViewPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:textSize="22sp"
-                android:text="R$ 0.00"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/pink_700"
-                android:textAllCaps="true"
-                android:text="Ir para loja"/>
-
-        </LinearLayout>
-
-        <!-- TIP -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="80dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:text="Sutiãs recomendados"/>
-
-
-    </LinearLayout>
+<!--    </ScrollView>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

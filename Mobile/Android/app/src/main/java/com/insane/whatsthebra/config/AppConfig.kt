@@ -1,5 +1,6 @@
 package com.insane.whatsthebra.config
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -47,9 +48,14 @@ object AppConfig {
     object Image {
 
         private const val thumbnailHeightDp = 250
+        private const val recommendationWidthDp = 120
 
         fun getThumbnailHeight(): Int {
             return Tools.Window.dpToPx(thumbnailHeightDp)
+        }
+
+        fun getRecommendationWidth(): Int {
+            return Tools.Window.dpToPx(recommendationWidthDp)
         }
 
         fun getLoader(context: Context): CircularProgressDrawable {
@@ -78,6 +84,18 @@ object AppConfig {
             imageView.layoutParams = paramsProductImage
             imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             imageView.setBackgroundColor(context.getColor(R.color.pink_200))
+            imageView.elevation = 0F
+            return imageView
+        }
+
+        @SuppressLint("UseCompatLoadingForDrawables")
+        fun getImageViewRecommendationTemplate(context: Context): ImageView {
+            val imageView = ImageView(context)
+            val paramsProductImage = LinearLayout.LayoutParams(getRecommendationWidth(), LinearLayout.LayoutParams.MATCH_PARENT)
+            paramsProductImage.setMargins(0,0,Tools.Window.dpToPx(8),0)
+            imageView.layoutParams = paramsProductImage
+            imageView.setBackgroundColor(context.getColor(R.color.pink_200))
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
             imageView.elevation = 0F
             return imageView
         }

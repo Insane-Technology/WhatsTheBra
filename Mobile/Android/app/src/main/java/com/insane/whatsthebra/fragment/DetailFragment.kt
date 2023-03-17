@@ -1,7 +1,6 @@
 package com.insane.whatsthebra.fragment
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,14 +9,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.insane.whatsthebra.R
+import com.insane.whatsthebra.activity.MainActivity
 import com.insane.whatsthebra.adapter.DetailImageAdapter
+import com.insane.whatsthebra.config.AppConfig
+import com.insane.whatsthebra.config.GlideApp
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.databinding.FragmentDetailBinding
+import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.UserService
 import com.insane.whatsthebra.utils.Tools
@@ -50,6 +52,14 @@ class DetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun getStringFromList(braTypeList: ArrayList<BraType>): String {
+        var string = ""
+        for (braType in braTypeList) {
+            braType.name.let { string = "$string, $it" }
+        }
+        return string.drop(1).drop(1)
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     private fun setUpViews() {
         val db = this.context?.let { AppDataBase.getDataBase(it) }
@@ -62,15 +72,83 @@ class DetailFragment : Fragment() {
 
             binding.textViewShopName.text = product?.shop?.name
             binding.textViewShopDescription.text = product?.description
-            binding.textViewBraMatch.text = product!!.braTypes[0].name
+            binding.textViewBraMatch.text = getStringFromList(product!!.braTypes)
             binding.textViewPrice.text = "R$ ${dec.format(priceAfterDiscount)}"
 
+            if (product.productType.id == 3) {
+                binding.textViewTitleRecommendation.text = context?.getString(R.string.productRecommendation)
+                binding.textViewIdealTitle.text = context?.getString(R.string.braTypeTitle)
+            } else {
+                binding.textViewTitleRecommendation.text = context?.getString(R.string.braRecommendation)
+                binding.textViewIdealTitle.text = context?.getString(R.string.idealBraTitle)
+            }
+
             displayViewPager(product)
+            displayRecommendations(product)
 
             if (favouriteProducts!!.any { it == product}) {
                 binding.imageViewHeart.setImageDrawable(requireActivity().getDrawable(R.drawable.ic_heart_color))
             }
+
+            binding.imageViewHeart.setOnClickListener {
+                setFavouriteProduct(product)
+            }
         }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun setFavouriteProduct(product: Product) {
+        val context = this.context
+        val db = AppDataBase.getDataBase(context!!)
+        val favouriteButton = binding.imageViewHeart
+        if (UserService(db).setFavouriteProduct(product))
+            favouriteButton.setImageDrawable(context.getDrawable(R.drawable.ic_heart_color))
+        else
+            favouriteButton.setImageDrawable(context.getDrawable(R.drawable.ic_heart))
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun displayRecommendations(product: Product) {
+        val context = this.context
+        val db = AppDataBase.getDataBase(context!!)
+        val recommendations = ArrayList<Product>()
+        val productTypes = db.productTypeDao().getAll()
+
+        for (productType in productTypes) {
+            if (productType.id != product.productType.id) {
+                for (prod in db.productDao().getAllByType(productType.id)) {
+                    for (braType in product.braTypes) {
+                        if (prod.toProduct(db).braTypes.any { it == braType }) {
+                            val productRecommendation = prod.toProduct(db)
+                            recommendations.add(productRecommendation)
+                            binding.linearLayoutRecommendations.let {
+                                val productImage = AppConfig.Image.getImageViewRecommendationTemplate(context)
+                                GlideApp.with(context)
+                                    .load(AppConfig.API.getImageUrl(productRecommendation.images[0].id))
+                                    .error(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
+                                    .fallback(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
+                                    .placeholder(AppConfig.Image.getLoader(context))
+                                    .centerCrop()
+                                    .into(productImage)
+
+                                    it.addView(productImage, 0)
+
+                                    // CLICK LISTENER
+                                    productImage.setOnClickListener {
+                                        if (this.activity is MainActivity) {
+                                            closeFragment().also {
+                                                (this.activity as MainActivity).openProductDetails(productRecommendation)
+                                            }
+                                        }
+                                    }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
@@ -132,7 +210,12 @@ class DetailFragment : Fragment() {
 
     private fun closeFragment() {
         val manager = requireActivity().supportFragmentManager
-        manager.beginTransaction().remove(this).commit()
+        if (this.activity is MainActivity) {
+            (this.activity as MainActivity).loadProducts().also {
+                manager.beginTransaction().remove(this).commit()
+            }
+        } else
+            manager.beginTransaction().remove(this).commit()
     }
 
     companion object {

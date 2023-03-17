@@ -26,6 +26,13 @@
     <string name="contentDescButtonNotification">Notificações</string>
     <string name="contentDescButtonProfile">Perfil e conta</string>
 
+    <!-- Recommendations -->
+    <string name="braRecommendation">Sutiãs recomendados</string>
+    <string name="productRecommendation">Vestidos e blusas recomendados</string>
+    <string name="idealBraTitle">Sutiã ideal:</string>
+    <string name="braTypeTitle">Tipo de sutiã:</string>
+    <string name="buttonGoToShop">Ir para loja</string>
+
     <!-- Messages -->
     <string name="noInternet">Sem conexão com a internet. Por favor conecte à uma rede e tente novamente.</string>
     <string name="offlineData">Sem sinal de internet, carregando dados offline…</string>

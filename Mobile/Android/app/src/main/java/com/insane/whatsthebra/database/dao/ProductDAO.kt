@@ -10,6 +10,9 @@ interface ProductDAO {
     @Query("SELECT * FROM $PRODUCT_TABLE_NAME ORDER BY id ASC")
     fun getAll(): List<ProductDTO>
 
+    @Query("SELECT * FROM $PRODUCT_TABLE_NAME WHERE productTypeId = :productTypeId ORDER BY id ASC")
+    fun getAllByType(productTypeId: Int): List<ProductDTO>
+
     @Query("SELECT * FROM $PRODUCT_TABLE_NAME WHERE id = :productId")
     fun getById(productId: Int): ProductDTO
 

@@ -9,7 +9,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.config.GlideApp
-import com.insane.whatsthebra.fragment.DetailFragment
 import com.insane.whatsthebra.model.Product
 
 class DetailImageAdapter(private var context: Context, private var product: Product) : PagerAdapter() {

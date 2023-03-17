@@ -1,6 +1,5 @@
 package com.insane.whatsthebra.service
 
-import android.content.Context
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.FavouriteProductDTO
 import com.insane.whatsthebra.model.Product

@@ -26,7 +26,10 @@ import java.text.DecimalFormat
 class MainComponent(private val context: MainActivity) {
 
     /**
-     * Method to create category button
+     * Method to create category button and add to the parent view to be displayed
+     * @param view is the parent View type LinearLayout where the button will be added as child
+     * @param category is an instance of the object Category that will be the button title and value
+     *
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     fun createButtonCategory(view: LinearLayout, category: Category) {
@@ -54,7 +57,9 @@ class MainComponent(private val context: MainActivity) {
     }
 
     /**
-     * Method to create a CheckBox
+     * Method to create a CheckBox and add to the parent view
+     * @param view is the parent View type LinearLayout where the checkbox will be added as child
+     * @param braType is an instance of the object BraType that will be the checkbox title and value
      */
     fun createCheckboxFilter(view: LinearLayout, braType: BraType) {
         val checkBox = CheckBox(context)
@@ -75,6 +80,8 @@ class MainComponent(private val context: MainActivity) {
 
     /**
      * Method to create a Product container with image and labels
+     * @param product is a Product parameter to be displayed in the container
+     * @return a view as LinearLayout
      */
     @SuppressLint("UseCompatLoadingForDrawables", "SetTextI18n")
     fun createProductContainer(product: Product): LinearLayout {
@@ -220,6 +227,11 @@ class MainComponent(private val context: MainActivity) {
         return mainLinearContainer
     }
 
+    /**
+     * Method to create a TextView
+     * @param text is a String parameter that will be displayed
+     * @param gravity is an Int parameter to define the TextView Gravity constant, like Gravity.CENTER
+     */
     fun createTextView(text: String, gravity: Int): TextView {
         // PRODUCT DESCRIPTION TEXT
         val textView = TextView(context)
