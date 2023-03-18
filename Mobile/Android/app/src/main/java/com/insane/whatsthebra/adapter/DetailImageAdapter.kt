@@ -29,7 +29,7 @@ class DetailImageAdapter(private var context: Context, private var product: Prod
 
         // RETRIEVING IMAGES FROM SERVER WITH GLIDE
         GlideApp.with(context)
-            .load(AppConfig.API.getImageUrl(product.images[position].id))
+            .load(AppConfig.API.getImageUrl(product.images[position].name))
             .error(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
             .fallback(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
             .placeholder(AppConfig.Image.getLoader(context))

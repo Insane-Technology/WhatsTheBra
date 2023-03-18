@@ -50,7 +50,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewDetail"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="320dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -143,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="horizontal">
@@ -160,6 +160,7 @@
                     android:textSize="22sp" />
 
                 <Button
+                    android:id="@+id/buttonGoToShop"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_weight="1"
@@ -174,7 +175,7 @@
                 android:id="@+id/textViewTitleRecommendation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="80dp"
                 android:textColor="@color/black"
@@ -186,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:scrollbars="none">

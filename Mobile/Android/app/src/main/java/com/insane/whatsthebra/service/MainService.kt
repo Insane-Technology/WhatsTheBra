@@ -75,6 +75,7 @@ object MainService {
         jsonCategories.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.categoryDao().truncateTable()
                 if (jsonResponse != null) {
                     for (c in jsonResponse) {
                         var category = Category(
@@ -104,6 +105,7 @@ object MainService {
         jsonBraTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.braTypeDao().truncateTable()
                 if (jsonResponse != null) {
                     for (t in jsonResponse) {
                         var braType = BraType(
@@ -134,6 +136,7 @@ object MainService {
         jsonImageList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.imageDao().truncateTable()
                 if (jsonResponse != null) {
                     for (t in jsonResponse) {
                         var image = Image (
@@ -164,6 +167,7 @@ object MainService {
         jsonShopList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.shopDao().truncateTable()
                 if (jsonResponse != null) {
                     for (t in jsonResponse) {
                         var shop = Shop (
@@ -195,6 +199,7 @@ object MainService {
         jsonProductTypeList.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.productTypeDao().truncateTable()
                 if (jsonResponse != null) {
                     for (t in jsonResponse) {
                         var productType = ProductType (
@@ -225,6 +230,10 @@ object MainService {
         jsonProducts.enqueue(object : retrofit2.Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 val jsonResponse = response.body()
+                db.productDao().truncateTable()
+                db.productImageDao().truncateTable()
+                db.productBraTypeDao().truncateTable()
+                db.productCategoryDao().truncateTable()
                 if (jsonResponse != null) {
                     for (p in jsonResponse) {
 

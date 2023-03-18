@@ -1,6 +1,7 @@
 package com.insane.whatsthebra.database.dao
 
 import androidx.room.*
+import com.insane.whatsthebra.database.dto.BRA_TYPE_TABLE_NAME
 import com.insane.whatsthebra.database.dto.FAVOURITE_PRODUCT_TABLE_NAME
 import com.insane.whatsthebra.database.dto.FavouriteProductDTO
 
@@ -15,5 +16,8 @@ interface FavouriteProductDAO {
 
     @Query("DELETE FROM $FAVOURITE_PRODUCT_TABLE_NAME WHERE id_product = :productId AND id_user = :userId")
     fun removeProductByIdAndUser(productId: Int, userId: Int)
+
+    @Query("DELETE FROM $FAVOURITE_PRODUCT_TABLE_NAME")
+    fun truncateTable()
 
 }

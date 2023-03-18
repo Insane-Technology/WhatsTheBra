@@ -48,7 +48,7 @@ object AppConfig {
     object Image {
 
         private const val thumbnailHeightDp = 250
-        private const val recommendationWidthDp = 120
+        private const val recommendationWidthDp = 100
 
         fun getThumbnailHeight(): Int {
             return Tools.Window.dpToPx(thumbnailHeightDp)

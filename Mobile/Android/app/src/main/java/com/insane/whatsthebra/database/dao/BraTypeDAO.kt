@@ -3,6 +3,7 @@ package com.insane.whatsthebra.database.dao
 import androidx.room.*
 import com.insane.whatsthebra.database.dto.BRA_TYPE_TABLE_NAME
 import com.insane.whatsthebra.database.dto.BraTypeDTO
+import com.insane.whatsthebra.database.dto.CATEGORY_TABLE_NAME
 
 @Dao
 interface BraTypeDAO {
@@ -18,5 +19,8 @@ interface BraTypeDAO {
 
     @Query("DELETE FROM $BRA_TYPE_TABLE_NAME WHERE id = :braTypeId")
     fun removeBraTypeById(braTypeId: Int)
+
+    @Query("DELETE FROM $BRA_TYPE_TABLE_NAME")
+    fun truncateTable()
 
 }

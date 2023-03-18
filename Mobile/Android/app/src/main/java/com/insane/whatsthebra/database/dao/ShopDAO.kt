@@ -1,6 +1,7 @@
 package com.insane.whatsthebra.database.dao
 
 import androidx.room.*
+import com.insane.whatsthebra.database.dto.PRODUCT_TYPE_TABLE_NAME
 import com.insane.whatsthebra.database.dto.SHOP_TABLE_NAME
 import com.insane.whatsthebra.database.dto.ShopDTO
 
@@ -15,5 +16,8 @@ interface ShopDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(shop: ShopDTO)
+
+    @Query("DELETE FROM $SHOP_TABLE_NAME")
+    fun truncateTable()
 
 }

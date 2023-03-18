@@ -2,8 +2,10 @@ package com.insane.whatsthebra.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.*
 import android.util.DisplayMetrics
 import android.util.TypedValue
@@ -142,6 +144,14 @@ object Tools {
                     false
                 }
             }
+    }
+
+    object Web {
+        fun openBrowser(context: Context, url: String) {
+            // OPEN BROWSER
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(browserIntent)
+        }
     }
 
     object Show {

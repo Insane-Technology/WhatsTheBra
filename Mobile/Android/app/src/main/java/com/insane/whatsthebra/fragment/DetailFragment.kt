@@ -116,20 +116,36 @@ class DetailFragment : Fragment() {
 
         for (productType in productTypes) {
             if (productType.id != product.productType.id) {
-                for (prod in db.productDao().getAllByType(productType.id)) {
-                    for (braType in product.braTypes) {
-                        if (prod.toProduct(db).braTypes.any { it == braType }) {
-                            val productRecommendation = prod.toProduct(db)
-                            recommendations.add(productRecommendation)
-                            binding.linearLayoutRecommendations.let {
-                                val productImage = AppConfig.Image.getImageViewRecommendationTemplate(context)
-                                GlideApp.with(context)
-                                    .load(AppConfig.API.getImageUrl(productRecommendation.images[0].id))
-                                    .error(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
-                                    .fallback(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
-                                    .placeholder(AppConfig.Image.getLoader(context))
-                                    .centerCrop()
-                                    .into(productImage)
+                if ((product.productType.id != 3 && productType.id == 3) || (product.productType.id == 3 && productType.id != 3)) {
+                    for (prod in db.productDao().getAllByType(productType.id)) {
+                        for (braType in product.braTypes) {
+                            if ((prod.toProduct(db).braTypes.any { it == braType }) && (!recommendations.any {
+                                    it == prod.toProduct(
+                                        db
+                                    )
+                                })) {
+                                val productRecommendation = prod.toProduct(db)
+                                recommendations.add(productRecommendation)
+                                binding.linearLayoutRecommendations.let {
+                                    val productImage =
+                                        AppConfig.Image.getImageViewRecommendationTemplate(context)
+                                    GlideApp.with(context)
+                                        .load(AppConfig.API.getImageUrl(productRecommendation.images[0].name))
+                                        .error(
+                                            context.resources.getDrawable(
+                                                R.drawable.ic_broken_image,
+                                                context.theme
+                                            )
+                                        )
+                                        .fallback(
+                                            context.resources.getDrawable(
+                                                R.drawable.ic_broken_image,
+                                                context.theme
+                                            )
+                                        )
+                                        .placeholder(AppConfig.Image.getLoader(context))
+                                        .centerCrop()
+                                        .into(productImage)
 
                                     it.addView(productImage, 0)
 
@@ -137,11 +153,14 @@ class DetailFragment : Fragment() {
                                     productImage.setOnClickListener {
                                         if (this.activity is MainActivity) {
                                             closeFragment().also {
-                                                (this.activity as MainActivity).openProductDetails(productRecommendation)
+                                                (this.activity as MainActivity).openProductDetails(
+                                                    productRecommendation
+                                                )
                                             }
                                         }
                                     }
 
+                                }
                             }
                         }
                     }
@@ -155,6 +174,10 @@ class DetailFragment : Fragment() {
     private fun displayViewPager(product: Product) {
         val context = this.context
         val productImages = ViewPager(context!!)
+
+        binding.buttonGoToShop.setOnClickListener {
+            Tools.Web.openBrowser(context, product.shop.link)
+        }
 
         // CREATE DOTS LINEARLAYOUT \\
         val dotsLayout = LinearLayout(activity)

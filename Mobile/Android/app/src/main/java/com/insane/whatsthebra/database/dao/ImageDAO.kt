@@ -1,6 +1,7 @@
 package com.insane.whatsthebra.database.dao
 
 import androidx.room.*
+import com.insane.whatsthebra.database.dto.FAVOURITE_PRODUCT_TABLE_NAME
 import com.insane.whatsthebra.database.dto.IMAGE_TABLE_NAME
 import com.insane.whatsthebra.database.dto.ImageDTO
 
@@ -18,5 +19,8 @@ interface ImageDAO {
 
     @Query("DELETE FROM $IMAGE_TABLE_NAME WHERE id = :imageId")
     fun removeImageById(imageId: Int)
+
+    @Query("DELETE FROM $IMAGE_TABLE_NAME")
+    fun truncateTable()
 
 }

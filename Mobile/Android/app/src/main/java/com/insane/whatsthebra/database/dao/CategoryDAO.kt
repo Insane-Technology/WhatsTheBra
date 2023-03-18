@@ -19,4 +19,7 @@ interface CategoryDAO {
     @Query("DELETE FROM $CATEGORY_TABLE_NAME WHERE id = :categoryId")
     fun removeCategoryById(categoryId: Int)
 
+    @Query("DELETE FROM $CATEGORY_TABLE_NAME")
+    fun truncateTable()
+
 }
