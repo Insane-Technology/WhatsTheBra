@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.internal.ViewUtils
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.component.MainComponent
 import com.insane.whatsthebra.config.AppConfig
@@ -22,6 +26,7 @@ import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.service.UserService
+import com.insane.whatsthebra.utils.Tools
 
 
 class MainActivity : AppCompatActivity(), DataCallBack {
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         setCategoryOn(selectedCategory)
     }
 
+    @SuppressLint("RestrictedApi")
     private fun setUpClickListeners() {
 
         // PULL TO REFRESH
@@ -111,6 +117,23 @@ class MainActivity : AppCompatActivity(), DataCallBack {
                 loadProfile()
             }
         }
+
+        // SEARCH IF CLICKED ON BUTTON SEARCH
+        binding.editTextSearch.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+            val input = binding.editTextSearch
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                ViewUtils.hideKeyboard(currentFocus ?: View(this))
+                input.clearFocus()
+                if (input.text.replace(" ".toRegex(), "") == "") {
+                    loadProducts()
+                } else {
+                    loadProducts(input.text.toString())
+                }
+                input.text.clear()
+                return@OnEditorActionListener true
+            }
+            false
+        })
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -188,6 +211,13 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         return false
     }
 
+    private fun checkQueryProduct(product: Product, query: String): Boolean {
+        if (query != "") {
+            return product.description.contains(query, ignoreCase = true)
+        }
+        return true
+    }
+
     private fun checkFilterProduct(product: Product, filters: ArrayList<BraType>): Boolean {
         if (filters.size <= 0) return true
         else {
@@ -223,15 +253,18 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
 
-    fun loadProducts() {
+    fun loadProducts(searchQuery: String = "") {
         var productMatches = 0
         val favouriteProducts = UserService(db).getFavouriteProducts()
 
         // CLEAR VIEWS
         cleanViews()
 
+        if (searchQuery != "")
+            binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView("Pesquisando por: $searchQuery", Gravity.START))
+
         fun filter(product: Product) {
-            if (checkCategoryProduct(product)) {
+            if (checkCategoryProduct(product) && checkQueryProduct(product, searchQuery)) {
                 if (checkFilterProduct(product, selectedFilters)) {
                     productMatches++
                     val view: View = mainActivityComponent.createProductContainer(product)

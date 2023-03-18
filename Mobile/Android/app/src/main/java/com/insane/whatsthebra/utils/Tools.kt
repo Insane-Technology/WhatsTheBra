@@ -10,6 +10,7 @@ import android.os.*
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.widget.Toast
+import com.insane.whatsthebra.R
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.text.Normalizer
@@ -155,8 +156,8 @@ object Tools {
     }
 
     object Show {
-        fun noConnection(context: Context?) {
-            Toast.makeText(context, "Sem conexão com a Internet", Toast.LENGTH_SHORT).show()
+        fun noConnection(context: Context) {
+            Toast.makeText(context, context.getString(R.string.noConnection), Toast.LENGTH_SHORT).show()
         }
 
         fun message(context: Context?, message: String?) {

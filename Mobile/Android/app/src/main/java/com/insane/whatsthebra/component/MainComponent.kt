@@ -237,6 +237,7 @@ class MainComponent(private val context: MainActivity) {
         val textView = TextView(context)
         val paramsTextView = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         textView.layoutParams = paramsTextView
+        textView.setPadding(Tools.Window.dpToPx(20),0,Tools.Window.dpToPx(20),0)
         textView.setTextColor(context.resources.getColor(R.color.gray_700, context.theme))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { textView.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD }
         textView.gravity = gravity

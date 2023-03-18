@@ -175,10 +175,6 @@ class DetailFragment : Fragment() {
         val context = this.context
         val productImages = ViewPager(context!!)
 
-        binding.buttonGoToShop.setOnClickListener {
-            Tools.Web.openBrowser(context, product.shop.link)
-        }
-
         // CREATE DOTS LINEARLAYOUT \\
         val dotsLayout = LinearLayout(activity)
         val paramsLinearDot = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -207,6 +203,11 @@ class DetailFragment : Fragment() {
         binding.cardViewDetail.addView(dotsContentLayout)
         fillLayoutDots(dotsLayout, product.images.size, 0)
         dotsContentLayout.addView(dotsLayout, 0)
+
+        binding.textViewShopDescription.setOnClickListener {
+            if (Tools.Device.isDoubleClick) setFavouriteProduct(product)
+        }
+        binding.buttonGoToShop.setOnClickListener {Tools.Web.openBrowser(context, product.shop.link) }
     }
 
     private fun fillLayoutDots(linearLayout: LinearLayout, amount: Int, position: Int) {
