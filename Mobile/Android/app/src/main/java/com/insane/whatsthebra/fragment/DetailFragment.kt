@@ -128,7 +128,7 @@ class DetailFragment : Fragment() {
                                 recommendations.add(productRecommendation)
                                 binding.linearLayoutRecommendations.let {
                                     val productImage =
-                                        AppConfig.Image.getImageViewRecommendationTemplate(context)
+                                        Tools.Component.getRecommendationImageView(context)
                                     GlideApp.with(context)
                                         .load(AppConfig.API.getImageUrl(productRecommendation.images[0].name))
                                         .error(
@@ -143,7 +143,7 @@ class DetailFragment : Fragment() {
                                                 context.theme
                                             )
                                         )
-                                        .placeholder(AppConfig.Image.getLoader(context))
+                                        .placeholder(Tools.Component.getLoader(context))
                                         .centerCrop()
                                         .into(productImage)
 

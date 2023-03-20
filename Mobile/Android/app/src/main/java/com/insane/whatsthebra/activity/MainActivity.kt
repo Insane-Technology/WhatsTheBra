@@ -18,7 +18,6 @@ import com.google.android.material.internal.ViewUtils
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.adapter.RecyclerViewAdapter
 import com.insane.whatsthebra.component.MainComponent
-import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
 import com.insane.whatsthebra.database.dto.CategoryDTO
 import com.insane.whatsthebra.databinding.ActivityMainBinding
@@ -29,8 +28,9 @@ import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.service.UserService
+import com.insane.whatsthebra.utils.Tools
 
-
+@SuppressLint("UseCompatLoadingForDrawables")
 class MainActivity : AppCompatActivity(), DataCallBack {
 
     private lateinit var binding: ActivityMainBinding
@@ -145,7 +145,6 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         })
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun selectMenu(imageView: ImageView) {
 
         binding.imageViewHome.setImageDrawable(this.getDrawable(R.drawable.ic_home))
@@ -171,23 +170,25 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     fun addFilter(braType: BraType) {
         selectedFilters.add(braType)
+        binding.imageButtonFilter.background = this.getDrawable(R.drawable.ic_box_button_filter_on)
     }
 
     fun removeFilter(braType: BraType) {
         selectedFilters.remove(braType)
+        if (selectedFilters.size <= 0)
+            binding.imageButtonFilter.background = this.getDrawable(R.drawable.ic_box_button_filter)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     fun setCategoryOn(category: Category) {
         // Unselect selected button
-        val oldSelectedButton = this.findViewById(AppConfig.Component.getButtonCategoryId(selectedCategory)) as Button
+        val oldSelectedButton = this.findViewById(Tools.Component.getButtonCategoryId(selectedCategory)) as Button
         oldSelectedButton.background = this.getDrawable(R.drawable.ic_box_button_off)
 
         // Set new category selected
         selectedCategory = category
 
         // Select Button
-        val selectedButton: Button = this.findViewById(AppConfig.Component.getButtonCategoryId(category))
+        val selectedButton: Button = this.findViewById(Tools.Component.getButtonCategoryId(category))
         selectedButton.background = this.getDrawable(R.drawable.ic_box_button_on)
 
         // Reload Products
@@ -243,6 +244,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         cleanViews().also {
             binding.linearLayoutCategories.visibility = View.INVISIBLE
             binding.linearLayoutSearchBar.visibility = View.INVISIBLE
+            binding.recyclerView.visibility = View.INVISIBLE
             binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView(this.getString(R.string.notificationMessage), Gravity.CENTER))
         }
     }
@@ -251,6 +253,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         cleanViews().also {
             binding.linearLayoutCategories.visibility = View.INVISIBLE
             binding.linearLayoutSearchBar.visibility = View.INVISIBLE
+            binding.recyclerView.visibility = View.INVISIBLE
             binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView(this.getString(R.string.profileMessage), Gravity.CENTER))
         }
     }
@@ -258,6 +261,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private fun cleanViews() {
         binding.linearLayoutCategories.visibility = View.VISIBLE
         binding.linearLayoutSearchBar.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.VISIBLE
         binding.linearLayoutMessageContainer.removeAllViews()
     }
 

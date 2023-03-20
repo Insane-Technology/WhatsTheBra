@@ -66,7 +66,7 @@ class RecyclerViewAdapter(private val mList: List<Product>, private val context:
                 .load(AppConfig.API.getImageUrl(product.images[0].name))
                 .error(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
                 .fallback(context.resources.getDrawable(R.drawable.ic_broken_image, context.theme))
-                .placeholder(AppConfig.Image.getLoader(context))
+                .placeholder(Tools.Component.getLoader(context))
                 .centerCrop()
                 .into(imageView)
         } else {

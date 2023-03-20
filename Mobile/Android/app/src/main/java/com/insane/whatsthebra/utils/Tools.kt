@@ -1,5 +1,6 @@
 package com.insane.whatsthebra.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,8 +10,14 @@ import android.net.Uri
 import android.os.*
 import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.insane.whatsthebra.R
+import com.insane.whatsthebra.model.Category
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.text.DecimalFormat
@@ -170,6 +177,38 @@ object Tools {
         fun message(context: Context?, message: String?) {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    object Component {
+        private const val BASE_ID_BUTTON_CATEGORY = 1000
+        private const val RECOMMENDATION_WIDTH = 100
+
+        fun getLoader(context: Context): CircularProgressDrawable {
+            val circularProgressDrawable = CircularProgressDrawable(context)
+            circularProgressDrawable.strokeWidth = 15f
+            circularProgressDrawable.centerRadius = 60f
+            circularProgressDrawable.alpha = 50
+            circularProgressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.SRC_ATOP)
+            circularProgressDrawable.start()
+            return  circularProgressDrawable
+        }
+
+        @SuppressLint("UseCompatLoadingForDrawables")
+        fun getRecommendationImageView(context: Context): ImageView {
+            val imageView = ImageView(context)
+            val paramsProductImage = LinearLayout.LayoutParams(Window.dpToPx(RECOMMENDATION_WIDTH), LinearLayout.LayoutParams.MATCH_PARENT)
+            paramsProductImage.setMargins(0,0,Window.dpToPx(8),0)
+            imageView.layoutParams = paramsProductImage
+            imageView.setBackgroundColor(context.getColor(R.color.pink_200))
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imageView.elevation = 0F
+            return imageView
+        }
+
+        fun getButtonCategoryId(category: Category): Int {
+            return BASE_ID_BUTTON_CATEGORY+category.id
+        }
+
     }
 
 }

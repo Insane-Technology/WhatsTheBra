@@ -8,7 +8,6 @@ import android.os.Build
 import android.widget.*
 import com.insane.whatsthebra.R
 import com.insane.whatsthebra.activity.MainActivity
-import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.model.BraType
 import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.utils.Tools
@@ -28,7 +27,7 @@ class MainComponent(private val context: MainActivity) {
         // Layout Params
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         params.setMargins(0,0, Tools.Window.dpToPx(10),0)
-        button.id = AppConfig.Component.getButtonCategoryId(category)
+        button.id = Tools.Component.getButtonCategoryId(category)
         button.layoutParams = params
         button.background = view.context.resources.getDrawable(R.drawable.ic_box_button_off, context.theme)
         button.typeface = Typeface.DEFAULT_BOLD
