@@ -4,6 +4,8 @@
 
     <!-- Search Bar Description -->
     <string name="hint"><font size="17">Pesquisar</font></string>
+    <string name="searchingFor">Pesquisando por:</string>
+    <string name="searchFound">Produtos encontrados:</string>
 
     <!-- Category Container Description -->
     <string name="categoryTitle">Categorias</string>
@@ -39,5 +41,9 @@
     <string name="notificationMessage">Painel de notificações ainda não disponível</string>
     <string name="profileMessage">Perfil de conta ainda não disponível</string>
     <string name="noConnection">Sem conexão com a Internet</string>
+
+    <!-- Image Content Description -->
+    <string name="productImageDescription">Imagem do produto</string>
+    <string name="favouriteImageDescription">Coração</string>
 
 </resources>

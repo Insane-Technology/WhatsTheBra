@@ -1,6 +1,5 @@
 package com.insane.whatsthebra.database.dto
 
-import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

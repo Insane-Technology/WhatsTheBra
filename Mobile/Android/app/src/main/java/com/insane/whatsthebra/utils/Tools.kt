@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.insane.whatsthebra.R
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
+import java.text.DecimalFormat
 import java.text.Normalizer
 import java.util.regex.Pattern
 import kotlin.math.roundToInt
@@ -33,7 +34,6 @@ object Tools {
 
     }
 
-
     object Text {
         fun removeAccents(string: String): String {
             var st = string
@@ -48,6 +48,13 @@ object Tools {
                 "^[a-zA-Z\\d_+&*-]+(?:\\.[a-zA-Z\\d_+&*-]+)*@(?:[a-zA-Z\\d-]+\\.)+[a-zA-Z]{2,7}$"
             val pat = Pattern.compile(emailRegex)
             return if (email == null) false else pat.matcher(email).matches()
+        }
+    }
+
+    object Currency {
+        fun toReal(value: Double): String {
+            val decimal = DecimalFormat("#,###.00")
+            return "R$ ${decimal.format(value)}"
         }
     }
 

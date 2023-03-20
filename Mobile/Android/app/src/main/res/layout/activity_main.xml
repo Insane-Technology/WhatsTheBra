@@ -99,7 +99,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="5dp"
         app:layout_constraintTop_toBottomOf="@id/linearLayoutSearchBar"
         tools:layout_editor_absoluteX="-89dp">
 
@@ -133,6 +133,18 @@
 
     </LinearLayout>
 
+    <!-- INNER MESSAGE CONTAINER -->
+    <LinearLayout
+        android:id="@+id/linearLayoutMessageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutCategories"
+        android:orientation="vertical">
+    </LinearLayout>
+
     <!-- SWIPE REFRESH LAYOUT -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -144,265 +156,19 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutBottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCategories">
-        <!-- SCROLLVIEW PRODUCT CONTAINER -->
-        <ScrollView
-            android:id="@+id/scrollViewProduct"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutMessageContainer">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:scrollbars="none">
+            android:paddingHorizontal="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            android:layout_gravity="top"
+            tools:listitem="@layout/card_view_layout" />
 
-                <!-- INNER PRODUCT CONTAINER -->
-                <LinearLayout
-                    android:id="@+id/linearLayoutProductContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <!-- INNER MESSAGE CONTAINER -->
-                    <LinearLayout
-                        android:id="@+id/linearLayoutMessageContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-                    </LinearLayout>
-
-                    <!-- PRODUCT COLUMNS CONTAINER -->
-                    <LinearLayout
-                        android:id="@+id/linearLayoutProductColumns"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <!-- LEFT COLUMN -->
-                        <LinearLayout
-                            android:id="@+id/linearLayoutProductContainerLeft"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="10dp"
-                            android:orientation="vertical">
-
-                            <!-- PRODUCT CONTAINER -->
-        <!--                    <LinearLayout-->
-        <!--                        android:layout_width="match_parent"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginBottom="10dp"-->
-        <!--                        android:orientation="vertical">-->
-
-        <!--                        <androidx.cardview.widget.CardView-->
-        <!--                            android:id="@+id/cardView"-->
-        <!--                            android:layout_width="match_parent"-->
-        <!--                            android:layout_height="wrap_content"-->
-        <!--                            android:elevation="10dp"-->
-        <!--                            app:cardCornerRadius="20dp">-->
-
-        <!--                            &lt;!&ndash; PRODUCT IMAGE &ndash;&gt;-->
-        <!--                            <ImageView-->
-        <!--                                android:id="@+id/roundedImageView"-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="240dp"-->
-        <!--                                android:background="@color/white"-->
-        <!--                                android:elevation="1dp"-->
-        <!--                                android:scaleType="centerCrop"-->
-        <!--                                android:src="@drawable/sutia1" />-->
-
-        <!--                            &lt;!&ndash; HEART IMAGE &ndash;&gt;-->
-        <!--                            <ImageView-->
-        <!--                                android:id="@+id/imageView3"-->
-        <!--                                android:layout_width="30dp"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:layout_marginStart="8dp"-->
-        <!--                                android:layout_marginTop="2dp"-->
-        <!--                                android:elevation="10dp"-->
-        <!--                                app:srcCompat="@drawable/ic_heart" />-->
-
-        <!--                        </androidx.cardview.widget.CardView>-->
-
-        <!--                        &lt;!&ndash; PRODUCT LABEL AND PRICE CONTAINER &ndash;&gt;-->
-        <!--                        <LinearLayout-->
-        <!--                            android:layout_width="match_parent"-->
-        <!--                            android:layout_height="wrap_content"-->
-        <!--                            android:layout_weight="1"-->
-        <!--                            android:layout_marginTop="5dp"-->
-        <!--                            android:orientation="vertical">-->
-
-        <!--                            <TextView-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:text="Sutiã Triângulo Renda Sweet Lace Azul Claro"-->
-        <!--                                android:textColor="@color/gray_700"-->
-        <!--                                android:justificationMode="inter_word"-->
-        <!--                                android:gravity="start"/>-->
-
-        <!--                            <LinearLayout-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:layout_weight="1"-->
-        <!--                                android:layout_marginTop="0dp"-->
-        <!--                                android:orientation="horizontal">-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1.4"-->
-        <!--                                    android:text="R$ 59,90"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    android:textColor="@color/gray_700"-->
-        <!--                                    android:textSize="13sp"-->
-        <!--                                    android:gravity="start"-->
-        <!--                                    app:fontFamily="@font/roboto_black"/>-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1.2"-->
-        <!--                                    android:text="R$ 85,90"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    android:textColor="@color/gray_500"-->
-        <!--                                    android:textSize="11sp"-->
-        <!--                                    android:gravity="end"/>-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1"-->
-        <!--                                    android:text="30% OFF"-->
-        <!--                                    android:gravity="end"-->
-        <!--                                    android:textColor="@color/pink_700"-->
-        <!--                                    android:textSize="11sp"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    app:textAllCaps="false" />-->
-
-        <!--                            </LinearLayout>-->
-
-        <!--                        </LinearLayout>-->
-
-        <!--                    </LinearLayout>-->
-
-                        </LinearLayout>
-
-                        <!-- RIGHT COLUMN -->
-                        <LinearLayout
-                            android:id="@+id/linearLayoutProductContainerRight"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="20dp"
-                            android:orientation="vertical">
-
-                            <!-- PRODUCT CONTAINER -->
-        <!--                    <LinearLayout-->
-        <!--                        android:layout_width="match_parent"-->
-        <!--                        android:layout_height="wrap_content"-->
-        <!--                        android:layout_marginTop="10dp"-->
-        <!--                        android:layout_marginBottom="10dp"-->
-        <!--                        android:orientation="vertical">-->
-
-        <!--                        <androidx.cardview.widget.CardView-->
-        <!--                            android:id="@+id/cardView2"-->
-        <!--                            android:layout_width="match_parent"-->
-        <!--                            android:layout_height="wrap_content"-->
-        <!--                            android:elevation="10dp"-->
-        <!--                            app:cardCornerRadius="20dp">-->
-
-        <!--                            &lt;!&ndash; PRODUCT IMAGE &ndash;&gt;-->
-
-        <!--                            &lt;!&ndash; HEART IMAGE &ndash;&gt;-->
-        <!--                            <ImageView-->
-        <!--                                android:id="@+id/roundedImageView2"-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="240dp"-->
-        <!--                                android:background="@color/white"-->
-        <!--                                android:elevation="1dp"-->
-        <!--                                android:scaleType="centerCrop"-->
-        <!--                                android:src="@drawable/sutia3" />-->
-
-        <!--                            <ImageView-->
-        <!--                                android:id="@+id/imageView4"-->
-        <!--                                android:layout_width="30dp"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:layout_marginStart="8dp"-->
-        <!--                                android:layout_marginTop="2dp"-->
-        <!--                                android:elevation="10dp"-->
-        <!--                                app:srcCompat="@drawable/ic_heart" />-->
-
-        <!--                        </androidx.cardview.widget.CardView>-->
-
-        <!--                        &lt;!&ndash; PRODUCT LABEL AND PRICE CONTAINER &ndash;&gt;-->
-        <!--                        <LinearLayout-->
-        <!--                            android:layout_width="match_parent"-->
-        <!--                            android:layout_height="wrap_content"-->
-        <!--                            android:layout_weight="1"-->
-        <!--                            android:layout_marginTop="5dp"-->
-        <!--                            android:orientation="vertical">-->
-
-        <!--                            <TextView-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:text="Sutiã Triângulo Renda Sweet Lace Azul Claro"-->
-        <!--                                android:textColor="@color/gray_700"-->
-        <!--                                android:justificationMode="inter_word"-->
-        <!--                                android:gravity="start"/>-->
-
-        <!--                            <LinearLayout-->
-        <!--                                android:layout_width="match_parent"-->
-        <!--                                android:layout_height="wrap_content"-->
-        <!--                                android:layout_weight="1"-->
-        <!--                                android:layout_marginTop="0dp"-->
-        <!--                                android:orientation="horizontal">-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1"-->
-        <!--                                    android:text="R$ 59,90"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    android:textColor="@color/gray_700"-->
-        <!--                                    android:textSize="14sp"-->
-        <!--                                    android:gravity="start"-->
-        <!--                                    app:fontFamily="@font/roboto_black"/>-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1"-->
-        <!--                                    android:text="R$ 85,90"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    android:textColor="@color/gray_500"-->
-        <!--                                    android:textSize="11sp"-->
-        <!--                                    android:gravity="end"/>-->
-
-        <!--                                <TextView-->
-        <!--                                    android:layout_width="0dp"-->
-        <!--                                    android:layout_height="wrap_content"-->
-        <!--                                    android:layout_weight="1"-->
-        <!--                                    android:text="30% OFF"-->
-        <!--                                    android:gravity="end"-->
-        <!--                                    android:textColor="@color/pink_700"-->
-        <!--                                    android:textSize="11sp"-->
-        <!--                                    android:textStyle="bold"-->
-        <!--                                    app:textAllCaps="false" />-->
-
-        <!--                            </LinearLayout>-->
-
-        <!--                        </LinearLayout>-->
-
-        <!--                    </LinearLayout>-->
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-        </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <!-- BOTTOM MENU BAR -->

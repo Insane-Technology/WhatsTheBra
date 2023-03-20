@@ -47,12 +47,7 @@ object AppConfig {
      */
     object Image {
 
-        private const val thumbnailHeightDp = 250
         private const val recommendationWidthDp = 100
-
-        fun getThumbnailHeight(): Int {
-            return Tools.Window.dpToPx(thumbnailHeightDp)
-        }
 
         fun getRecommendationWidth(): Int {
             return Tools.Window.dpToPx(recommendationWidthDp)
@@ -66,16 +61,6 @@ object AppConfig {
             circularProgressDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.pink_700, BlendModeCompat.SRC_ATOP)
             circularProgressDrawable.start()
             return  circularProgressDrawable
-        }
-
-        fun getImageViewThumbnailTemplate(context: Context): ImageView {
-            val imageView = ImageView(context)
-            val paramsProductImage = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getThumbnailHeight())
-            imageView.layoutParams = paramsProductImage
-            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-            imageView.setBackgroundColor(context.getColor(R.color.pink_200))
-            imageView.elevation = 0F
-            return imageView
         }
 
         fun getImageViewDetailTemplate(context: Context): ImageView {
@@ -104,14 +89,9 @@ object AppConfig {
 
     object Component {
         private const val BASE_ID_BUTTON_CATEGORY = 1000
-        private const val BASE_ID_IMAGEVIEW_FAVOURITE = 2000
 
         fun getButtonCategoryId(category: Category): Int {
             return BASE_ID_BUTTON_CATEGORY+category.id
-        }
-
-        fun getImageViewFavouriteId(product: Product): Int {
-            return BASE_ID_IMAGEVIEW_FAVOURITE+product.id
         }
 
     }

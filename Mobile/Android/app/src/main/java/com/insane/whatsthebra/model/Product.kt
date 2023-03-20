@@ -2,7 +2,7 @@ package com.insane.whatsthebra.model
 
 import com.insane.whatsthebra.database.dto.ProductDTO
 
-class Product (
+data class Product (
     var id: Int = 0,
     val name: String,
     val price: Double,

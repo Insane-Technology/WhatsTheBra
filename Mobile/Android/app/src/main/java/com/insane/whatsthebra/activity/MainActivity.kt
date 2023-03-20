@@ -2,18 +2,21 @@ package com.insane.whatsthebra.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.widget.TextView.OnEditorActionListener
 import androidx.activity.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.internal.ViewUtils
 import com.insane.whatsthebra.R
+import com.insane.whatsthebra.adapter.RecyclerViewAdapter
 import com.insane.whatsthebra.component.MainComponent
 import com.insane.whatsthebra.config.AppConfig
 import com.insane.whatsthebra.database.AppDataBase
@@ -26,13 +29,14 @@ import com.insane.whatsthebra.model.Category
 import com.insane.whatsthebra.model.Product
 import com.insane.whatsthebra.service.MainService
 import com.insane.whatsthebra.service.UserService
-import com.insane.whatsthebra.utils.Tools
 
 
 class MainActivity : AppCompatActivity(), DataCallBack {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerViewState: Parcelable
     private val db = AppDataBase.getDataBase(this)
     private val mainActivityComponent = MainComponent(this)
     private var selectedCategory = db.categoryDao().getAll()[0].toCategory()
@@ -40,14 +44,9 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private var favouriteList = false
 
 
-//    @Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val detailFragment: DetailFragment? = supportFragmentManager.findFragmentByTag("FRAGMENT_DETAIL") as DetailFragment?
-        if (detailFragment != null && detailFragment.isVisible) {
-            val manager = this.supportFragmentManager
-            manager.beginTransaction().remove(detailFragment).commit()
-            loadProducts()
-        }
+        closeFragmentIfVisible()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +54,11 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         refreshLayout = binding.swipeRefreshLayout
+        recyclerView = binding.recyclerView
+        val layoutManager = GridLayoutManager(this, 2)
+        layoutManager.orientation = RecyclerView.VERTICAL
+        recyclerView.layoutManager = layoutManager
+        recyclerViewState = layoutManager.onSaveInstanceState()!!
         // SET UP VIEWS
         setUpViews()
         // SET UP CLICK LISTENERS
@@ -72,7 +76,12 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private fun setUpClickListeners() {
 
         // PULL TO REFRESH
-        refreshLayout.setOnRefreshListener { MainService.loadProducts(db, this) }
+        refreshLayout.setOnRefreshListener {
+            // Save state on recycler view
+            recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()!!
+            // Load products
+            MainService.loadProducts(db, this)
+        }
 
         // BUTTON FILTER
         binding.imageButtonFilter.setOnClickListener { openModalFilter(binding.constraintLayoutFilterModal) }
@@ -186,7 +195,9 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     }
 
     fun openProductDetails(product: Product) {
-
+        // Save state
+        recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()!!
+        // Load Fragment
         val detailFragment = DetailFragment.newInstance(product.id);
         supportFragmentManager
             .beginTransaction()
@@ -195,13 +206,13 @@ class MainActivity : AppCompatActivity(), DataCallBack {
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    fun setFavouriteProduct(product: Product) {
-        val favouriteButton = this.findViewById(AppConfig.Component.getImageViewFavouriteId(product)) as ImageView
-        if (UserService(db).setFavouriteProduct(product))
-            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart_color))
-        else
-            favouriteButton.setImageDrawable(this.getDrawable(R.drawable.ic_heart))
+    private fun closeFragmentIfVisible() {
+        val detailFragment: DetailFragment? = supportFragmentManager.findFragmentByTag("FRAGMENT_DETAIL") as DetailFragment?
+        if (detailFragment != null && detailFragment.isVisible) {
+            val manager = this.supportFragmentManager
+            manager.beginTransaction().remove(detailFragment).commit()
+            loadProducts()
+        }
     }
 
     private fun checkCategoryProduct(product: Product): Boolean {
@@ -247,8 +258,6 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private fun cleanViews() {
         binding.linearLayoutCategories.visibility = View.VISIBLE
         binding.linearLayoutSearchBar.visibility = View.VISIBLE
-        binding.linearLayoutProductContainerLeft.removeAllViews()
-        binding.linearLayoutProductContainerRight.removeAllViews()
         binding.linearLayoutMessageContainer.removeAllViews()
     }
 
@@ -256,37 +265,42 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     fun loadProducts(searchQuery: String = "") {
         var productMatches = 0
         val favouriteProducts = UserService(db).getFavouriteProducts()
+        val productList = ArrayList<Product>()
 
         // CLEAR VIEWS
         cleanViews()
-
-        if (searchQuery != "")
-            binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView("Pesquisando por: $searchQuery", Gravity.START))
 
         fun filter(product: Product) {
             if (checkCategoryProduct(product) && checkQueryProduct(product, searchQuery)) {
                 if (checkFilterProduct(product, selectedFilters)) {
                     productMatches++
-                    val view: View = mainActivityComponent.createProductContainer(product)
-                    // ADD VIEW TO EACH COLUMN
-                    if (productMatches % 2 == 0) {
-                        binding.linearLayoutProductContainerRight.addView(view)
-                    } else {
-                        binding.linearLayoutProductContainerLeft.addView(view)
+                    productList.add(product)
+                }
+            }
+        }
+
+        fun getProducts() {
+            for (product in db.productDao().getAll()) {
+                if (!favouriteList) {
+                    filter(product.toProduct(db))
+                } else {
+                    if (favouriteProducts.any { it == product.toProduct(db)}) {
+                        filter(product.toProduct(db))
                     }
                 }
             }
         }
 
-        for (product in db.productDao().getAll()) {
-            if (!favouriteList) {
-                filter(product.toProduct(db))
-            } else {
-                if (favouriteProducts.any { it == product.toProduct(db)}) {
-                    filter(product.toProduct(db))
-                }
-            }
+        getProducts().also {
+            recyclerView.adapter = RecyclerViewAdapter(productList, this)
+            // Restore state
+            recyclerView.layoutManager!!.onRestoreInstanceState(recyclerViewState);
+            if (searchQuery != "")
+                binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView("${this.getString(R.string.searchingFor)} $searchQuery", Gravity.START))
+            else
+                binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView("${this.getString(R.string.searchFound)} $productMatches", Gravity.START))
         }
+
     }
 
     private fun loadCategoryButtons(buttonsContainer: LinearLayout, categories: List<CategoryDTO>) {
