@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
     private lateinit var binding: ActivityMainBinding
     private lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
-    lateinit var recyclerViewState: Parcelable
+    private lateinit var recyclerViewState: Parcelable
     private val db = AppDataBase.getDataBase(this)
     private val mainActivityComponent = MainComponent(this)
     private var selectedCategory = db.categoryDao().getAll()[0].toCategory()
@@ -199,11 +199,11 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         // Save state
         recyclerViewState = recyclerView.layoutManager!!.onSaveInstanceState()!!
         // Load Fragment
-        val detailFragment = DetailFragment.newInstance(product.id);
+        val detailFragment = DetailFragment.newInstance(product.id)
         supportFragmentManager
             .beginTransaction()
             .add(R.id.frameLayoutDetail, detailFragment, "FRAGMENT_DETAIL")
-            .commit();
+            .commit()
 
     }
 
@@ -298,7 +298,7 @@ class MainActivity : AppCompatActivity(), DataCallBack {
         getProducts().also {
             recyclerView.adapter = RecyclerViewAdapter(productList, this)
             // Restore state
-            recyclerView.layoutManager!!.onRestoreInstanceState(recyclerViewState);
+            recyclerView.layoutManager!!.onRestoreInstanceState(recyclerViewState)
             if (searchQuery != "")
                 binding.linearLayoutMessageContainer.addView(mainActivityComponent.createTextView("${this.getString(R.string.searchingFor)} $searchQuery", Gravity.START))
             else

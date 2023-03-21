@@ -1,6 +1,7 @@
 <resources>
     <!-- Logo's Description -->
     <string name="app_name">What\'s the Bra</string>
+    <string name="app_logo">what\'s\nthe bra</string>
 
     <!-- Search Bar Description -->
     <string name="hint"><font size="17">Pesquisar</font></string>
